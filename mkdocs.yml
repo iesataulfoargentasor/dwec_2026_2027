@@ -1,0 +1,89 @@
+site_name: Desarrollo Web en Entorno Cliente
+site_description: Apuntes del módulo DWEC (CFGS DAW) — IES Ataúlfo Argenta
+site_url: https://iesataulfoargentasor.github.io/dwec_2026_2027/
+repo_url: https://github.com/iesataulfoargentasor/dwec_2026_2027
+repo_name: iesataulfoargentasor/dwec_2026_2027
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: es
+  icon:
+    logo: material/language-javascript
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Modo oscuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.path
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/iesataulfoargentasor/dwec_2026_2027
+  generator: false
+
+copyright: IES Ataúlfo Argenta · DWEC · curso 2026/2027
+
+nav:
+  - Inicio: index.md
+  - UT2 Sintaxis:
+    - Manejo de la sintaxis: ut2/index.md
+    - 2.1 Características: ut2/caracteristicas.md
+    - 2.2 Hola Mundo: ut2/hola-mundo.md
+    - 2.3 Sintaxis: ut2/sintaxis.md
+    - 2.4 Tipos de datos: ut2/tipos-de-datos.md
+    - 2.5 Variables: ut2/variables.md
+    - 2.6 Operadores: ut2/operadores.md
+    - 2.7 Control de flujo: ut2/control-de-flujo.md
+  - Etiquetas: etiquetas.md
