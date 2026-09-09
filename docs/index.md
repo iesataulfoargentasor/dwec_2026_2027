@@ -2,6 +2,10 @@
 title: Inicio
 ---
 
+<p class="brand-logo" markdown="1">
+![Logo del IES Ataúlfo Argenta](assets/branding/logo-ies-ataulfo-argenta.png)
+</p>
+
 # Desarrollo Web en Entorno Cliente
 
 Apuntes del módulo **DWEC** (CFGS Desarrollo de Aplicaciones Web) del IES Ataúlfo Argenta.

@@ -8,21 +8,22 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: es
+  logo: assets/branding/logo-ies-ataulfo-argenta.png
+  favicon: assets/branding/logo-ies-ataulfo-argenta.png
   icon:
-    logo: material/language-javascript
     repo: fontawesome/brands/github
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-7
         name: Modo oscuro
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Modo claro
@@ -66,6 +67,9 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - toc:
       permalink: true
+
+extra_css:
+  - stylesheets/extra.css
 
 extra:
   social:
