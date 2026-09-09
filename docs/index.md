@@ -74,6 +74,21 @@ JavaScript del navegador aplicado al **[RA5](ut5/ra5.md)**: capturar eventos, ge
 - [5.6 Expresiones regulares](ut5/expresiones-regulares.md)
 - [5.7 Cookies](ut5/cookies.md)
 
+### UT6 — Utilización del modelo de objetos del documento (DOM)
+
+JavaScript del navegador aplicado al **[RA6](ut6/ra6.md)**: recorrer y modificar el árbol DOM, asociar eventos y separar contenido, aspecto y comportamiento.
+
+- [RA6 y criterios de evaluación](ut6/ra6.md)
+- [Introducción](ut6/index.md)
+- [6.1 El modelo DOM](ut6/modelo-dom.md)
+- [6.2 Objetos, propiedades y métodos](ut6/objetos-propiedades.md)
+- [6.3 Acceso al documento](ut6/acceso-documento.md)
+- [6.4 Crear y modificar elementos](ut6/crear-modificar.md)
+- [6.5 Eventos del modelo](ut6/eventos-dom.md)
+- [6.6 Diferencias entre navegadores](ut6/diferencias-navegadores.md)
+- [6.7 Compatibilidad](ut6/compatibilidad.md)
+- [6.8 Tres capas](ut6/tres-capas.md)
+
 ## Cómo navegar
 
 - Usa el **menú lateral** para saltar entre apartados.
