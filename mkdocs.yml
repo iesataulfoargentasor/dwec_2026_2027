@@ -113,4 +113,14 @@ nav:
     - 4.5 Orientación a objetos: ut4/orientacion-objetos.md
     - 4.6 Objetos de usuario: ut4/objetos-usuario.md
     - 4.7 Patrones de diseño: ut4/patrones.md
+  - UT5 Eventos y formularios:
+    - Interacción con el usuario: ut5/index.md
+    - RA5 y criterios de evaluación: ut5/ra5.md
+    - 5.1 Modelo de eventos: ut5/modelo-eventos.md
+    - 5.2 Tipos de eventos: ut5/tipos-eventos.md
+    - 5.3 Formularios: ut5/formularios.md
+    - 5.4 Apariencia y comportamiento: ut5/apariencia-comportamiento.md
+    - 5.5 Validación y envío: ut5/validacion.md
+    - 5.6 Expresiones regulares: ut5/expresiones-regulares.md
+    - 5.7 Cookies: ut5/cookies.md
   - Etiquetas: etiquetas.md
