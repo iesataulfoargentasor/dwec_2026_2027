@@ -18,8 +18,9 @@ Las **entregas evaluables** y los cuestionarios siguen en el aula Moodle.
 
 ### UT2 — Manejo de la sintaxis del lenguaje
 
-JavaScript moderno (ECMAScript) aplicado al **RA2**: escribir sentencias simples, aplicar la sintaxis del lenguaje y verificar su ejecución en el navegador.
+JavaScript moderno (ECMAScript) aplicado al **[RA2](ut2/ra2.md)**: escribir sentencias simples, aplicar la sintaxis del lenguaje y verificar su ejecución en el navegador.
 
+- [RA2 y criterios de evaluación](ut2/ra2.md)
 - [Introducción a la sintaxis](ut2/index.md)
 - [2.1 Características de JavaScript](ut2/caracteristicas.md)
 - [2.2 Hola Mundo](ut2/hola-mundo.md)

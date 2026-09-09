@@ -12,7 +12,9 @@ La **sintaxis** de un lenguaje de programación es el conjunto de reglas que hay
 
 En JavaScript esas reglas las fija el estándar **ECMAScript**. Los navegadores (Chrome, Edge, Firefox, Safari) y entornos como **Node.js** implementan ese estándar. En el aula usamos la sintaxis actual del lenguaje: la que entenderá cualquier navegador moderno y que verás en documentación, frameworks y ofertas de empleo.
 
-Esta unidad cubre el **RA2** del módulo: escribir sentencias simples, aplicar la sintaxis y comprobar el resultado en el navegador (y, cuando convenga, en Node.js).
+Esta unidad cubre el **[RA2](ra2.md)** del módulo: escribir sentencias simples, aplicar la sintaxis y comprobar el resultado en el navegador (y, cuando convenga, en Node.js).
+
+Consulta el [enunciado oficial del RA2 y sus criterios de evaluación](ra2.md).
 
 ## Qué vas a trabajar
 
@@ -28,13 +30,7 @@ Esta unidad cubre el **RA2** del módulo: escribir sentencias simples, aplicar l
 
 ## Criterios de evaluación (RA2)
 
-- Seleccionar JavaScript como lenguaje de cliente web y justificarlo.
-- Utilizar tipos de datos, variables y operadores actuales.
-- Identificar el **ámbito** de las variables (`const` / `let` de bloque frente a `var`).
-- Comprobar las **conversiones de tipo** (coerción, `Number`, `===`).
-- Añadir **comentarios** útiles.
-- Usar **decisiones** y **bucles**, y verificarlos.
-- Apoyarse en herramientas de **prueba y depuración** (DevTools, `console.log`).
+El texto oficial del resultado de aprendizaje y de los criterios **a)** a **h)** está en [RA2 y criterios de evaluación](ra2.md).
 
 !!! info "Sobre el material original"
     Se mantiene la estructura pedagógica del documento *U.T. 2. Manejo de la sintaxis del lenguaje*. El contenido se ha actualizado: HTML5, `const`/`let`, igualdad estricta, tipos actuales de ECMAScript y prácticas que ya no se recomiendan (`var` global, `document.write`, octales con `034`, etc.).
