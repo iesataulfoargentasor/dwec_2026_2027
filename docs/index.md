@@ -60,11 +60,25 @@ Estructuras definidas por el usuario aplicadas al **[RA4](ut4/ra4.md)**: funcion
 - [4.6 Objetos de usuario](ut4/objetos-usuario.md)
 - [4.7 Patrones de diseño](ut4/patrones.md)
 
+### UT5 — Interacción con el usuario: eventos y formularios
+
+JavaScript del navegador aplicado al **[RA5](ut5/ra5.md)**: capturar eventos, gestionar formularios y validar datos (también con expresiones regulares).
+
+- [RA5 y criterios de evaluación](ut5/ra5.md)
+- [Introducción](ut5/index.md)
+- [5.1 Modelo de eventos](ut5/modelo-eventos.md)
+- [5.2 Tipos de eventos](ut5/tipos-eventos.md)
+- [5.3 Formularios](ut5/formularios.md)
+- [5.4 Apariencia y comportamiento](ut5/apariencia-comportamiento.md)
+- [5.5 Validación y envío](ut5/validacion.md)
+- [5.6 Expresiones regulares](ut5/expresiones-regulares.md)
+- [5.7 Cookies](ut5/cookies.md)
+
 ## Cómo navegar
 
 - Usa el **menú lateral** para saltar entre apartados.
 - La **tabla de contenidos** de la derecha recorre los epígrafes de cada página.
-- La **búsqueda** del encabezado localiza un concepto concreto (`const`, `===`, `for...of`…).
+- La **búsqueda** del encabezado localiza un concepto concreto (`const`, `addEventListener`, `map`…).
 - Cada bloque de código tiene un botón para **copiar**.
 
 !!! tip "Consola del navegador"
