@@ -30,6 +30,22 @@ JavaScript moderno (ECMAScript) aplicado al **[RA2](ut2/ra2.md)**: escribir sent
 - [2.6 Operadores](ut2/operadores.md)
 - [2.7 Estructuras de control de flujo](ut2/control-de-flujo.md)
 
+### UT3 — Utilización de los objetos predefinidos del lenguaje
+
+JavaScript del navegador aplicado al **[RA3](ut3/ra3.md)**: identificar objetos nativos y del BOM/DOM y usarlos para fechas, ventanas, HTML generado y almacenamiento.
+
+- [RA3 y criterios de evaluación](ut3/ra3.md)
+- [Introducción a los objetos](ut3/index.md)
+- [3.1 Objetos nativos](ut3/objetos-nativos.md)
+- [3.2 String](ut3/string.md)
+- [3.3 BOM](ut3/bom.md)
+- [3.4 Window](ut3/window.md)
+- [3.5 Document](ut3/document.md)
+- [3.6 History y Location](ut3/history-location.md)
+- [3.7 Generar HTML](ut3/generar-html.md)
+- [3.8 Ventanas y marcos](ut3/ventanas.md)
+- [3.9 Almacenamiento](ut3/almacenamiento.md)
+
 ## Cómo navegar
 
 - Usa el **menú lateral** para saltar entre apartados.
