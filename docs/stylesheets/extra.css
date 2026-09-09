@@ -7,10 +7,15 @@
   --aa-negro-logo: #000000;
 }
 
-:root > * {
+[data-md-color-scheme="default"][data-md-color-primary="custom"],
+[data-md-color-scheme="slate"][data-md-color-primary="custom"] {
   --md-primary-fg-color: var(--aa-granate);
   --md-primary-fg-color--light: var(--aa-granate-clara);
   --md-primary-fg-color--dark: var(--aa-granate-oscura);
+}
+
+[data-md-color-scheme="default"][data-md-color-accent="custom"],
+[data-md-color-scheme="slate"][data-md-color-accent="custom"] {
   --md-accent-fg-color: var(--aa-rojo-logo);
   --md-accent-fg-color--transparent: color-mix(in srgb, var(--aa-rojo-logo) 10%, transparent);
 }
