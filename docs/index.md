@@ -46,6 +46,20 @@ JavaScript del navegador aplicado al **[RA3](ut3/ra3.md)**: identificar objetos 
 - [3.8 Ventanas y marcos](ut3/ventanas.md)
 - [3.9 Almacenamiento](ut3/almacenamiento.md)
 
+### UT4 — Programación con funciones, arrays y objetos
+
+Estructuras definidas por el usuario aplicadas al **[RA4](ut4/ra4.md)**: funciones, arrays, objetos propios y patrones de diseño.
+
+- [RA4 y criterios de evaluación](ut4/ra4.md)
+- [Introducción](ut4/index.md)
+- [4.1 Funciones predefinidas](ut4/funciones-predefinidas.md)
+- [4.2 Funciones de usuario](ut4/funciones-usuario.md)
+- [4.3 Arrays](ut4/arrays.md)
+- [4.4 Operaciones agregadas](ut4/operaciones-agregadas.md)
+- [4.5 Orientación a objetos](ut4/orientacion-objetos.md)
+- [4.6 Objetos de usuario](ut4/objetos-usuario.md)
+- [4.7 Patrones de diseño](ut4/patrones.md)
+
 ## Cómo navegar
 
 - Usa el **menú lateral** para saltar entre apartados.
