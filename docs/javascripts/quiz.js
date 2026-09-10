@@ -25,10 +25,11 @@
     return chosen ? Number(chosen.value) : null;
   }
 
-  function scoreMessage(ok, total) {
+  function scoreMessage(ok, total, unit) {
     const ratio = ok / total;
+    const donde = unit || "la unidad";
     if (ok === total) {
-      return "Excelente: todas correctas. Puedes pasar a las prácticas de Moodle con la sintaxis clara.";
+      return "Excelente: todas correctas. Puedes pasar a las prácticas de Moodle.";
     }
     if (ratio >= 0.75) {
       return "Muy bien. Repasa solo las preguntas falladas (enlace al apartado al final de cada una).";
@@ -36,7 +37,7 @@
     if (ratio >= 0.5) {
       return "Vas por el camino, pero conviene volver a los apartados enlazados antes de un examen.";
     }
-    return "Mejor recorre de nuevo la UT2 y reintenta el test. No puntúa en Moodle: es para practicar.";
+    return `Mejor recorre de nuevo la ${donde} y reintenta el test. No puntúa en Moodle: es para practicar.`;
   }
 
   function renderForm(data, quizId) {
@@ -119,7 +120,7 @@
     const total = data.questions.length;
     const result = form.querySelector(".dwec-quiz__result");
     result.hidden = false;
-    result.innerHTML = `<p class="dwec-quiz__score">Resultado: <strong>${ok} / ${total}</strong></p><p>${escapeHtml(scoreMessage(ok, total))}</p>`;
+    result.innerHTML = `<p class="dwec-quiz__score">Resultado: <strong>${ok} / ${total}</strong></p><p>${escapeHtml(scoreMessage(ok, total, data.unit))}</p>`;
     result.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
