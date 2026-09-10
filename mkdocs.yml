@@ -70,6 +70,10 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/quiz.css
+
+extra_javascript:
+  - javascripts/quiz.js
 
 extra:
   social:
@@ -91,6 +95,7 @@ nav:
     - 2.5 Variables: ut2/variables.md
     - 2.6 Operadores: ut2/operadores.md
     - 2.7 Control de flujo: ut2/control-de-flujo.md
+    - Autoevaluación: ut2/autoevaluacion.md
   - UT3 Objetos:
     - Utilización de objetos: ut3/index.md
     - RA3 y criterios de evaluación: ut3/ra3.md
