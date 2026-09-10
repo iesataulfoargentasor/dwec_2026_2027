@@ -45,6 +45,34 @@
       "explain": "En 2.3.1 el lenguaje es sensible a mayúsculas. En 2.3.2 `//` comenta el resto de la línea y no se ejecuta. `total` y `Total` son identificadores distintos; `Total` no está declarado → `ReferenceError`."
     },
     {
+      "topic": "2.3 Identificadores",
+      "href": "../sintaxis/",
+      "prompt": "En 2.3 los nombres de variable tienen reglas. ¿Qué ocurre al ejecutar esta línea?",
+      "code": "const 2nombre = \"Ana\";",
+      "options": [
+        "Crea la constante 2nombre con el valor \"Ana\".",
+        "Imprime Ana: el 2 se ignora al principio del nombre.",
+        "SyntaxError: un identificador no puede empezar por un dígito.",
+        "ReferenceError: Ana no está definida."
+      ],
+      "answer": 2,
+      "explain": "Un identificador empieza por letra, `_` o `$`. El resto puede llevar dígitos (`nombre2` sí vale). `2nombre` es SyntaxError. Convención de la unidad: camelCase (`nombreCompleto`)."
+    },
+    {
+      "topic": "2.3 Comentarios",
+      "href": "../sintaxis/",
+      "prompt": "Comentarios de bloque, como en 2.3.2. ¿Qué se imprime?",
+      "code": "let n = 5;\n/* n = 8;\nconsole.log(\"dentro\"); */\nconsole.log(n);",
+      "options": [
+        "8 y después dentro",
+        "5",
+        "dentro y después 5",
+        "SyntaxError: no se pueden anidar comentarios"
+      ],
+      "answer": 1,
+      "explain": "`/* ... */` comenta varias líneas y no se ejecuta. `n` sigue valiendo 5. Los comentarios sirven para explicar el porqué, no para cambiar el código."
+    },
+    {
       "topic": "2.4 Números",
       "href": "../tipos-de-datos/",
       "prompt": "Trabajas con números como en el apartado 2.4.1. ¿Qué muestra este fragmento?",
@@ -71,6 +99,34 @@
       ],
       "answer": 1,
       "explain": "Las cadenas van entre comillas simples, dobles o **acento grave**. Con plantilla, `${b}` interpola el valor: `hola mundo`. Un ENTER real dentro de `\"...\"` sin `\\n` rompería la cadena; las plantillas sí permiten saltos de línea."
+    },
+    {
+      "topic": "2.4 Booleanos",
+      "href": "../tipos-de-datos/",
+      "prompt": "Conversión a booleano, como en 2.4.4. ¿Qué imprime esto?",
+      "code": "console.log(Boolean(0));\nconsole.log(Boolean(\"0\"));",
+      "options": [
+        "false y false",
+        "true y true",
+        "false y true",
+        "true y false"
+      ],
+      "answer": 2,
+      "explain": "`0` es falsy → `Boolean(0)` es `false`. La cadena `\"0\"` no está vacía, así que es truthy → `true`. `true` y `false` no son el número 1/0 ni las cadenas `\"true\"`/`\"false\"`."
+    },
+    {
+      "topic": "2.4 undefined y null",
+      "href": "../tipos-de-datos/",
+      "prompt": "En 2.4.5 y 2.5.2 se distingue ausencia de valor. ¿Qué muestra la consola?",
+      "code": "let pendiente;\nconsole.log(pendiente);",
+      "options": [
+        "null",
+        "undefined",
+        "0",
+        "ReferenceError: pendiente is not defined"
+      ],
+      "answer": 1,
+      "explain": "`let` permite declarar sin valor: queda `undefined` (ausencia por defecto). `null` es ausencia **intencionada**: lo asignas tú (`const vacio = null`). `pendiente` sí está declarada, por eso no hay ReferenceError."
     },
     {
       "topic": "2.4 Conversiones",
@@ -115,6 +171,48 @@
       "explain": "En esta unidad `const` es la opción por defecto: hay que inicializar y **no** se puede hacer `iva = ...` (`TypeError`). Si el valor tiene que cambiar (contador, acumulador), se usa `let`. `var` queda para código legado."
     },
     {
+      "topic": "2.5 Sombra de nombres",
+      "href": "../variables/",
+      "prompt": "Sombra (shadowing) de 2.5.3. ¿Qué se escribe, y en qué orden?",
+      "code": "const mensaje = \"fuera\";\nfunction muestraMensaje() {\n  const mensaje = \"dentro\";\n  console.log(mensaje);\n}\nmuestraMensaje();\nconsole.log(mensaje);",
+      "options": [
+        "dentro y después fuera",
+        "fuera y después dentro",
+        "dentro y después dentro",
+        "fuera y después fuera"
+      ],
+      "answer": 0,
+      "explain": "Si hay dos `const mensaje`, **dentro del bloque gana la local**. La función imprime `dentro`; al salir, el `console.log` del script imprime `fuera`. La de dentro no pisa a la de fuera."
+    },
+    {
+      "topic": "2.6 Módulo",
+      "href": "../operadores/",
+      "prompt": "El operador `%` de 2.6.1. ¿Qué imprime esto?",
+      "code": "console.log(10 % 5);\nconsole.log(9 % 5);",
+      "options": [
+        "2 y 1.8 (tantos por ciento)",
+        "0 y 4 (resto de la división)",
+        "50 y 45",
+        "5 y 5"
+      ],
+      "answer": 1,
+      "explain": "`%` es el **resto** (módulo), no un porcentaje. `10 = 5·2 + 0` → `0`. `9 = 5·1 + 4` → `4`."
+    },
+    {
+      "topic": "2.6 Operadores lógicos",
+      "href": "../operadores/",
+      "prompt": "`&&` y `||` como en 2.6.2. ¿Qué se imprime?",
+      "code": "const valor1 = true;\nconst valor2 = false;\nconsole.log(valor1 && valor2);\nconsole.log(valor1 || valor2);",
+      "options": [
+        "true y true",
+        "false y false",
+        "false y true",
+        "true y false"
+      ],
+      "answer": 2,
+      "explain": "`&&` es verdadero solo si **los dos** son truthy → `true && false` es `false`. `||` es verdadero si **alguno** lo es → `true`. Es el ejemplo de la tabla del temario."
+    },
+    {
       "topic": "2.6 Operadores relacionales",
       "href": "../operadores/",
       "prompt": "`prompt` devuelve una cadena. En 2.6 se compara con `==` y con `===`. ¿Qué imprime esto?",
@@ -155,6 +253,20 @@
       ],
       "answer": 1,
       "explain": "6 no cumple `nota >= 9`, así que no entra en Sobresaliente. Sí cumple `nota >= 5` → **Aprobado**. El `else if` no combina ramas: cuando una condición es verdadera, el resto no se ejecuta. En la unidad las llaves `{ }` son obligatorias aunque el cuerpo tenga una sola línea."
+    },
+    {
+      "topic": "2.7 Bucle while",
+      "href": "../control-de-flujo/",
+      "prompt": "El `while` de 2.7.3 mira la condición **antes** de entrar. ¿Qué se imprime?",
+      "code": "let i = 5;\nwhile (i < 5) {\n  console.log(i);\n  i += 1;\n}\nconsole.log(\"fin\");",
+      "options": [
+        "5 y después fin",
+        "0, 1, 2, 3, 4 y después fin",
+        "Solo fin (el cuerpo no se ejecuta ni una vez)",
+        "Bucle infinito"
+      ],
+      "answer": 2,
+      "explain": "`i` ya vale 5, así que `i < 5` es false desde el principio: el cuerpo **no corre**. Solo se imprime `fin`. Un `for (let i = 0; i < 5; i += 1)` sí daría cinco vueltas; el `while` solo entra si la condición es verdadera al empezar."
     },
     {
       "topic": "2.7 Bucle for",
