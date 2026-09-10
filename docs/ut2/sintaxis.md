@@ -1,5 +1,5 @@
 ---
-title: 2.3 El lenguaje JavaScript: sintaxis
+title: "2.3 El lenguaje JavaScript: sintaxis"
 tags:
   - JavaScript
   - DWEC
