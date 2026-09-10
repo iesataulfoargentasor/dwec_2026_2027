@@ -27,6 +27,7 @@ Consulta el [enunciado oficial del RA2 y sus criterios de evaluación](ra2.md).
 | [2.5 Variables](variables.md) | `const`, `let`, `var`, ámbito de bloque y buenas prácticas |
 | [2.6 Operadores](operadores.md) | Aritméticos, lógicos, comparación estricta, `??` y `?.` |
 | [2.7 Control de flujo](control-de-flujo.md) | `if`, `switch`, `while`, `for` y `for...of` |
+| [Autoevaluación](autoevaluacion.md) | Test de 12 preguntas (código y casos de uso), con corrección comentada |
 
 ## Criterios de evaluación (RA2)
 

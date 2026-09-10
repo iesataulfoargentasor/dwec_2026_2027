@@ -29,6 +29,7 @@ JavaScript moderno (ECMAScript) aplicado al **[RA2](ut2/ra2.md)**: escribir sent
 - [2.5 Variables](ut2/variables.md)
 - [2.6 Operadores](ut2/operadores.md)
 - [2.7 Estructuras de control de flujo](ut2/control-de-flujo.md)
+- [Autoevaluación](ut2/autoevaluacion.md)
 
 ### UT3 — Utilización de los objetos predefinidos del lenguaje
 

@@ -1,0 +1,174 @@
+{
+  "unit": "UT2",
+  "title": "Autoevaluación de la UT2",
+  "questions": [
+    {
+      "topic": "2.1 Características",
+      "href": "../caracteristicas/",
+      "prompt": "En un script de cliente ocurre esto. ¿Qué pasa al ejecutarlo?",
+      "code": "let dato = 5;\ndato = \"cinco\";\nconsole.log(typeof dato);",
+      "options": [
+        "Lanza TypeError: no se puede cambiar el tipo de una variable.",
+        "Imprime \"string\": JavaScript es de tipado dinámico y el tipo lo marca el valor.",
+        "Imprime \"number\": la primera asignación fija el tipo para siempre.",
+        "Solo funciona si el archivo se llama con extensión .ts (TypeScript)."
+      ],
+      "answer": 1,
+      "explain": "JavaScript no declara el tipo de la variable: `dato` pasa de number a string sin error. `typeof dato` vale `\"string\"`. Eso no ocurre en Java (tipado estático). TypeScript es otro lenguaje que se transpila a JS; aquí ejecutamos JavaScript nativo."
+    },
+    {
+      "topic": "2.2 Hola Mundo",
+      "href": "../hola-mundo/",
+      "prompt": "Tienes `saludo.js` con una sola línea: `alert(\"Hola\");`. Lo ejecutas en terminal con `node saludo.js`. ¿Qué ocurre?",
+      "code": "node saludo.js",
+      "options": [
+        "Se abre el cuadro de diálogo del navegador con el texto Hola.",
+        "Se escribe Hola en la consola de DevTools (F12).",
+        "Falla: en Node.js no existen `alert`, `document` ni `prompt`.",
+        "Funciona igual que en el navegador porque Node usa el mismo DOM."
+      ],
+      "answer": 2,
+      "explain": "Node ejecuta el mismo lenguaje, pero no el DOM ni las ventanas del navegador. `alert` no está definido y obtienes un `ReferenceError`. Para probar sintaxis en terminal usa `console.log`. El Hola Mundo de DWEC se comprueba en la consola del navegador (F12) con un HTML5 + `script`."
+    },
+    {
+      "topic": "2.3 Sintaxis",
+      "href": "../sintaxis/",
+      "prompt": "¿Qué imprime la consola?",
+      "code": "const total = 10; // Total del carrito\nconsole.log(Total);",
+      "options": [
+        "10, porque el comentario convierte Total en un alias de total.",
+        "10, JavaScript no distingue mayúsculas de minúsculas.",
+        "undefined, Total existe pero no tiene valor.",
+        "ReferenceError: Total is not defined."
+      ],
+      "answer": 3,
+      "explain": "`//` comenta el resto de la línea y no se ejecuta. `total` y `Total` son identificadores distintos (el lenguaje es case-sensitive). `Total` no está declarado, así que la consola lanza `ReferenceError`."
+    },
+    {
+      "topic": "2.4 Tipos de datos",
+      "href": "../tipos-de-datos/",
+      "prompt": "¿Qué muestra este fragmento?",
+      "code": "console.log(typeof null);\nconsole.log(null === null);",
+      "options": [
+        "\"null\" y true",
+        "\"object\" y true",
+        "\"undefined\" y false",
+        "\"object\" y false"
+      ],
+      "answer": 1,
+      "explain": "`typeof null` vale `\"object\"`: es una peculiaridad histórica que ya no se corrige. Para saber si un valor es `null` se compara con `=== null`, que aquí es `true`. No uses `typeof` para detectar `null`."
+    },
+    {
+      "topic": "2.4 Conversiones",
+      "href": "../tipos-de-datos/",
+      "prompt": "Un dato llega como texto (por ejemplo desde `prompt`). ¿Qué se imprime?",
+      "code": "console.log(\"10\" + 2);\nconsole.log(\"10\" - 2);",
+      "options": [
+        "12 y 8",
+        "\"102\" y 8",
+        "\"102\" y \"102\"",
+        "NaN y NaN"
+      ],
+      "answer": 1,
+      "explain": "`+` con una cadena concatena: `\"10\" + 2` → `\"102\"`. `-` fuerza conversión a número: `\"10\" - 2` → `8`. Es la coerción del lenguaje (criterio d). En clase convierte tú con `Number(...)` y compara con `===` para no depender de estas trampas."
+    },
+    {
+      "topic": "2.4 NaN",
+      "href": "../tipos-de-datos/",
+      "prompt": "Validas lo que escribió el usuario. ¿Qué vale cada llamada?",
+      "code": "console.log(Number.isNaN(\"hola\"));\nconsole.log(isNaN(\"hola\"));",
+      "options": [
+        "true y true",
+        "false y true",
+        "false y false",
+        "true y false"
+      ],
+      "answer": 1,
+      "explain": "`Number.isNaN` solo es `true` si el valor es exactamente el número `NaN`. `\"hola\"` es un string → `false`. El `isNaN` clásico convierte a número antes (`Number(\"hola\")` es `NaN`) y por eso devuelve `true`. Para validar un `prompt` usa `Number(bruto)` y luego `Number.isNaN(n)`."
+    },
+    {
+      "topic": "2.5 Variables",
+      "href": "../variables/",
+      "prompt": "Tras ejecutar el bloque, ¿qué ocurre en la última línea?",
+      "code": "if (true) {\n  const nota = 7;\n}\nconsole.log(nota);",
+      "options": [
+        "Imprime 7: `const` es visible en todo el archivo.",
+        "Imprime undefined: `nota` existe pero está vacía.",
+        "ReferenceError: `const` y `let` tienen ámbito de bloque.",
+        "Imprime 7 solo en el navegador; en Node.js fallaría."
+      ],
+      "answer": 2,
+      "explain": "`const` y `let` viven dentro de `{ ... }`. Al salir del `if`, `nota` no existe (`ReferenceError`). Con `var` el identificador se “escaparía” de ese bloque: por eso en código nuevo no usamos `var`."
+    },
+    {
+      "topic": "2.5 const y let",
+      "href": "../variables/",
+      "prompt": "Calculas un IVA. ¿Qué hace este código?",
+      "code": "const iva = 0.21;\niva = 0.1;\nconsole.log(iva);",
+      "options": [
+        "Imprime 0.1: `const` solo impide cambiar el tipo.",
+        "Imprime 0.21: la reasignación se ignora en silencio.",
+        "TypeError: no se puede reasignar un identificador `const`.",
+        "SyntaxError ya en la primera línea: `const` exige un objeto."
+      ],
+      "answer": 2,
+      "explain": "`const` obliga a inicializar y prohíbe `iva = ...`. La segunda línea lanza `TypeError` y no se llega al `console.log`. Si el valor tiene que cambiar (acumulador, contador), usa `let`. `const` por defecto es la regla de la unidad."
+    },
+    {
+      "topic": "2.6 Operadores",
+      "href": "../operadores/",
+      "prompt": "`prompt` siempre devuelve string (o `null`). ¿Qué imprime esto?",
+      "code": "const variable1 = 10;\nconst variable2 = \"10\";\nconsole.log(variable1 == variable2);\nconsole.log(variable1 === variable2);",
+      "options": [
+        "true y true",
+        "false y false",
+        "true y false",
+        "false y true"
+      ],
+      "answer": 2,
+      "explain": "`==` convierte tipos antes de comparar (`10 == \"10\"` → `true`). `===` compara valor y tipo, sin coerción → `false`. En DWEC se compara con `===` / `!==`. Si hace falta, convierte tú: `Number(variable2) === 10`."
+    },
+    {
+      "topic": "2.6 ?? y ||",
+      "href": "../operadores/",
+      "prompt": "Un contador puede valer 0 (cero intentos usados). ¿Qué se imprime?",
+      "code": "const contador = 0;\nconsole.log(contador || 10);\nconsole.log(contador ?? 10);",
+      "options": [
+        "0 y 0",
+        "10 y 0",
+        "10 y 10",
+        "0 y 10"
+      ],
+      "answer": 1,
+      "explain": "`||` trata `0` (y `\"\"`) como falsy y sustituye por 10: suele ser un bug en contadores. `??` solo sustituye `null` o `undefined`, así que deja el `0`. Para valores por defecto de números usa `??`."
+    },
+    {
+      "topic": "2.7 Control de flujo",
+      "href": "../control-de-flujo/",
+      "prompt": "`switch` en JavaScript compara con `===`. ¿Qué se escribe en consola?",
+      "code": "const x = \"5\";\nswitch (x) {\n  case 5:\n    console.log(\"número\");\n    break;\n  case \"5\":\n    console.log(\"texto\");\n    break;\n  default:\n    console.log(\"otro\");\n}",
+      "options": [
+        "número",
+        "texto",
+        "otro",
+        "número y texto (cae al case siguiente)"
+      ],
+      "answer": 1,
+      "explain": "`\"5\" === 5` es false, así que no entra en `case 5`. Sí coincide `case \"5\"` y, con `break`, no sigue al `default`. Si olvidaras el `break`, habría fall-through hacia `otro`."
+    },
+    {
+      "topic": "2.7 Bucles",
+      "href": "../control-de-flujo/",
+      "prompt": "Recorres notas de un examen. ¿Qué imprime el script?",
+      "code": "const notas = [7, 8, 9];\nlet suma = 0;\nfor (const n of notas) {\n  suma += n;\n}\nlet i = 10;\ndo {\n  i += 1;\n} while (i < 10);\nconsole.log(suma, i);",
+      "options": [
+        "24 y 10",
+        "24 y 11",
+        "\"789\" y 11",
+        "ReferenceError: no se puede usar `const n` dentro del `for`"
+      ],
+      "answer": 1,
+      "explain": "`for...of` recorre los valores (7+8+9 = 24), no concatena cadenas. `const n` en cada vuelta es válido. El `do...while` ejecuta el cuerpo al menos una vez aunque la condición (`i < 10`) ya sea falsa: `i` pasa de 10 a 11. Un `while (i < 10)` con `i = 10` no entraría nunca."
+    }
+  ]
+}
