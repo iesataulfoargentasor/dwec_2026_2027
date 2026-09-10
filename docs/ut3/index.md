@@ -42,6 +42,7 @@ Consulta el [enunciado oficial del RA3 y sus criterios de evaluación](ra3.md).
 | [3.7 Generar HTML](generar-html.md) | Texto y etiquetas desde código (`textContent`, `createElement`) |
 | [3.8 Ventanas y marcos](ventanas.md) | `iframe`, `window.open`, `opener` (los `frameset` son legado) |
 | [3.9 Almacenamiento](almacenamiento.md) | Cookies, `localStorage` y `sessionStorage` |
+| [Autoevaluación](autoevaluacion.md) | Test de 20 preguntas (código y casos de uso), con corrección comentada |
 
 !!! info "Sobre el material original"
     Se mantiene la estructura pedagógica del documento *U.T. 3. Utilización de los objetos predefinidos del lenguaje*. El contenido se ha actualizado: HTML5, `const`/`let`, DOM en lugar de `document.write` / `bgColor`, sin `with`, sin `frameset` como técnica actual, y almacenamiento web para el criterio **g)** del RA3.

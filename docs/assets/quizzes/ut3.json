@@ -1,0 +1,286 @@
+{
+  "unit": "UT3",
+  "title": "Autoevaluación de la UT3",
+  "questions": [
+    {
+      "topic": "3.1 Date",
+      "href": "../objetos-nativos/",
+      "prompt": "El constructor de `Date` (apartado 3.1.1). ¿Qué fecha representa esta línea?",
+      "code": "const concreta = new Date(2026, 8, 9);",
+      "options": [
+        "9 de agosto de 2026 (el 8 es agosto).",
+        "8 de septiembre de 2026.",
+        "9 de septiembre de 2026: el mes va de 0 (enero) a 11 (diciembre).",
+        "9 de agosto de 2028: el año se cuenta desde 1900."
+      ],
+      "answer": 2,
+      "explain": "En `new Date(año, mes, día)` el **mes empieza en 0**: 0 es enero y 8 es septiembre. El día del mes sí es 1–31 (`getDate()`). `getYear()` está obsoleto; se usa `getFullYear()`."
+    },
+    {
+      "topic": "3.1 Date (métodos)",
+      "href": "../objetos-nativos/",
+      "prompt": "Métodos de `Date`. Con esa fecha, ¿qué imprimen `getDate()` y `getMonth()`?",
+      "code": "const f = new Date(2026, 8, 9);\nconsole.log(f.getDate());\nconsole.log(f.getMonth());",
+      "options": [
+        "9 y 8",
+        "9 y 9",
+        "8 y 9",
+        "El día de la semana (0–6) y 8"
+      ],
+      "answer": 0,
+      "explain": "`getDate()` es el **día del mes** (9). `getMonth()` es el mes **0–11** (8 = septiembre). `getDay()` es el día de la semana (0 = domingo). No los mezcles."
+    },
+    {
+      "topic": "3.1 Math",
+      "href": "../objetos-nativos/",
+      "prompt": "`Math` no se instancia. Con `num = 27.6`, ¿qué sale en `floor`, `ceil` y `round`?",
+      "code": "const num = 27.6;\nconsole.log(Math.floor(num));\nconsole.log(Math.ceil(num));\nconsole.log(Math.round(num));",
+      "options": [
+        "27, 27 y 28",
+        "27, 28 y 28",
+        "28, 27 y 28",
+        "27.6, 27.6 y 28"
+      ],
+      "answer": 1,
+      "explain": "`floor` baja al entero (27), `ceil` sube (28), `round` al más cercano (28). `trunc` cortaría a 27 sin redondear. Se llama `Math.floor(...)`, nunca `new Math()`."
+    },
+    {
+      "topic": "3.1 Number",
+      "href": "../objetos-nativos/",
+      "prompt": "Formato con `toFixed`, como en 3.1.3. ¿Qué imprime esto?",
+      "code": "console.log((12.348).toFixed(2));\nconsole.log(typeof (12.348).toFixed(2));",
+      "options": [
+        "12.34 y \"number\"",
+        "12.35 y \"string\"",
+        "12.348 y \"number\"",
+        "12.35 y \"number\""
+      ],
+      "answer": 1,
+      "explain": "`toFixed(2)` redondea a dos decimales (**12.35**) y devuelve una **cadena**, no un número. `new Number(6) === 6` es `false`: en esta unidad no se usa `new Number()`."
+    },
+    {
+      "topic": "3.2 String (length)",
+      "href": "../string/",
+      "prompt": "Cadenas, como en 3.2. ¿Qué se escribe en consola?",
+      "code": "const txt = \"DWEC\";\nconsole.log(txt.length);\nconsole.log(txt[0]);",
+      "options": [
+        "4 y \"D\"",
+        "4 y \"C\"",
+        "3 y \"D\"",
+        "5 y \"D\" (cuenta las comillas)"
+      ],
+      "answer": 0,
+      "explain": "`length` es la longitud (4). El primer carácter está en el índice **0**, así que `txt[0]` (o `charAt(0)`) es `\"D\"`. Evita `new String(\"DWEC\")`."
+    },
+    {
+      "topic": "3.2 includes",
+      "href": "../string/",
+      "prompt": "`includes` distingue mayúsculas. ¿Qué imprime este fragmento?",
+      "code": "const s = \"JavaScript\";\nconsole.log(s.includes(\"Script\"));\nconsole.log(s.includes(\"script\"));",
+      "options": [
+        "true y true",
+        "false y false",
+        "true y false",
+        "false y true"
+      ],
+      "answer": 2,
+      "explain": "`includes` busca un trozo **tal cual**. `\"Script\"` está; `\"script\"` no, porque la S de JavaScript es mayúscula. Si hace falta ignorar caja, pasa antes por `toLowerCase()`."
+    },
+    {
+      "topic": "3.2 slice",
+      "href": "../string/",
+      "prompt": "`slice` extrae un trozo (`fin` no incluido). ¿Qué sale?",
+      "code": "const s = \"DWEC-objetos\";\nconsole.log(s.slice(0, 4));",
+      "options": [
+        "DWEC-objetos",
+        "DWEC",
+        "WEC-",
+        "DWEC-"
+      ],
+      "answer": 1,
+      "explain": "`slice(0, 4)` toma los índices 0, 1, 2 y 3: **DWEC**. El 4 no entra. En código nuevo se prefiere `slice` a `substring`. `substr` está obsoleto."
+    },
+    {
+      "topic": "3.2 trim y split",
+      "href": "../string/",
+      "prompt": "`trim` y `split`, de la tabla de 3.2. ¿Qué imprime la última línea?",
+      "code": "const bruto = \"  Ana,Luis,Eva  \";\nconst partes = bruto.trim().split(\",\");\nconsole.log(partes[0], partes.length);",
+      "options": [
+        "\"  Ana\" y 3",
+        "Ana y 3",
+        "Ana,Luis,Eva y 1",
+        "undefined y 0"
+      ],
+      "answer": 1,
+      "explain": "`trim()` quita espacios de los extremos. `split(\",\")` parte en un array de **3** elementos; el primero es `\"Ana\"`. `replace` / `toUpperCase` siguen el mismo estilo: el string original no cambia a menos que guardes el resultado."
+    },
+    {
+      "topic": "3.3 BOM",
+      "href": "../bom/",
+      "prompt": "BOM frente a DOM, como en 3.3. ¿Qué describe cada objeto?",
+      "code": "console.log(window.innerWidth);\nconsole.log(document.title);",
+      "options": [
+        "Los dos son DOM: todo cuelga de document.",
+        "innerWidth es del BOM (ventana); title es del documento (DOM).",
+        "innerWidth es del DOM; title es del BOM (navigator).",
+        "Los dos son objetos nativos de ECMAScript, como Date."
+      ],
+      "answer": 1,
+      "explain": "El **BOM** describe la ventana (`window`, `navigator`, `screen`, `location`, `history`). El **DOM** describe el HTML (`document` y sus nodos). `Date`/`Math` son nativos: no dependen del navegador."
+    },
+    {
+      "topic": "3.3 screen",
+      "href": "../bom/",
+      "prompt": "Pantalla frente a ventana (3.3.2). ¿Cuál es la lectura correcta?",
+      "code": "console.log(screen.width, screen.height);\nconsole.log(window.innerWidth, window.innerHeight);",
+      "options": [
+        "screen es el viewport; innerWidth es la resolución del monitor.",
+        "Las dos parejas miden lo mismo siempre.",
+        "screen es la pantalla (solo lectura); innerWidth/innerHeight son el viewport de la pestaña.",
+        "Hay que usar with (screen) { width } para leer el ancho."
+      ],
+      "answer": 2,
+      "explain": "`screen.width` / `height` son la **pantalla**. El tamaño de la **ventana** es `window.innerWidth` / `innerHeight`. `with` está prohibido en modo estricto; se escribe `screen.width`."
+    },
+    {
+      "topic": "3.4 Diálogos",
+      "href": "../window/",
+      "prompt": "`prompt` y `confirm` (criterio e). Si la persona pulsa **Cancelar** en el `prompt`, ¿qué vale `nombre`?",
+      "code": "const nombre = prompt(\"Tu nombre:\", \"\");\nif (nombre !== null) {\n  console.log(\"Hola, \" + nombre);\n}",
+      "options": [
+        "La cadena vacía \"\".",
+        "undefined.",
+        "null: Cancelar no es lo mismo que un texto vacío.",
+        "false, igual que confirm."
+      ],
+      "answer": 2,
+      "explain": "`prompt` devuelve el texto o **`null`** si se cancela. Un Enter con el campo vacío sí es `\"\"`. `confirm` devuelve `true`/`false`. En la unidad se comprueba `nombre !== null` antes de usar el valor."
+    },
+    {
+      "topic": "3.4 Temporizadores",
+      "href": "../window/",
+      "prompt": "Temporizadores de 3.4. ¿Cuál es la forma de la unidad?",
+      "code": "const id = setTimeout(() => {\n  console.log(\"Han pasado 2 segundos\");\n}, 2000);",
+      "options": [
+        "Pasar una **función** y los milisegundos; `clearTimeout(id)` cancela.",
+        "Pasar la cadena \"console.log(...)\" para que evalúe el código.",
+        "setTimeout espera segundos, no milisegundos: aquí serían 2000 s.",
+        "Hay que escribir new Window().setTimeout(...)."
+      ],
+      "answer": 0,
+      "explain": "Se pasa **una función** (aquí una flecha) y el retraso en **milisegundos** (2000 ms = 2 s). `setTimeout(\"Mover()\", 100)` evalúa una cadena: inseguro y obsoleto. `setInterval` repite; se para con `clearInterval`."
+    },
+    {
+      "topic": "3.5 Document",
+      "href": "../document/",
+      "prompt": "El objeto `document` (3.5). Tras ejecutar esto, ¿qué ha cambiado?",
+      "code": "document.title = \"DWEC · UT3\";\nconsole.log(document.URL);",
+      "options": [
+        "Solo se imprime la URL; el título de la pestaña no se puede asignar.",
+        "Cambia el `<title>` (y el texto de la pestaña) y se muestra la URL del documento.",
+        "Cambia la barra de estado (`status`), no el título.",
+        "Equivale a location.href = \"DWEC · UT3\" y recarga la página."
+      ],
+      "answer": 1,
+      "explain": "`document.title` se **puede asignar**: actualiza `<title>` y la pestaña. `document.URL` es la URL completa (solo lectura). `status` ya no sirve. Navegar es cosa de `location`, no del título."
+    },
+    {
+      "topic": "3.5 Aspecto",
+      "href": "../document/",
+      "prompt": "Cambiar el aspecto del documento (criterio c). ¿Qué hace el código de la unidad?",
+      "code": "document.body.style.backgroundColor = \"crimson\";\ndocument.body.classList.add(\"tema-oscuro\");",
+      "options": [
+        "Es lo mismo que document.bgColor = \"red\" (la forma recomendada).",
+        "Cambia el CSS del body (fondo) y añade una clase; el aspecto va con CSS, no con bgColor.",
+        "Solo funciona si el script va con document.write.",
+        "classList es de jQuery; en JavaScript nativo no existe."
+      ],
+      "answer": 1,
+      "explain": "`bgColor`, `fgColor` y similares son **legado HTML 4**. En la unidad se usa `element.style` o, mejor, `classList.add` / `toggle` y un CSS. `querySelector` y `getElementById` son válidos para localizar el nodo."
+    },
+    {
+      "topic": "3.6 Location",
+      "href": "../history-location/",
+      "prompt": "Partes de la URL (3.6.2). Si la dirección es la del ejemplo, ¿qué vale `location.search`?",
+      "code": "https://ies.edu/dwec/ut3.html?tema=bom#window\nconsole.log(location.search);",
+      "options": [
+        "\"https://ies.edu/dwec/ut3.html?tema=bom#window\"",
+        "\"?tema=bom\"",
+        "\"#window\"",
+        "\"/dwec/ut3.html\""
+      ],
+      "answer": 1,
+      "explain": "`search` es la consulta (`?tema=bom`). `hash` es `#window`, `pathname` es `/dwec/ut3.html` y `href` es la URL completa. `host` incluye el puerto si no es el de por defecto."
+    },
+    {
+      "topic": "3.6 History y Location",
+      "href": "../history-location/",
+      "prompt": "Navegar sin perder (o sí) el historial. ¿Cuál es la diferencia?",
+      "code": "location.assign(\"https://www.google.es\");\n// location.replace(\"https://www.google.es\");",
+      "options": [
+        "assign y replace hacen lo mismo: siempre se puede pulsar Atrás.",
+        "assign carga la URL y deja esta página en el historial; replace la sustituye (no hay Atrás a esta).",
+        "replace es history.back(); assign es history.forward().",
+        "assign solo funciona en Node.js; replace es del BOM."
+      ],
+      "answer": 1,
+      "explain": "`assign` (o `location.href = ...`) **añade** una entrada. `replace` **cambia** la actual: no vuelves aquí con Atrás. `history.back()` / `go(-1)` recorren el historial; no puedes leer las URLs visitadas (`current` del PDF no existe)."
+    },
+    {
+      "topic": "3.7 Generar HTML",
+      "href": "../generar-html/",
+      "prompt": "Texto en el documento (3.7). El contenedor `#app` está vacío. ¿Qué se ve en la página?",
+      "code": "const app = document.querySelector(\"#app\");\napp.textContent = \"<b>Hola</b>\";",
+      "options": [
+        "La palabra Hola en negrita (interpreta el HTML).",
+        "El texto literal <b>Hola</b> (no interpreta etiquetas).",
+        "Nada: textContent solo vale en Node.js.",
+        "Borra toda la página, como document.write."
+      ],
+      "answer": 1,
+      "explain": "`textContent` **no** interpreta HTML: muestra `<b>Hola</b>` tal cual. Es lo adecuado para datos del usuario. `innerHTML` sí crea etiquetas, pero no se usa con cadenas de `prompt` (XSS). `document.write` después de cargar **pisa** el documento."
+    },
+    {
+      "topic": "3.7 createElement",
+      "href": "../generar-html/",
+      "prompt": "Crear etiquetas (criterio d). ¿Qué hace este fragmento?",
+      "code": "const app = document.querySelector(\"#app\");\nconst p = document.createElement(\"p\");\np.textContent = \"Hola Mundo\";\napp.append(p);",
+      "options": [
+        "Sustituye todo el HTML de la página por un párrafo.",
+        "Crea un <p> con ese texto y lo inserta al final de #app.",
+        "Escribe en la consola; el DOM no cambia.",
+        "Equivale a document.write(\"<p>Hola Mundo</p>\")."
+      ],
+      "answer": 1,
+      "explain": "`createElement(\"p\")` crea el nodo; `textContent` pone el texto; `append` lo mete **dentro** de `#app` (al final). No reescribe el documento. En DevTools → Elements se ve el `<p>` nuevo."
+    },
+    {
+      "topic": "3.8 Ventanas",
+      "href": "../ventanas/",
+      "prompt": "Varias ventanas (3.8). Llamas a `open` **al cargar** la página (sin clic). ¿Qué suele pasar?",
+      "code": "const secundaria = window.open(\n  \"popup.html\",\n  \"p\",\n  \"width=400,height=300\"\n);\nconsole.log(secundaria);",
+      "options": [
+        "Siempre abre el popup; secundaria es un Window.",
+        "El bloqueador de pop-ups suele devolver null si no hay un clic (gesto).",
+        "Abre un frameset HTML5 con dos marcos.",
+        "Desde el popup, parent apunta a Google aunque sea otro origen."
+      ],
+      "answer": 1,
+      "explain": "`open` casi solo funciona tras un **clic**. Si no, devuelve `null`. El `frameset` está obsoleto; hoy se usa `<iframe>`. Solo lees `contentWindow.document` u `opener.document` si es **mismo origen**."
+    },
+    {
+      "topic": "3.9 Almacenamiento",
+      "href": "../almacenamiento/",
+      "prompt": "Web Storage (criterio g). Tras recargar la misma pestaña, ¿qué se imprime?",
+      "code": "localStorage.setItem(\"colorFondo\", \"crimson\");\nconsole.log(localStorage.getItem(\"colorFondo\"));\nconsole.log(typeof localStorage.getItem(\"colorFondo\"));",
+      "options": [
+        "crimson y \"string\" (sigue ahí tras recargar; todo se guarda como texto).",
+        "crimson y \"string\", pero al recargar getItem devuelve null.",
+        "crimson y \"object\".",
+        "undefined y \"undefined\" si la clave no es un número."
+      ],
+      "answer": 0,
+      "explain": "`localStorage` **sobrevive** al recargar (hasta que lo borres). `sessionStorage` se pierde al cerrar la pestaña. Solo guarda **cadenas**: un número se lee como string. Si la clave no existe, `getItem` devuelve `null`. Las cookies se envían al servidor; el storage no."
+    }
+  ]
+}

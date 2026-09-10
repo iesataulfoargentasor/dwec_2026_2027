@@ -28,3 +28,5 @@ Esta unidad de trabajo desarrolla el **RA3** del módulo *Desarrollo Web en Ento
 
 !!! note "Cómo se evalúa"
     Los criterios son el referente de la unidad. En las prácticas se pide **identificar** el objeto adecuado, **escribir** el código, **ejecutarlo en el navegador** y **comprobar** el resultado. Las entregas formales siguen en Moodle.
+
+    Para practicar por tu cuenta: [autoevaluación de la UT3](autoevaluacion.md) (no sustituye a las pruebas del aula).

@@ -46,6 +46,7 @@ JavaScript del navegador aplicado al **[RA3](ut3/ra3.md)**: identificar objetos 
 - [3.7 Generar HTML](ut3/generar-html.md)
 - [3.8 Ventanas y marcos](ut3/ventanas.md)
 - [3.9 Almacenamiento](ut3/almacenamiento.md)
+- [Autoevaluación](ut3/autoevaluacion.md)
 
 ### UT4 — Programación con funciones, arrays y objetos
 
