@@ -102,7 +102,8 @@
 .dwec-quiz__reset[hidden],
 .dwec-quiz__submit[hidden],
 .dwec-quiz__result[hidden],
-.dwec-quiz__feedback[hidden] {
+.dwec-quiz__feedback[hidden],
+.dwec-quiz__check[hidden] {
   display: none !important;
 }
 
@@ -110,6 +111,20 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
+}
+
+.dwec-quiz__actions--question {
+  margin-top: 0.65rem;
+}
+
+.dwec-quiz__check {
+  padding: 0.35rem 0.95rem;
+  font-size: 0.78rem;
+}
+
+.dwec-quiz__check:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .dwec-quiz__result {

@@ -40,6 +40,15 @@
     return `Mejor recorre de nuevo la ${donde} y reintenta el test. No puntúa en Moodle: es para practicar.`;
   }
 
+  function fieldsetOf(form, qIndex) {
+    return form.querySelector(`fieldset[data-index="${qIndex}"]`);
+  }
+
+  function isGraded(form, qIndex) {
+    const fieldset = fieldsetOf(form, qIndex);
+    return Boolean(fieldset) && fieldset.classList.contains("dwec-quiz__question--graded");
+  }
+
   function renderForm(data, quizId) {
     const items = data.questions
       .map((q, qIndex) => {
@@ -61,6 +70,9 @@
           <p class="dwec-quiz__prompt">${escapeHtml(q.prompt)}</p>
           ${renderCode(q.code)}
           <div class="dwec-quiz__options">${opts}</div>
+          <div class="dwec-quiz__actions dwec-quiz__actions--question">
+            <button type="button" class="md-button dwec-quiz__check" data-qindex="${qIndex}" disabled>Comprobar respuesta</button>
+          </div>
           <div class="dwec-quiz__feedback" hidden></div>
         </fieldset>`;
       })
@@ -79,67 +91,120 @@
 
   function updateProgress(form, total) {
     const answered = form.querySelectorAll("input[type=radio]:checked").length;
+    const graded = form.querySelectorAll(".dwec-quiz__question--graded").length;
     const bar = form.querySelector(".dwec-quiz__progress");
-    bar.textContent = `Respondidas: ${answered} / ${total}`;
+    bar.textContent = `Respondidas: ${answered} / ${total} · Corregidas: ${graded} / ${total}`;
   }
 
-  function showFeedback(form, data) {
-    let ok = 0;
-    data.questions.forEach((q, qIndex) => {
-      const fieldset = form.querySelector(`fieldset[data-index="${qIndex}"]`);
-      const picked = selectedIndex(form, qIndex);
-      const correct = picked === q.answer;
-      if (correct) {
-        ok += 1;
-      }
-      fieldset.classList.toggle("dwec-quiz__question--ok", correct);
-      fieldset.classList.toggle("dwec-quiz__question--ko", !correct);
-      fieldset.querySelectorAll(".dwec-quiz__option").forEach((label, oIndex) => {
-        label.classList.toggle("dwec-quiz__option--correct", oIndex === q.answer);
-        label.classList.toggle("dwec-quiz__option--picked", oIndex === picked && !correct);
-      });
-      const box = fieldset.querySelector(".dwec-quiz__feedback");
-      const letter = LETTERS[q.answer];
-      const href = q.href ? `<p class="dwec-quiz__more"><a href="${escapeHtml(q.href)}">Repasar ${escapeHtml(q.topic)}</a></p>` : "";
-      const yours =
-        picked === null
-          ? "<p>No marcaste ninguna opción.</p>"
-          : correct
-            ? "<p><strong>Correcta.</strong></p>"
-            : `<p><strong>Incorrecta.</strong> Marcaste la ${LETTERS[picked]}.</p>`;
-      box.hidden = false;
-      box.innerHTML = `${yours}<p>La respuesta correcta es la <strong>${letter}</strong>.</p><p>${escapeHtml(q.explain)}</p>${href}`;
+  function gradeQuestion(form, data, qIndex) {
+    if (isGraded(form, qIndex)) {
+      return;
+    }
+    const q = data.questions[qIndex];
+    const fieldset = fieldsetOf(form, qIndex);
+    const picked = selectedIndex(form, qIndex);
+    const correct = picked === q.answer;
+    fieldset.classList.add("dwec-quiz__question--graded");
+    fieldset.classList.toggle("dwec-quiz__question--ok", correct);
+    fieldset.classList.toggle("dwec-quiz__question--ko", !correct);
+    fieldset.querySelectorAll(".dwec-quiz__option").forEach((label, oIndex) => {
+      label.classList.toggle("dwec-quiz__option--correct", oIndex === q.answer);
+      label.classList.toggle("dwec-quiz__option--picked", oIndex === picked && !correct);
     });
+    fieldset.querySelectorAll("input[type=radio]").forEach((input) => {
+      input.disabled = true;
+    });
+    const check = fieldset.querySelector(".dwec-quiz__check");
+    if (check) {
+      check.hidden = true;
+    }
+    const box = fieldset.querySelector(".dwec-quiz__feedback");
+    const letter = LETTERS[q.answer];
+    const href = q.href ? `<p class="dwec-quiz__more"><a href="${escapeHtml(q.href)}">Repasar ${escapeHtml(q.topic)}</a></p>` : "";
+    const yours =
+      picked === null
+        ? "<p>No marcaste ninguna opción.</p>"
+        : correct
+          ? "<p><strong>Correcta.</strong></p>"
+          : `<p><strong>Incorrecta.</strong> Marcaste la ${LETTERS[picked]}.</p>`;
+    box.hidden = false;
+    box.innerHTML = `${yours}<p>La respuesta correcta es la <strong>${letter}</strong>.</p><p>${escapeHtml(q.explain)}</p>${href}`;
+  }
 
+  function showResult(form, data) {
+    const total = data.questions.length;
+    const graded = form.querySelectorAll(".dwec-quiz__question--graded").length;
+    if (graded < total) {
+      return false;
+    }
+    const ok = form.querySelectorAll(".dwec-quiz__question--ok").length;
     form.querySelectorAll("input[type=radio]").forEach((input) => {
       input.disabled = true;
+    });
+    form.querySelectorAll(".dwec-quiz__check").forEach((btn) => {
+      btn.hidden = true;
     });
     form.querySelector(".dwec-quiz__submit").hidden = true;
     form.querySelector(".dwec-quiz__reset").hidden = false;
 
-    const total = data.questions.length;
     const result = form.querySelector(".dwec-quiz__result");
     result.hidden = false;
     result.innerHTML = `<p class="dwec-quiz__score">Resultado: <strong>${ok} / ${total}</strong></p><p>${escapeHtml(scoreMessage(ok, total, data.unit))}</p>`;
     result.scrollIntoView({ behavior: "smooth", block: "start" });
+    return true;
   }
 
   function bindForm(form, data, render) {
     const total = data.questions.length;
     updateProgress(form, total);
-    form.addEventListener("change", () => updateProgress(form, total));
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const missing = data.questions.some((_, i) => selectedIndex(form, i) === null);
-      if (missing) {
-        const first = [...form.querySelectorAll("fieldset")].find((fs, i) => selectedIndex(form, i) === null);
-        first?.scrollIntoView({ behavior: "smooth", block: "center" });
-        form.querySelector(".dwec-quiz__progress").textContent =
-          `Responde las ${total} preguntas antes de corregir. Llevas ${form.querySelectorAll("input[type=radio]:checked").length}.`;
+
+    form.addEventListener("change", (event) => {
+      updateProgress(form, total);
+      const input = event.target.closest("input[type=radio]");
+      if (input) {
+        const fieldset = input.closest("fieldset");
+        const check = fieldset?.querySelector(".dwec-quiz__check");
+        if (check && !fieldset.classList.contains("dwec-quiz__question--graded")) {
+          check.disabled = false;
+        }
+      }
+    });
+
+    form.addEventListener("click", (event) => {
+      const check = event.target.closest(".dwec-quiz__check");
+      if (!check || check.disabled || check.hidden) {
         return;
       }
-      showFeedback(form, data);
+      const qIndex = Number(check.dataset.qindex);
+      if (selectedIndex(form, qIndex) === null) {
+        return;
+      }
+      gradeQuestion(form, data, qIndex);
+      updateProgress(form, total);
+      const feedback = fieldsetOf(form, qIndex)?.querySelector(".dwec-quiz__feedback");
+      if (!showResult(form, data) && feedback) {
+        feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
     });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const pending = data.questions
+        .map((_, i) => i)
+        .filter((i) => !isGraded(form, i) && selectedIndex(form, i) === null);
+      if (pending.length > 0) {
+        fieldsetOf(form, pending[0])?.scrollIntoView({ behavior: "smooth", block: "center" });
+        const answered = form.querySelectorAll("input[type=radio]:checked").length;
+        const graded = form.querySelectorAll(".dwec-quiz__question--graded").length;
+        form.querySelector(".dwec-quiz__progress").textContent =
+          `Te faltan ${pending.length} sin responder: llevas ${answered} respondidas y ${graded} corregidas.`;
+        return;
+      }
+      data.questions.forEach((_, i) => gradeQuestion(form, data, i));
+      updateProgress(form, total);
+      showResult(form, data);
+    });
+
     form.querySelector(".dwec-quiz__reset").addEventListener("click", () => {
       render();
     });
