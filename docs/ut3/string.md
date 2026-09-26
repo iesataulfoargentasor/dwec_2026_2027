@@ -67,7 +67,7 @@ console.log(palindromo("La ruta nos aporto otro paso natural"));
 console.log(palindromo("Esta frase no se parece a ningun palindromo"));
 ```
 
-`[...cadena]` parte en caracteres (mejor que `split("")` con emojis). En ejercicios de clase, `split("")` basta.
+`[...cadena]` despliega la cadena en caracteres con el operador **spread**. Qué es y para qué más sirve (copiar un array, unir dos, pasar un `Map` a lista) está en [4.3 Arrays](../ut4/arrays.md). En ejercicios de clase, `split("")` basta.
 
 !!! example "Prueba en consola"
     Carga un `script` al final del `body` y abre DevTools (:kbd:`F12`). No hace falta `alert` para ver el resultado.

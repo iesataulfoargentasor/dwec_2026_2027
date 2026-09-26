@@ -64,7 +64,7 @@ console.log(media(7, 8, 9, 6));
 ```
 
 - **Valor por defecto:** `grupo = "DAW2"`.
-- **Rest** (`...notas`): agrupa el resto de argumentos en un array.
+- **Rest** (`...notas`): agrupa el resto de argumentos en un array. El operador [spread](arrays.md) (`[...nombres]`) hace el camino contrario: despliega una lista en elementos sueltos.
 - Primitivos se pasan **por valor**; objetos y arrays, **por referencia** (la función puede mutar el mismo objeto).
 
 ```javascript

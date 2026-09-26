@@ -70,7 +70,7 @@ const recuperado = new Map(JSON.parse(texto));
 console.log(recuperado.get("Luis")); // 6
 ```
 
-`[...notas]` es un array de pares: `[["Alex", 9], ["Luis", 6]]`. El array sí entra en JSON.
+`[...notas]` usa el [spread](arrays.md): despliega el `Map` en un array de pares, `[["Alex", 9], ["Luis", 6]]`. El array sí entra en JSON.
 
 ## 4.4.2. `Set`
 
@@ -100,7 +100,7 @@ Quitar duplicados y volver a un array:
 
 ```javascript
 const conDuplicados = ["Ana", "Luis", "Ana", "Nora"];
-const unicos = [...new Set(conDuplicados)];
+const unicos = [...new Set(conDuplicados)]; // spread: el Set vuelve a ser array
 console.log(unicos); // ["Ana", "Luis", "Nora"]
 ```
 

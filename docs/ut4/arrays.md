@@ -55,11 +55,11 @@ for (const coche of coches) {
 
 | Método | Efecto |
 | --- | --- |
-| `push(...x)` | Añade al **final**. Devuelve la nueva `length` |
+| `push(elemento)` | Añade al **final**. Devuelve la nueva `length` |
 | `pop()` | Quita el **último** |
-| `unshift(...x)` | Añade al **principio** |
+| `unshift(elemento)` | Añade al **principio** |
 | `shift()` | Quita el **primero** |
-| `splice(inicio, cuantos, ...nuevos)` | Quita y/o inserta en el medio |
+| `splice(inicio, cuantos, elemento)` | Quita y/o inserta en el medio |
 
 ```javascript
 const cola = ["A", "B"];
@@ -71,13 +71,37 @@ cola.splice(1, 0, "X"); // inserta "X" en el índice 1 → ["B", "X", "C"]
 !!! warning "`delete array[i]`"
     Deja un hueco `undefined` y **no** reduce `length`. Para borrar de verdad usa `splice`.
 
+## El operador spread (`...`)
+
+Tres puntos delante de un array, una cadena, un `Map` o un `Set` **despliegan** sus elementos, como si los hubieras escrito uno a uno.
+
+```javascript
+const nombres = ["Zoe", "Ana"];
+const copia = [...nombres];
+console.log(copia);             // ["Zoe", "Ana"]
+console.log(copia === nombres); // false: es otro array
+```
+
+`copia` tiene los mismos valores y no es el mismo array. Por eso `[...nombres].sort(...)` ordena la copia y deja `nombres` como estaba: `sort` y `reverse` modifican el array sobre el que se llaman.
+
+```javascript
+const a = [1, 2];
+const b = [3, 4];
+console.log([...a, ...b]); // [1, 2, 3, 4]
+console.log([..."AB"]);     // ["A", "B"]
+```
+
+`[..."AB"]` parte la cadena en caracteres. Es lo que hace el palíndromo de la [UT3](../ut3/string.md). Con un `Map` o un `Set` (apartado 4.4) el spread fabrica un array: `[...notas]` es la lista de pares y `[...vistos]` es la lista de valores.
+
+En una función, `function media(...notas)` es el parámetro **rest** (apartado 4.2): agrupa los argumentos en un array. El spread despliega; el rest recoge.
+
 ## Copiar y combinar (sin romper el original)
 
 | Método | Efecto |
 | --- | --- |
 | `concat(otro)` | Une y **devuelve un array nuevo** |
 | `slice(inicio, fin)` | Copia un trozo (`fin` no incluido) |
-| `[...arr]` | Copia superficial (spread) |
+| `[...arr]` | Copia con spread: otro array, mismos valores |
 | `join(sep)` | Convierte a cadena |
 | `reverse()` / `sort()` | **Mutan** el array original |
 
