@@ -43,7 +43,7 @@ localStorage.removeItem("colorFondo");
 localStorage.clear(); // borra todas las claves de este origen
 ```
 
-Solo guarda **strings**. Para objetos:
+Solo guarda **strings**. Para objetos se usa [`JSON`](objetos-nativos.md), visto en el apartado 3.1:
 
 ```javascript
 const alumno = { nombre: "Alex", grupo: "DAW2" };

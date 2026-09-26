@@ -1,12 +1,12 @@
 ---
-title: 4.7 Patrones de diseño
+title: 4.8 Patrones de diseño
 tags:
   - JavaScript
   - DWEC
   - RA4
 ---
 
-# 4.7. Patrones de diseño de software
+# 4.8. Patrones de diseño de software
 
 Un **patrón** es una solución **reutilizable** a un problema que aparece a menudo (cómo crear objetos, cómo ocultar datos, cómo avisar de un cambio…). No es una librería: es una **forma de organizar** el código.
 

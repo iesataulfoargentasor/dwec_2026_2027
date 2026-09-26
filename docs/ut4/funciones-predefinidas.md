@@ -53,14 +53,7 @@ console.log(url);
 
 ## Datos: `JSON`
 
-Para pasar objetos a texto y al revés (almacenamiento, APIs):
-
-```javascript
-const alumno = { nombre: "Alex", grupo: "DAW2" };
-const texto = JSON.stringify(alumno);
-const copia = JSON.parse(texto);
-console.log(copia.grupo); // "DAW2"
-```
+Ya está explicado en la [UT3](../ut3/objetos-nativos.md): `JSON.stringify` pasa un valor a texto y `JSON.parse` lo recupera. Aquí solo se clasifica como función predefinida (no la escribes tú). En el [apartado 3.9](../ut3/almacenamiento.md) se usa para guardar un objeto en `localStorage`.
 
 ## Temporizadores y diálogos (entorno)
 

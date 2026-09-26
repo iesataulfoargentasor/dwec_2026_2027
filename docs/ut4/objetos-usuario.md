@@ -1,12 +1,12 @@
 ---
-title: 4.6 Objetos definidos por el usuario
+title: 4.7 Objetos definidos por el usuario
 tags:
   - JavaScript
   - DWEC
   - RA4
 ---
 
-# 4.6. Objetos definidos por el usuario
+# 4.7. Objetos definidos por el usuario
 
 Tú defines la **estructura** (qué propiedades y métodos tiene) y luego **creas instancias** y las usas. Criterios **g)**, **h)** e **i)**.
 

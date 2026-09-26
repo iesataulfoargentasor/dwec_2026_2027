@@ -8,7 +8,7 @@ tags:
 
 # Autoevaluación de la UT2
 
-Veinte preguntas de **opción múltiple** (una correcta), a lo largo de la unidad: 2.1 características, 2.2 Hola Mundo, 2.3 sintaxis, 2.4 tipos, 2.5 variables, 2.6 operadores y 2.7 `if` / `while` / `for`. El código sigue los ejemplos de los apuntes (tipado, consola, `const`/`let`, `===`, bucles).
+Veinte preguntas de **opción múltiple** (una correcta), a lo largo de la unidad: 2.1 características, 2.2 Hola Mundo, 2.3 sintaxis, 2.4 tipos, 2.5 variables, 2.6 operadores y 2.7 `if` / `switch` / `while` / `for`. Cada ítem trae un **fragmento de código** para acostumbrarte a leerlo: qué imprime la consola, qué error lanza, qué línea es ilegal. No hay funciones: eso va más adelante.
 
 Son casos **prácticos** (qué hace este código, qué imprime la consola). No puntúan en Moodle: cada pregunta tiene su botón **Comprobar respuesta** para autocorregirse al instante, y al final puedes pulsar **Corregir test** para corregir todas de golpe, ver la nota, la opción buena y **por qué**.
 

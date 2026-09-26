@@ -10,7 +10,7 @@ tags:
 
 Los objetos **nativos** los define ECMAScript. No dependen de Chrome o Firefox: los usas igual en el navegador y en Node.js.
 
-Los de esta unidad: **`Date`**, **`Math`**, **`Number`** y **`String`** (el siguiente apartado). Más adelante aparecerán `Array`, `JSON`, `Map`, `Set`…
+Los de esta unidad: **`Date`**, **`Math`**, **`Number`** y **`JSON`**, más **`String`** en el apartado siguiente. **`Array`**, **`Map`** y **`Set`** se trabajan en la UT4, cuando ya tienes la lista con índice.
 
 No hace falta `new Object()` para trabajar con ellos. Un número o una cadena **primitivos** se “envuelven” automáticamente cuando llamas a un método (`(3.14).toFixed(1)`). Evita `new Number()` y `new String()`: complican las comparaciones con `===`.
 
@@ -129,5 +129,45 @@ if (count1.toFixed(2) === count2.toFixed(2)) {
 
 `new Number(valor)` crea un **objeto**, no un primitivo. `new Number(6) === 6` es `false`. No lo uses en esta unidad.
 
+## 3.1.4. `JSON`
+
+**JSON** (*JavaScript Object Notation*) es un **formato de texto** para guardar o enviar datos: un objeto, una lista, un número, una cadena, un booleano o `null`. No es el objeto de JavaScript. Es la cadena que lo representa, la que viaja en una API o la que cabe en `localStorage` (solo admite texto; lo verás en el apartado 3.9).
+
+El objeto nativo `JSON` **no se instancia**. Tiene dos métodos:
+
+| Método | Qué hace |
+| --- | --- |
+| `JSON.stringify(valor)` | Pasa un valor de JavaScript a texto JSON |
+| `JSON.parse(texto)` | Lee ese texto y recupera el valor |
+
+```javascript
+const alumno = { nombre: "Alex", grupo: "DAW2", nota: 8 };
+const texto = JSON.stringify(alumno);
+console.log(texto);          // '{"nombre":"Alex","grupo":"DAW2","nota":8}'
+console.log(typeof texto);   // "string"
+
+const copia = JSON.parse(texto);
+console.log(copia.grupo);    // "DAW2"
+console.log(copia === alumno); // false: es otro objeto, con los mismos datos
+```
+
+No todo valor de JavaScript cabe en JSON:
+
+| En JavaScript | Al hacer `stringify` |
+| --- | --- |
+| `undefined`, funciones | Se **omiten** si son una propiedad; la raíz `undefined` pasa a `undefined` (no a texto) |
+| `NaN`, `Infinity` | Se convierten en `null` |
+| `Date` | Pasa a cadena ISO (`toISOString()`). Al leerlo vuelve una **cadena**, no un `Date` |
+| `Map`, `Set` (UT4) | Salen como `{}`: JSON no tiene tipo para ellos |
+
+Las claves de un objeto JSON van **siempre entre comillas dobles**. Un bloque `{ nombre: "Alex" }` es JavaScript; el texto `'{"nombre":"Alex"}'` es JSON. `JSON.parse` lanza `SyntaxError` si el texto no es JSON válido.
+
+```javascript
+const fecha = new Date("2026-09-09T12:00:00");
+const guardado = JSON.stringify({ cuando: fecha });
+const leido = JSON.parse(guardado);
+console.log(typeof leido.cuando); // "string"
+```
+
 !!! tip "Node.js"
-    `Date`, `Math` y `Number` funcionan igual en `node archivo.js`. `document` y `window` no.
+    `Date`, `Math`, `Number` y `JSON` funcionan igual en `node archivo.js`. `document` y `window` no. `Map` y `Set` también, pero se explican en la UT4.

@@ -57,10 +57,12 @@ Estructuras definidas por el usuario aplicadas al **[RA4](ut4/ra4.md)**: funcion
 - [4.1 Funciones predefinidas](ut4/funciones-predefinidas.md)
 - [4.2 Funciones de usuario](ut4/funciones-usuario.md)
 - [4.3 Arrays](ut4/arrays.md)
-- [4.4 Operaciones agregadas](ut4/operaciones-agregadas.md)
-- [4.5 Orientación a objetos](ut4/orientacion-objetos.md)
-- [4.6 Objetos de usuario](ut4/objetos-usuario.md)
-- [4.7 Patrones de diseño](ut4/patrones.md)
+- [4.4 Map y Set](ut4/map-set.md)
+- [4.5 Operaciones agregadas](ut4/operaciones-agregadas.md)
+- [4.6 Orientación a objetos](ut4/orientacion-objetos.md)
+- [4.7 Objetos de usuario](ut4/objetos-usuario.md)
+- [4.8 Patrones de diseño](ut4/patrones.md)
+- [Autoevaluación](ut4/autoevaluacion.md)
 
 ### UT5 — Interacción con el usuario: eventos y formularios
 

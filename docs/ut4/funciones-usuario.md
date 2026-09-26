@@ -39,7 +39,7 @@ const avisar = (msg) => {
 };
 ```
 
-La **flecha** (`=>`) es la forma habitual en código actual para callbacks cortos. **No** tiene `this` propio (lo hereda del entorno): eso importa en métodos de objeto (apartado 4.6).
+La **flecha** (`=>`) es la forma habitual en código actual para callbacks cortos. **No** tiene `this` propio (lo hereda del entorno): eso importa en métodos de objeto (apartado 4.7).
 
 ## Parámetros
 

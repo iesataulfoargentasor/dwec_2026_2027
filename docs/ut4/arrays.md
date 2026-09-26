@@ -107,7 +107,7 @@ console.log(notas[1][2]); // 8  → fila 1, columna 2
 
 ## Lo que no es un array
 
-- `edades["Juan"] = 20` no crea un array asociativo: añade una **propiedad** a un objeto. Para clave/valor usa un **objeto** `{}` o un `Map`.
+- `edades["Juan"] = 20` no crea un array asociativo: añade una **propiedad** a un objeto. Para clave/valor usa un **objeto** `{}` o un [`Map`](map-set.md). Para «está o no está», sin duplicados, un [`Set`](map-set.md).
 - `document.forms` / `document.images` son `HTMLCollection`: tienen `length` e índices, pero **no** todos los métodos de `Array`. Conviertes con `Array.from(document.images)`.
 
 ```javascript

@@ -1,12 +1,12 @@
 ---
-title: 4.4 Operaciones agregadas
+title: 4.5 Operaciones agregadas
 tags:
   - JavaScript
   - DWEC
   - RA4
 ---
 
-# 4.4. Operaciones agregadas sobre colecciones
+# 4.5. Operaciones agregadas sobre colecciones
 
 El criterio **e)** pide manejar la información de una colección con **operaciones agregadas**: en lugar de un `for` que lo hace todo, aplicas una función a **cada elemento** y obtienes un resultado (otra lista, un sí/no, un acumulado).
 

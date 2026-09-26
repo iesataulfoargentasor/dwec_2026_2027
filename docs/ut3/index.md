@@ -19,7 +19,7 @@ JavaScript distingue dos familias que importan en esta unidad:
 
 | Familia | Ejemplos | ¿Depende del navegador? |
 | --- | --- | --- |
-| **Objetos nativos** (ECMAScript) | `Date`, `Math`, `Number`, `String`, `Array`, `JSON` | No. También funcionan en Node.js |
+| **Objetos nativos** (ECMAScript) | `Date`, `Math`, `Number`, `String`, `JSON`. `Array`, `Map` y `Set` van en la UT4 | No. También funcionan en Node.js |
 | **BOM** (Browser Object Model) | `window`, `navigator`, `screen`, `location`, `history` | Sí. Describen la ventana y el navegador |
 | **DOM** (Document Object Model) | `document`, nodos HTML | Sí. Describe el contenido de la página |
 
@@ -33,7 +33,7 @@ Consulta el [enunciado oficial del RA3 y sus criterios de evaluación](ra3.md).
 
 | Apartado | Contenido |
 | --- | --- |
-| [3.1 Objetos nativos](objetos-nativos.md) | `Date`, `Math`, `Number` |
+| [3.1 Objetos nativos](objetos-nativos.md) | `Date`, `Math`, `Number`, `JSON` |
 | [3.2 String](string.md) | Cadenas: `length`, `includes`, `split`, plantillas |
 | [3.3 BOM](bom.md) | Modelo de objetos del navegador, `navigator`, `screen` |
 | [3.4 Window](window.md) | Ventana, diálogos, temporizadores |

@@ -157,7 +157,7 @@
       "explain": "Si asignas un índice **más allá** del final, el array se expande y `length` pasa a `índice + 1` (5); las posiciones intermedias quedan *huecos* (`undefined`). Los apuntes recomiendan rellenar en orden o usar `push`."
     },
     {
-      "topic": "4.4 Operaciones agregadas",
+      "topic": "4.5 Operaciones agregadas",
       "href": "../operaciones-agregadas/",
       "prompt": "¿Qué imprime la consola?",
       "code": "const notas = [7, 4, 9];\nconsole.log(notas.map((n) => n * 10));",
@@ -171,7 +171,7 @@
       "explain": "`map` devuelve un **array nuevo** con el mismo número de elementos, transformados por el callback. El original no cambia (apartado 4.4)."
     },
     {
-      "topic": "4.4 Operaciones agregadas",
+      "topic": "4.5 Operaciones agregadas",
       "href": "../operaciones-agregadas/",
       "prompt": "¿Qué imprime la consola?",
       "code": "const notas = [7, 4, 9, 5, 10];\nconsole.log(notas.filter((n) => n >= 5));",
@@ -185,7 +185,7 @@
       "explain": "`filter` devuelve un array nuevo con los elementos que cumplen la condición (`n >= 5`): [7, 9, 5, 10]. Es la operación agregada de filtrado del apartado 4.4."
     },
     {
-      "topic": "4.4 Operaciones agregadas",
+      "topic": "4.5 Operaciones agregadas",
       "href": "../operaciones-agregadas/",
       "prompt": "¿Qué imprime la consola? (Fíjate en el segundo argumento de reduce.)",
       "code": "const nums = [1, 2, 3];\nconsole.log(nums.reduce((acum, n) => acum + n, 0));",
@@ -199,7 +199,7 @@
       "explain": "`reduce` acumula un único valor. El segundo argumento (`0`) es el **valor inicial** del acumulador. Sin él, el primer elemento haría de inicial y en un array vacío fallaría (apartado 4.4)."
     },
     {
-      "topic": "4.4 Operaciones agregadas",
+      "topic": "4.5 Operaciones agregadas",
       "href": "../operaciones-agregadas/",
       "prompt": "¿Qué imprime la consola?",
       "code": "const notas = [7, 4, 9];\nconsole.log(notas.some((n) => n < 5), notas.every((n) => n >= 0));",
@@ -213,7 +213,7 @@
       "explain": "`some` devuelve `true` si **alguno** cumple la condición (el 4 es menor que 5) y `every` si **todos** la cumplen (las tres notas son ≥ 0). Ambos devuelven booleanos, no arrays (apartado 4.4)."
     },
     {
-      "topic": "4.5 Orientación a objetos",
+      "topic": "4.6 Orientación a objetos",
       "href": "../orientacion-objetos/",
       "prompt": "¿Qué imprime la consola?",
       "code": "const ficha = {\n  nombre: \"Alex\",\n  nota: 8,\n  aprobado() {\n    return this.nota >= 5;\n  },\n};\nconsole.log(ficha.aprobado());",
@@ -227,7 +227,7 @@
       "explain": "Dentro de un método, `this` es el objeto **desde el que se llamó** la función (apartado 4.5): `ficha.aprobado()` → `this` es `ficha`, con nota 8 ≥ 5 → true. Ojo: si extrajeras la función (`const fn = ficha.aprobado`), se perdería el receptor."
     },
     {
-      "topic": "4.5 Orientación a objetos",
+      "topic": "4.6 Orientación a objetos",
       "href": "../orientacion-objetos/",
       "prompt": "¿Qué imprime la consola?",
       "code": "class Alumno {\n  constructor(nombre, nota) {\n    this.nombre = nombre;\n    this.nota = nota;\n  }\n}\n\nconst a = new Alumno(\"Mar\", 9);\nconsole.log(Object.getPrototypeOf(a) === Alumno.prototype);",
@@ -241,7 +241,7 @@
       "explain": "`class` es azúcar sobre **prototipos**: `new` crea el objeto, enlaza su prototipo y ejecuta el `constructor`. Los métodos declarados en la clase se comparten en `Alumno.prototype`, así que todas las instancias usan la misma copia (apartado 4.5)."
     },
     {
-      "topic": "4.6 Objetos de usuario",
+      "topic": "4.7 Objetos de usuario",
       "href": "../objetos-usuario/",
       "prompt": "¿Qué imprime la consola?",
       "code": "class Contador {\n  static creados = 0;\n\n  constructor() {\n    Contador.creados += 1;\n    this.id = Contador.creados;\n  }\n}\n\nnew Contador();\nnew Contador();\nconsole.log(Contador.creados);",
@@ -255,7 +255,7 @@
       "explain": "Una propiedad o método `static` pertenece a la **clase**, no a cada objeto (apartado 4.6). Las dos llamadas a `new` incrementan el mismo contador compartido → 2."
     },
     {
-      "topic": "4.6 Objetos de usuario",
+      "topic": "4.7 Objetos de usuario",
       "href": "../objetos-usuario/",
       "prompt": "¿Qué imprime la consola?",
       "code": "class Caja {\n  #saldo = 0;\n\n  ingresar(cantidad) {\n    if (cantidad > 0) {\n      this.#saldo += cantidad;\n    }\n  }\n\n  ver() {\n    return this.#saldo;\n  }\n}\n\nconst caja = new Caja();\ncaja.ingresar(50);\nconsole.log(caja.ver());",
@@ -269,7 +269,7 @@
       "explain": "Los campos `#privados` no se pueden leer ni escribir **desde fuera** de la clase (`caja.#saldo` daría error), pero los métodos de la propia clase sí los usan con normalidad. Por eso `ver()` devuelve 50 (apartado 4.6: encapsulación real)."
     },
     {
-      "topic": "4.7 Patrones de diseño",
+      "topic": "4.8 Patrones de diseño",
       "href": "../patrones/",
       "prompt": "Necesitas que las variables internas de un carrito no llenen `window` de basura y exponer solo tres métodos públicos (`add`, `listar`, `total`). ¿Qué patrón de los apuntes encaja mejor?",
       "code": "",

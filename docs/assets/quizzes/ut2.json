@@ -3,284 +3,284 @@
   "title": "Autoevaluación de la UT2",
   "questions": [
     {
-      "topic": "2.1 Características",
+      "topic": "2.1 Tipado dinámico",
       "href": "../caracteristicas/",
-      "prompt": "En un script de cliente ocurre esto. ¿Qué pasa al ejecutarlo?",
-      "code": "let dato = 5;\ndato = \"cinco\";\nconsole.log(typeof dato);",
+      "prompt": "En 2.1 el tipo lo marca el valor, no la declaración. Tras ejecutar este script, ¿qué imprime la consola y en qué orden?",
+      "code": "let dato = 5;\nconsole.log(typeof dato);\n\ndato = \"cinco\";\nconsole.log(typeof dato);\n\ndato = true;\nconsole.log(typeof dato);\n\ndato = 5;\nconsole.log(typeof dato);\nconsole.log(dato);",
       "options": [
-        "Lanza TypeError: no se puede cambiar el tipo de una variable.",
-        "Imprime \"string\": en JavaScript no se declara el tipo; lo marca el valor.",
-        "Imprime \"number\": la primera asignación fija el tipo para siempre.",
-        "Solo es válido en Java, no en JavaScript."
+        "TypeError en la segunda asignación: no se puede cambiar el tipo.",
+        "\"number\", \"string\", \"boolean\", \"number\", 5.",
+        "\"number\" cuatro veces y luego 5: la primera asignación fija el tipo.",
+        "Solo es válido en Java; en el navegador no se ejecuta."
       ],
       "answer": 1,
-      "explain": "El apartado 2.1 presenta JavaScript como lenguaje de tipado dinámico (débilmente tipado en el PDF): no defines el tipo de la variable. `dato` pasa de número a cadena y `typeof dato` vale `\"string\"`. Java, en cambio, es de tipado estático."
+      "explain": "No declaras el tipo. `dato` pasa de `number` a `string`, a `boolean` y otra vez a `number`. `typeof` consulta el valor actual. Al final `dato` vale 5."
     },
     {
       "topic": "2.2 Hola Mundo",
       "href": "../hola-mundo/",
-      "prompt": "El Hola Mundo de la unidad es una página HTML5 con `saludo.js` al final del `body`. El archivo JS solo tiene `console.log(\"¡Hola mundo!\");`. ¿Dónde compruebas el resultado?",
-      "code": "<script src=\"saludo.js\"></script>",
+      "prompt": "El Hola Mundo de la unidad es HTML5 + un `.js` al final del `body`. Con estos dos archivos, ¿qué ves al abrir `hola.html`?",
+      "code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <title>Hola Mundo</title>\n  </head>\n  <body>\n    <h1>Hola Mundo</h1>\n    <script src=\"saludo.js\"></script>\n  </body>\n</html>\n\n// saludo.js\nconst mensaje = \"¡Hola mundo!\";\nconsole.log(mensaje);\nconsole.log(typeof mensaje);",
       "options": [
-        "En un cuadro `alert` que aparece al cargar.",
-        "Escrito en la propia página, como hacía `document.write`.",
-        "En la consola de DevTools (F12), pestaña Console.",
-        "Solo si el script va en el `head` con `type=\"text/javascript\"`."
+        "Un `alert` con ¡Hola mundo!; el `<h1>` no se pinta hasta pulsar Aceptar.",
+        "El texto se escribe en la página con `document.write` (obligatorio en HTML5).",
+        "En la página el `<h1>` Hola Mundo; en la consola (F12) ¡Hola mundo! y \"string\". El script va al final del `body`, el HTML ya está parseado.",
+        "No se ejecuta: en HTML5 hace falta `type=\"text/javascript\"` y el script solo en el `head`."
       ],
       "answer": 2,
-      "explain": "En 2.2 el resultado se mira en la **consola** (F12), no con `document.write` (obsoleto) ni con `alert`. El `<script>` al final del `body` es la forma de la unidad; en HTML5 ya no hace falta `type=\"text/javascript\"`."
+      "explain": "El resultado se mira en la **consola**, no con `document.write` (obsoleto) ni con `alert`. El `<script>` al final del `body` espera a que el HTML esté parseado. `typeof` de una cadena es `\"string\"`. En HTML5 el tipo por defecto de `<script>` ya es JavaScript."
     },
     {
-      "topic": "2.3 Sintaxis",
-      "href": "../sintaxis/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const total = 10; // Total del carrito\nconsole.log(Total);",
+      "topic": "2.2 Node.js",
+      "href": "../hola-mundo/",
+      "prompt": "El mismo `saludo.js` se lanza con `node saludo.js`. ¿Qué es correcto?",
+      "code": "const mensaje = \"¡Hola mundo!\";\nconsole.log(mensaje);\nconsole.log(2 + 2);\nconsole.log(typeof mensaje);\n// alert(mensaje);\n// document.querySelector(\"h1\");",
       "options": [
-        "10, porque el comentario convierte Total en un alias de total.",
-        "10, JavaScript no distingue mayúsculas de minúsculas.",
-        "undefined, Total existe pero no tiene valor.",
-        "ReferenceError: Total is not defined."
+        "Imprime ¡Hola mundo!, 4 y \"string\". `alert` y `document` no existen en Node: si los descomentas, ReferenceError.",
+        "Node pinta el `<h1>` en el navegador porque comparte el DOM con Chrome.",
+        "`alert` abre una ventana del sistema; `document` apunta a `stdout`.",
+        "Node no entiende `console.log`; solo funciona `print()`."
+      ],
+      "answer": 0,
+      "explain": "En Node el lenguaje es el mismo, pero **no** hay `document`, `alert` ni `prompt`. `console.log` sí. Por eso en DWEC el laboratorio diario es el navegador; Node sirve para probar sintaxis en terminal."
+    },
+    {
+      "topic": "2.3 Mayúsculas y comentarios",
+      "href": "../sintaxis/",
+      "prompt": "JavaScript distingue mayúsculas (2.3.1) y los comentarios no se ejecutan (2.3.2). ¿Qué ocurre al ejecutar este fragmento?",
+      "code": "const total = 10;\nconst iva = 0.21;\nconsole.log(total);\n/*\nconst Total = total * (1 + iva);\nconsole.log(\"dentro\", Total);\n*/\nconsole.log(total * (1 + iva));\nconsole.log(Total);",
+      "options": [
+        "Imprime 10, 12.1 y 12.1: el comentario convierte Total en un alias de total.",
+        "Imprime 10 y 12.1: JavaScript no distingue mayúsculas de minúsculas.",
+        "Imprime 10, 12.1 y undefined: Total existe pero no tiene valor.",
+        "Imprime 10 y 12.1; después ReferenceError: Total is not defined (el bloque /* */ no se ejecuta y Total ≠ total)."
       ],
       "answer": 3,
-      "explain": "En 2.3.1 el lenguaje es sensible a mayúsculas. En 2.3.2 `//` comenta el resto de la línea y no se ejecuta. `total` y `Total` son identificadores distintos; `Total` no está declarado → `ReferenceError`."
+      "explain": "`total` y `Total` son identificadores distintos. El `/* ... */` comenta la declaración de `Total`, así que la última línea lanza `ReferenceError`. Antes sí se imprimen 10 y 12.1. `//` solo comenta el resto de su línea."
     },
     {
       "topic": "2.3 Identificadores",
       "href": "../sintaxis/",
-      "prompt": "En 2.3 los nombres de variable tienen reglas. ¿Qué ocurre al ejecutar esta línea?",
-      "code": "const 2nombre = \"Ana\";",
+      "prompt": "Reglas de identificadores (2.3). Este script es válido. Si descomentas las dos últimas líneas, ¿cuáles son SyntaxError?",
+      "code": "const nombre2 = \"Ana\";\nconst _privado = 1;\nconst $nodo = \"ok\";\nconst nombreCompleto = \"Ana Ruiz\";\nconsole.log(nombre2);\nconsole.log(_privado);\nconsole.log($nodo);\nconsole.log(nombreCompleto);\n// const 2nombre = \"Luis\";\n// const class = \"grupoA\";",
       "options": [
-        "Crea la constante 2nombre con el valor \"Ana\".",
-        "Imprime Ana: el 2 se ignora al principio del nombre.",
-        "SyntaxError: un identificador no puede empezar por un dígito.",
-        "ReferenceError: Ana no está definida."
+        "Ninguna: los seis nombres son legales en camelCase. Imprime Ana, 1, ok, Ana Ruiz.",
+        "Solo `2nombre`: un identificador no puede empezar por dígito. `class` sí vale.",
+        "Imprime Ana, 1, ok, Ana Ruiz. `2nombre` (empieza por dígito) y `class` (palabra reservada) son SyntaxError.",
+        "Solo `$nodo` y `_privado`: en clase está prohibido `$` y `_`."
       ],
       "answer": 2,
-      "explain": "Un identificador empieza por letra, `_` o `$`. El resto puede llevar dígitos (`nombre2` sí vale). `2nombre` es SyntaxError. Convención de la unidad: camelCase (`nombreCompleto`)."
+      "explain": "El primer carácter es letra, `_` o `$`. El resto puede llevar dígitos (`nombre2` sí). `2nombre` es SyntaxError. `class` está reservada. Convención: camelCase (`nombreCompleto`)."
     },
     {
-      "topic": "2.3 Comentarios",
-      "href": "../sintaxis/",
-      "prompt": "Comentarios de bloque, como en 2.3.2. ¿Qué se imprime?",
-      "code": "let n = 5;\n/* n = 8;\nconsole.log(\"dentro\"); */\nconsole.log(n);",
-      "options": [
-        "8 y después dentro",
-        "5",
-        "dentro y después 5",
-        "SyntaxError: no se pueden anidar comentarios"
-      ],
-      "answer": 1,
-      "explain": "`/* ... */` comenta varias líneas y no se ejecuta. `n` sigue valiendo 5. Los comentarios sirven para explicar el porqué, no para cambiar el código."
-    },
-    {
-      "topic": "2.4 Números",
+      "topic": "2.4 typeof",
       "href": "../tipos-de-datos/",
-      "prompt": "Trabajas con números como en el apartado 2.4.1. ¿Qué muestra este fragmento?",
-      "code": "console.log(3 / 0);\nconsole.log(Number(\"hola\"));",
+      "prompt": "`typeof` tiene peculiaridades históricas (2.4). ¿Qué imprime este script, línea a línea?",
+      "code": "console.log(typeof 12);\nconsole.log(typeof 12.3);\nconsole.log(typeof \"Hola\");\nconsole.log(typeof true);\nconsole.log(typeof undefined);\nconsole.log(typeof null);",
       "options": [
-        "0 y 0",
-        "Infinity y NaN",
-        "Error de sintaxis en las dos líneas",
-        "undefined y \"hola\""
+        "\"number\", \"number\", \"string\", \"boolean\", \"undefined\", \"null\"",
+        "\"number\", \"float\", \"string\", \"boolean\", \"undefined\", \"object\"",
+        "\"number\", \"number\", \"string\", \"boolean\", \"undefined\", \"object\"",
+        "\"number\", \"number\", \"string\", \"true\", \"undefined\", \"object\""
+      ],
+      "answer": 2,
+      "explain": "Enteros y decimales son `number`. `typeof true` es `\"boolean\"`. `typeof undefined` es `\"undefined\"`. `typeof null` es `\"object\"` (fallo histórico; se comprueba con `valor === null`)."
+    },
+    {
+      "topic": "2.4 Números y NaN",
+      "href": "../tipos-de-datos/",
+      "prompt": "Valores especiales de `number` y cómo detectar NaN (2.4.1). ¿Qué se escribe en consola?",
+      "code": "console.log(3 / 0);\nconsole.log(Number(\"hola\"));\nconsole.log(NaN === NaN);\nconsole.log(Number.isNaN(\"hola\"));\nconsole.log(isNaN(\"hola\"));\nconsole.log(Number.isNaN(Number(\"hola\")));",
+      "options": [
+        "Infinity, NaN, true, true, true, true",
+        "Infinity, NaN, false, false, true, true",
+        "0, 0, false, false, false, false",
+        "Error de sintaxis: no se puede dividir por cero"
       ],
       "answer": 1,
-      "explain": "JavaScript define `Infinity` (y `-Infinity`) para desbordes o división por cero, y `NaN` (*Not a Number*) cuando una operación numérica no tiene sentido. `Number(\"hola\")` no es un número → `NaN`. El decimal se escribe con **punto** (`3.14`), no con coma."
+      "explain": "`3 / 0` es `Infinity`. `Number(\"hola\")` es `NaN`. `NaN === NaN` es **false**. `Number.isNaN(\"hola\")` es false (no es el número NaN). El `isNaN` clásico convierte antes → true. `Number.isNaN(NaN)` sí es true. En la unidad se usa `Number.isNaN`, no `isNaN`."
     },
     {
       "topic": "2.4 Cadenas",
       "href": "../tipos-de-datos/",
-      "prompt": "Declaras textos como en 2.4.3. ¿Qué se imprime?",
-      "code": "const b = \"mundo\";\nconst c = `hola ${b}`;\nconsole.log(c);",
+      "prompt": "Comillas, plantillas y escapes (2.4.3). ¿Qué imprimen las cuatro llamadas a `console.log`?",
+      "code": "const b = \"mundo\";\nconst c = `hola ${b}`;\nconst d = \"hola ${b}\";\nconst e = \"linea1\\nlinea2\";\nconst f = \"precio: '12'\";\nconsole.log(c);\nconsole.log(d);\nconsole.log(e);\nconsole.log(f);",
       "options": [
-        "hola ${b}",
-        "hola mundo",
-        "hola b",
-        "Error: las plantillas no existen en JavaScript"
+        "hola mundo / hola ${b} / linea1, salto de línea, linea2 / precio: '12'",
+        "hola ${b} / hola mundo / linea1\\nlinea2 (tal cual) / precio: '12'",
+        "hola mundo / hola mundo / linea1linea2 (el \\n se ignora) / precio: '12'",
+        "Error: las plantillas no existen; hay que concatenar con +"
       ],
-      "answer": 1,
-      "explain": "Las cadenas van entre comillas simples, dobles o **acento grave**. Con plantilla, `${b}` interpola el valor: `hola mundo`. Un ENTER real dentro de `\"...\"` sin `\\n` rompería la cadena; las plantillas sí permiten saltos de línea."
+      "answer": 0,
+      "explain": "Solo el acento grave interpola `${b}` → `hola mundo`. Entre comillas dobles, `${b}` es texto literal. `\\n` dentro de `\"...\"` es un salto de línea real. Las comillas simples dentro de `\"...\"` no chocan."
     },
     {
       "topic": "2.4 Booleanos",
       "href": "../tipos-de-datos/",
-      "prompt": "Conversión a booleano, como en 2.4.4. ¿Qué imprime esto?",
-      "code": "console.log(Boolean(0));\nconsole.log(Boolean(\"0\"));",
+      "prompt": "Valores falsy y truthy (2.4.4). ¿Qué imprime este bloque?",
+      "code": "console.log(Boolean(0));\nconsole.log(Boolean(\"0\"));\nconsole.log(Boolean(\"\"));\nconsole.log(Boolean(null));\nconsole.log(Boolean(undefined));\nconsole.log(Boolean(\"hola\"));\nconsole.log(Boolean(NaN));",
       "options": [
-        "false y false",
-        "true y true",
-        "false y true",
-        "true y false"
-      ],
-      "answer": 2,
-      "explain": "`0` es falsy → `Boolean(0)` es `false`. La cadena `\"0\"` no está vacía, así que es truthy → `true`. `true` y `false` no son el número 1/0 ni las cadenas `\"true\"`/`\"false\"`."
-    },
-    {
-      "topic": "2.4 undefined y null",
-      "href": "../tipos-de-datos/",
-      "prompt": "En 2.4.5 y 2.5.2 se distingue ausencia de valor. ¿Qué muestra la consola?",
-      "code": "let pendiente;\nconsole.log(pendiente);",
-      "options": [
-        "null",
-        "undefined",
-        "0",
-        "ReferenceError: pendiente is not defined"
+        "false, false, false, false, false, true, false",
+        "false, true, false, false, false, true, false",
+        "true, true, false, false, false, true, true",
+        "false, true, false, true, true, true, false"
       ],
       "answer": 1,
-      "explain": "`let` permite declarar sin valor: queda `undefined` (ausencia por defecto). `null` es ausencia **intencionada**: lo asignas tú (`const vacio = null`). `pendiente` sí está declarada, por eso no hay ReferenceError."
+      "explain": "Falsy: `false`, `0`, `\"\"`, `null`, `undefined`, `NaN`. La cadena `\"0\"` no está vacía → truthy. `true`/`false` no son el 1/0 ni las cadenas `\"true\"`/`\"false\"`."
     },
     {
       "topic": "2.4 Conversiones",
       "href": "../tipos-de-datos/",
-      "prompt": "Un dato llega como texto (por ejemplo desde `prompt`). ¿Qué se imprime?",
-      "code": "console.log(\"10\" + 2);\nconsole.log(\"10\" - 2);",
+      "prompt": "Coerción (2.4.6). Si `bruto` llega como cadena (como haría `prompt`), ¿qué imprime este programa?",
+      "code": "const bruto = \"10\";\nconst n = Number(bruto);\nconsole.log(bruto + 2);\nconsole.log(bruto - 2);\nconsole.log(n + 2);\nconsole.log(Number(\"hola\"));\nconsole.log(Number(null));\nconsole.log(String(12));",
       "options": [
-        "12 y 8",
-        "\"102\" y 8",
-        "\"102\" y \"102\"",
-        "NaN y NaN"
+        "12, 8, 12, 0, 0, 12",
+        "\"102\", 8, 12, NaN, 0, \"12\"",
+        "\"102\", \"102\", 12, NaN, null, \"12\"",
+        "NaN, NaN, 12, NaN, NaN, \"12\""
       ],
       "answer": 1,
-      "explain": "Es la peculiaridad de conversiones del 2.4.6 (criterio d): `+` con una cadena **concatena** (`\"102\"`); `-` fuerza número (`8`). En la unidad se pide convertir de forma explícita (`Number(...)`) y comparar con `===`."
+      "explain": "`+` con una cadena **concatena** (`\"102\"`). `-` fuerza número (`8`). `Number(\"10\") + 2` es `12`. `Number(\"hola\")` es `NaN`. `Number(null)` es `0` (por eso en 2.4 se valida `bruto === null` antes de convertir). `String(12)` es `\"12\"`. La unidad pide convertir de forma explícita y comparar con `===`."
     },
     {
-      "topic": "2.5 Variables",
+      "topic": "2.5 const y let",
       "href": "../variables/",
-      "prompt": "Ámbito, como en 2.5.3. Tras ejecutar el bloque, ¿qué ocurre en la última línea?",
-      "code": "if (true) {\n  const nota = 7;\n}\nconsole.log(nota);",
+      "prompt": "Reglas de declaración (2.5.1 y 2.5.2). ¿Qué ocurre al ejecutar este script?",
+      "code": "const iva = 0.21;\nlet total = 0;\ntotal = 100 * (1 + iva);\nconsole.log(total);\n\nlet extra = 10;\nextra += 5;\nconsole.log(extra);\n\niva = 0.1;\nconsole.log(iva);",
       "options": [
-        "Imprime 7: `const` es visible en todo el archivo.",
-        "Imprime undefined: `nota` existe pero está vacía.",
-        "ReferenceError: `const` y `let` tienen ámbito de bloque.",
-        "Imprime 7 porque `var` y `const` se comportan igual."
+        "Imprime 121, 15 y 0.1: `const` solo impide cambiar el tipo.",
+        "Imprime 121 y 15; después TypeError: no se puede reasignar un identificador `const`.",
+        "Imprime 121, 15 y 0.21: la reasignación de `iva` se ignora en silencio.",
+        "SyntaxError en `let total = 0`: en esta unidad solo se permite `var`."
       ],
-      "answer": 2,
-      "explain": "`const`/`let` solo existen dentro de `{ ... }` (función, `if`, `for`…). Al salir del `if`, `nota` no está definida. El PDF hablaba de `var` (ámbito de función); en la unidad actual no usamos `var` precisamente porque se “escapa” del bloque."
+      "answer": 1,
+      "explain": "`const` es la opción por defecto: hay que inicializar y **no** se reasigna (`TypeError`). `let` sí cambia (`total` pasa de 0 a 121; `extra` de 10 a 15). `const` sin valor en la misma sentencia sería `SyntaxError`. `var` no se usa en código nuevo."
     },
     {
-      "topic": "2.5 Declaración",
+      "topic": "2.5 Ámbito de bloque",
       "href": "../variables/",
-      "prompt": "Calculas un IVA con las reglas de 2.5.1. ¿Qué hace este código?",
-      "code": "const iva = 0.21;\niva = 0.1;\nconsole.log(iva);",
+      "prompt": "Ámbito de `const`/`let` (2.5.3). ¿Qué se escribe, y qué pasaría si descomentas las dos últimas líneas?",
+      "code": "let visible = \"fuera\";\nif (true) {\n  const oculta = \"bloque\";\n  visible = \"cambiada\";\n  console.log(oculta);\n  console.log(visible);\n}\nconsole.log(visible);\n\nfor (let i = 0; i < 2; i += 1) {\n  console.log(\"i\", i);\n}\n// console.log(oculta);\n// console.log(i);",
       "options": [
-        "Imprime 0.1: `const` solo impide cambiar el tipo.",
-        "Imprime 0.21: la reasignación se ignora en silencio.",
-        "TypeError: no se puede reasignar un identificador `const`.",
-        "SyntaxError: `const` no existe; hay que usar siempre `var`."
+        "bloque, cambiada, cambiada, i 0, i 1; y `oculta` e `i` seguirían existiendo fuera (valen \"bloque\" y 2).",
+        "bloque, cambiada, cambiada, i 0, i 1. Si descomentas: ReferenceError en `oculta` y en `i` (`const`/`let` mueren con su bloque).",
+        "ReferenceError en `visible = \"cambiada\"` porque `visible` se declaró fuera.",
+        "undefined, undefined, fuera, i 0, i 1."
       ],
-      "answer": 2,
-      "explain": "En esta unidad `const` es la opción por defecto: hay que inicializar y **no** se puede hacer `iva = ...` (`TypeError`). Si el valor tiene que cambiar (contador, acumulador), se usa `let`. `var` queda para código legado."
+      "answer": 1,
+      "explain": "`const`/`let` tienen ámbito de **bloque**. `oculta` solo existe dentro del `if`. `visible` se declaró fuera: el `if` la reasigna, no crea otra. El `i` del `for` con `let` no existe fuera. En la unidad no usamos `var` precisamente porque se escapa del bloque."
     },
     {
-      "topic": "2.5 Sombra de nombres",
+      "topic": "2.5 Sombra y reasignación",
       "href": "../variables/",
-      "prompt": "Sombra (shadowing) de 2.5.3. ¿Qué se escribe, y en qué orden?",
-      "code": "const mensaje = \"fuera\";\nfunction muestraMensaje() {\n  const mensaje = \"dentro\";\n  console.log(mensaje);\n}\nmuestraMensaje();\nconsole.log(mensaje);",
+      "prompt": "Sombra (shadowing) frente a tocar la de fuera (2.5.3). ¿Qué imprimen los cuatro `console.log`, en orden?",
+      "code": "const fijo = \"fuera\";\nlet movil = 1;\n\nif (true) {\n  const fijo = \"dentro\";\n  movil = 2;\n  console.log(fijo);\n  console.log(movil);\n}\n\nconsole.log(fijo);\nconsole.log(movil);",
       "options": [
-        "dentro y después fuera",
-        "fuera y después dentro",
-        "dentro y después dentro",
-        "fuera y después fuera"
+        "dentro, 2, fuera, 2",
+        "dentro, 2, dentro, 2",
+        "fuera, 1, fuera, 1",
+        "TypeError: no se puede hacer `movil = 2` porque hay un `const fijo`."
       ],
       "answer": 0,
-      "explain": "Si hay dos `const mensaje`, **dentro del bloque gana la local**. La función imprime `dentro`; al salir, el `console.log` del script imprime `fuera`. La de dentro no pisa a la de fuera."
+      "explain": "Dentro del `if`, el `const fijo` **sombra** al de fuera (no lo pisa). `movil = 2` **sin** `let`/`const` reasigna la `let` de fuera. Orden: dentro, 2, (sale del bloque) fuera, 2."
     },
     {
-      "topic": "2.6 Módulo",
-      "href": "../operadores/",
-      "prompt": "El operador `%` de 2.6.1. ¿Qué imprime esto?",
-      "code": "console.log(10 % 5);\nconsole.log(9 % 5);",
+      "topic": "2.5 TDZ e inicialización",
+      "href": "../variables/",
+      "prompt": "Zona muerta temporal e inicialización (2.5.2–2.5.3). ¿Qué ocurre?",
+      "code": "let listo;\nconsole.log(listo);\nlisto = 8;\nconsole.log(listo);\nconsole.log(x);\nlet x = 1;",
       "options": [
-        "2 y 1.8 (tantos por ciento)",
-        "0 y 4 (resto de la división)",
-        "50 y 45",
-        "5 y 5"
+        "undefined, 8, undefined: `let` tiene hoisting usable como `var`.",
+        "undefined, 8; después ReferenceError en `console.log(x)`: `let`/`const` no se pueden usar antes de su declaración (TDZ).",
+        "undefined, 8, 1.",
+        "ReferenceError en la primera línea: `let` exige valor al declarar."
       ],
       "answer": 1,
-      "explain": "`%` es el **resto** (módulo), no un porcentaje. `10 = 5·2 + 0` → `0`. `9 = 5·1 + 4` → `4`."
+      "explain": "Con `let` puedes declarar sin valor: `listo` es `undefined` y luego 8. `let`/`const` no se pueden leer **antes** de su línea (TDZ → `ReferenceError`). No hay hoisting usable como con `var`. `const` sí exige inicializar en la misma sentencia."
     },
     {
-      "topic": "2.6 Operadores lógicos",
+      "topic": "2.6 Aritméticos e incremento",
       "href": "../operadores/",
-      "prompt": "`&&` y `||` como en 2.6.2. ¿Qué se imprime?",
-      "code": "const valor1 = true;\nconst valor2 = false;\nconsole.log(valor1 && valor2);\nconsole.log(valor1 || valor2);",
+      "prompt": "Aritmética, módulo y `++` prefijo/sufijo (2.6.1). Tras este código, ¿qué valores quedan y qué se imprimió?",
+      "code": "const a = 10;\nconst b = 5;\nconsole.log(a / b);\nconsole.log(2 ** 3);\nconsole.log(10 % 5);\nconsole.log(9 % 5);\n\nlet n = 5;\nconst k = 2;\nlet s = n++ + k;\nconsole.log(n, s);\n\nn = 5;\nlet p = ++n + k;\nconsole.log(n, p);",
       "options": [
-        "true y true",
-        "false y false",
-        "false y true",
-        "true y false"
-      ],
-      "answer": 2,
-      "explain": "`&&` es verdadero solo si **los dos** son truthy → `true && false` es `false`. `||` es verdadero si **alguno** lo es → `true`. Es el ejemplo de la tabla del temario."
-    },
-    {
-      "topic": "2.6 Operadores relacionales",
-      "href": "../operadores/",
-      "prompt": "`prompt` devuelve una cadena. En 2.6 se compara con `==` y con `===`. ¿Qué imprime esto?",
-      "code": "const variable1 = 10;\nconst variable2 = \"10\";\nconsole.log(variable1 == variable2);\nconsole.log(variable1 === variable2);",
-      "options": [
-        "true y true",
-        "false y false",
-        "true y false",
-        "false y true"
-      ],
-      "answer": 2,
-      "explain": "Es el ejemplo del temario: `==` convierte tipos (`10 == \"10\"` → `true`). `===` (idéntico) compara valor **y** tipo, sin conversión → `false`. La regla de la unidad es usar `===` / `!==`. Si hace falta, convierte tú: `Number(variable2) === 10`."
-    },
-    {
-      "topic": "2.6 Incremento",
-      "href": "../operadores/",
-      "prompt": "Prefijo y sufijo de `++`, como en 2.6.1. Tras estas líneas, ¿cuánto valen `numero1` y `numero3`?",
-      "code": "let numero1 = 5;\nconst numero2 = 2;\nlet numero3 = numero1++ + numero2;",
-      "options": [
-        "numero1 = 6 y numero3 = 7",
-        "numero1 = 6 y numero3 = 8",
-        "numero1 = 5 y numero3 = 7",
-        "numero1 = 7 y numero3 = 7"
+        "2, 8, 0, 4; luego 6 y 7; luego 6 y 8",
+        "2, 8, 2, 1.8; luego 6 y 8; luego 6 y 7",
+        "2, 6, 0, 4; luego 5 y 7; luego 6 y 8",
+        "2, 8, 50, 45; luego 6 y 7; luego 6 y 8"
       ],
       "answer": 0,
-      "explain": "`numero1++` usa primero el 5 y **después** incrementa. `numero3 = 5 + 2 = 7` y `numero1` queda en 6. Con `++numero1` (prefijo) sería `numero3 = 8` y `numero1 = 6`. En bucles se recomienda `i += 1` o el `i++` del `for`, sin mezclar `++` en expresiones largas."
+      "explain": "`10/5=2`, `2**3=8`, `%` es el **resto** (0 y 4), no un porcentaje. `n++` usa 5 y luego incrementa → `s=7`, `n=6`. `++n` incrementa antes → `p=8`, `n=6`. En bucles se prefiere `i += 1` y no mezclar `++` en expresiones largas."
     },
     {
-      "topic": "2.7 Sentencia if",
-      "href": "../control-de-flujo/",
-      "prompt": "Decisión con `if` / `else if`, como en 2.7.1. ¿Qué escribe la consola?",
-      "code": "const nota = 6;\nif (nota >= 9) {\n  console.log(\"Sobresaliente\");\n} else if (nota >= 5) {\n  console.log(\"Aprobado\");\n} else {\n  console.log(\"Suspenso\");\n}",
+      "topic": "2.6 Lógicos y ??",
+      "href": "../operadores/",
+      "prompt": "`&&`, `||` y el coalescente nulo `??` (2.6.2). ¿Qué imprime este fragmento?",
+      "code": "const valor1 = true;\nconst valor2 = false;\nconsole.log(valor1 && valor2);\nconsole.log(valor1 || valor2);\n\nconst contador = 0;\nconst vacio = \"\";\nconst nada = null;\nconsole.log(contador || 10);\nconsole.log(contador ?? 10);\nconsole.log(vacio || \"defecto\");\nconsole.log(vacio ?? \"defecto\");\nconsole.log(nada ?? \"defecto\");",
       "options": [
-        "Sobresaliente",
-        "Aprobado",
-        "Suspenso",
-        "Sobresaliente y Aprobado (entra en las dos ramas)"
+        "false, true, 10, 0, \"defecto\", \"\", \"defecto\"",
+        "false, true, 0, 10, \"\", \"defecto\", \"defecto\"",
+        "true, true, 10, 10, \"defecto\", \"defecto\", null",
+        "false, false, 0, 0, \"\", \"\", null"
+      ],
+      "answer": 0,
+      "explain": "`true && false` → false; `true || false` → true. `||` trata `0` y `\"\"` como vacíos (suele ser un bug). `??` **solo** sustituye `null` o `undefined`: `0 ?? 10` es 0, `\"\" ?? \"defecto\"` es `\"\"`, `null ?? \"defecto\"` es `\"defecto\"`."
+    },
+    {
+      "topic": "2.6 Comparación y asignación",
+      "href": "../operadores/",
+      "prompt": "`=` no es `===` (2.6.4). `prompt` devuelve cadena. ¿Qué imprime este código?",
+      "code": "const variable1 = 10;\nconst variable2 = \"10\";\nconsole.log(variable1 == variable2);\nconsole.log(variable1 === variable2);\nconsole.log(Number(variable2) === 10);\n\nlet numero1 = 5;\nconst mal = (numero1 = 3);\nconst bien = numero1 === 3;\nconsole.log(mal);\nconsole.log(bien);\nconsole.log(numero1);",
+      "options": [
+        "true, false, true, 3, true, 3",
+        "true, true, true, true, true, 3",
+        "false, false, true, 3, false, 5",
+        "true, false, false, false, true, 5"
+      ],
+      "answer": 0,
+      "explain": "`==` convierte tipos (`10 == \"10\"` → true). `===` compara valor **y** tipo → false. Tras `Number(...)` sí es true. `(numero1 = 3)` **asigna** 3 y esa expresión vale 3 (`mal`). `bien` es la comparación (`true`). `numero1` queda en 3. Regla de la unidad: `===` / `!==`."
+    },
+    {
+      "topic": "2.7 if y switch",
+      "href": "../control-de-flujo/",
+      "prompt": "`if` / `else if` y `switch` con `===` (2.7.1–2.7.2). ¿Qué se escribe, y en qué orden?",
+      "code": "const nota = 6;\nif (nota >= 9) {\n  console.log(\"Sobresaliente\");\n} else if (nota >= 5) {\n  console.log(\"Aprobado\");\n} else {\n  console.log(\"Suspenso\");\n}\n\nconst dia = \"sábado\";\nswitch (dia) {\n  case \"sábado\":\n  case \"domingo\":\n    console.log(\"Fin de semana\");\n    break;\n  default:\n    console.log(\"Día laborable\");\n}\n\nconst nombre = \"Alicia\";\nswitch (nombre) {\n  case \"Alicia\":\n    console.log(\"Hola Alicia\");\n  case \"Lewis\":\n    console.log(\"Hola Lewis\");\n    break;\n  default:\n    console.log(\"Hola\");\n}",
+      "options": [
+        "Aprobado, Fin de semana, Hola Alicia (el switch de nombre se detiene en el primer case)",
+        "Aprobado, Fin de semana, Hola Alicia y Hola Lewis (falta break: fall-through)",
+        "Sobresaliente y Aprobado, Día laborable, Hola Alicia",
+        "Suspenso, Fin de semana, Hola (switch compara con == y \"Alicia\" no entra)"
       ],
       "answer": 1,
-      "explain": "6 no cumple `nota >= 9`, así que no entra en Sobresaliente. Sí cumple `nota >= 5` → **Aprobado**. El `else if` no combina ramas: cuando una condición es verdadera, el resto no se ejecuta. En la unidad las llaves `{ }` son obligatorias aunque el cuerpo tenga una sola línea."
+      "explain": "6 no es ≥ 9; sí ≥ 5 → **Aprobado** (una sola rama). `switch` usa `===`. Sábado y domingo están agrupados → Fin de semana. En el tercer `switch` no hay `break` tras Alicia: se ejecuta también Lewis (*fall-through*). Las llaves del `if` son obligatorias en esta unidad."
     },
     {
-      "topic": "2.7 Bucle while",
+      "topic": "2.7 while y do...while",
       "href": "../control-de-flujo/",
-      "prompt": "El `while` de 2.7.3 mira la condición **antes** de entrar. ¿Qué se imprime?",
-      "code": "let i = 5;\nwhile (i < 5) {\n  console.log(i);\n  i += 1;\n}\nconsole.log(\"fin\");",
+      "prompt": "El `while` mira la condición **antes**; el `do...while`, **después** (2.7.3). ¿Qué se imprime?",
+      "code": "let i = 5;\nwhile (i < 5) {\n  console.log(\"while\", i);\n  i += 1;\n}\nconsole.log(\"fin-while\");\n\nlet j = 5;\ndo {\n  console.log(\"do\", j);\n  j += 1;\n} while (j < 5);\nconsole.log(\"fin-do\", j);",
       "options": [
-        "5 y después fin",
-        "0, 1, 2, 3, 4 y después fin",
-        "Solo fin (el cuerpo no se ejecuta ni una vez)",
-        "Bucle infinito"
-      ],
-      "answer": 2,
-      "explain": "`i` ya vale 5, así que `i < 5` es false desde el principio: el cuerpo **no corre**. Solo se imprime `fin`. Un `for (let i = 0; i < 5; i += 1)` sí daría cinco vueltas; el `while` solo entra si la condición es verdadera al empezar."
-    },
-    {
-      "topic": "2.7 Bucle for",
-      "href": "../control-de-flujo/",
-      "prompt": "El `for` de 2.7.4 recorre con un contador de bloque. ¿Qué ocurre al ejecutar esto?",
-      "code": "let m = \"\";\nfor (let i = 0; i < 5; i += 1) {\n  m += \"vuelta \" + i + \"\\n\";\n}\nconsole.log(m);\nconsole.log(i);",
-      "options": [
-        "Muestra cinco vueltas (0 a 4) y después imprime 5.",
-        "Muestra cinco vueltas (0 a 4) y luego ReferenceError: i is not defined.",
-        "Muestra cinco vueltas (1 a 5) y después imprime 5.",
-        "No entra al bucle porque i empieza en 0."
+        "while 5, fin-while, do 5, fin-do 6",
+        "Solo fin-while; luego do 5 y fin-do 6 (el while no entra ni una vez; el do sí)",
+        "Bucle infinito en el while",
+        "fin-while, fin-do 5 (ningún cuerpo se ejecuta)"
       ],
       "answer": 1,
-      "explain": "El `for` inicializa, comprueba (`i < 5`), ejecuta el cuerpo y suma 1: vueltas 0, 1, 2, 3 y 4. Con `let`, el contador **muere con el bucle**, así que `console.log(i)` lanza `ReferenceError`. En el PDF antiguo `i` seguía existiendo por `var`; esa es la diferencia que se trabaja en la unidad."
+      "explain": "`i` ya es 5, así que `i < 5` es false: el `while` **no corre**. El `do` ejecuta el cuerpo **al menos una vez** (`do 5`), incrementa `j` a 6 y entonces la condición falla. `break` sale; `continue` salta al siguiente ciclo."
+    },
+    {
+      "topic": "2.7 for y for...of",
+      "href": "../control-de-flujo/",
+      "prompt": "`for` con `let` y `for...of` frente a `for...in` (2.7.4–2.7.5). ¿Qué es correcto al ejecutar esto?",
+      "code": "let m = \"\";\nfor (let i = 0; i < 5; i += 1) {\n  m += \"vuelta \" + i + \"\\n\";\n}\nconsole.log(m);\n// console.log(i);\n\nconst letras = \"JS\";\nfor (const letra of letras) {\n  console.log(\"of\", letra);\n}\n\nconst numeros = [10, 20];\nfor (const clave in numeros) {\n  console.log(\"in\", clave);\n}",
+      "options": [
+        "`m` tiene vueltas 0 a 4; `i` sigue valiendo 5; `for...of` imprime J y S; `for...in` imprime 10 y 20.",
+        "`m` tiene vueltas 0 a 4; `console.log(i)` sería ReferenceError; `for...of` imprime J y S (valores); `for...in` imprime \"0\" y \"1\" (claves). En esta unidad no uses `for...in` en arrays.",
+        "`m` tiene vueltas 1 a 5; `for...of` imprime 0 y 1; `for...in` imprime J y S.",
+        "No entra al `for` porque `i` empieza en 0."
+      ],
+      "answer": 1,
+      "explain": "El `for` da vueltas 0–4. Con `let`, `i` **muere** con el bucle (ReferenceError). `for...of` recorre **valores** (`J`, `S`). `for...in` recorre **claves** (`\"0\"`, `\"1\"`) y puede incluir heredadas: no lo uses para arrays en esta unidad."
     }
   ]
 }

@@ -1,12 +1,12 @@
 ---
-title: 4.5 Orientación a objetos
+title: 4.6 Orientación a objetos
 tags:
   - JavaScript
   - DWEC
   - RA4
 ---
 
-# 4.5. Características de orientación a objetos
+# 4.6. Características de orientación a objetos
 
 JavaScript es **multiparadigma**. La orientación a objetos no funciona como en Java:
 
