@@ -91,7 +91,7 @@ console.log([...a, ...b]); // [1, 2, 3, 4]
 console.log([..."AB"]);     // ["A", "B"]
 ```
 
-`[..."AB"]` parte la cadena en caracteres. Es lo que hace el palíndromo de la [UT3](../ut3/string.md). Con un `Map` o un `Set` (apartado 4.4) el spread fabrica un array: `[...notas]` es la lista de pares y `[...vistos]` es la lista de valores.
+`[..."AB"]` parte la cadena en caracteres. El palíndromo de la [UT3](../ut3/string.md) no lo usa: recorre la cadena con un `for` y `charAt`. Con un `Map` o un `Set` (apartado 4.4) el spread fabrica un array: `[...notas]` es la lista de pares y `[...vistos]` es la lista de valores.
 
 En una función, `function media(...notas)` es el parámetro **rest** (apartado 4.2): agrupa los argumentos en un array. El spread despliega; el rest recoge.
 

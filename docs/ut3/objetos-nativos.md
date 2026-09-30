@@ -48,31 +48,18 @@ const iso = new Date("2026-09-09T12:00:00");
 
 Los `setFullYear`, `setMonth`, `setDate`, `setHours`… modifican el instante. Prefiere `getFullYear()`; `getYear()` está **obsoleto**. Igual con `toUTCString()` frente a `toGMTString()`.
 
-```javascript
-function formatearFecha(fecha) {
-  const dia = String(fecha.getDate()).padStart(2, "0");
-  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
-  const anio = fecha.getFullYear();
-  const hora = String(fecha.getHours()).padStart(2, "0");
-  const min = String(fecha.getMinutes()).padStart(2, "0");
-  const seg = String(fecha.getSeconds()).padStart(2, "0");
-  return `${dia}/${mes}/${anio} ${hora}:${min}:${seg}`;
-}
-
-const ahora = new Date();
-console.log("Hoy es", formatearFecha(ahora));
-```
-
-Para mostrar fechas “como en España” sin reinventar el formato:
+`getMonth()` empieza en 0: enero es `0` y diciembre es `11`. Para mostrarlo como calendario se suma 1. El cero a la izquierda se pone con el operador ternario de la UT2. `padStart`, que hace lo mismo sobre una cadena, está en el apartado 3.2.
 
 ```javascript
 const ahora = new Date();
-console.log(
-  new Intl.DateTimeFormat("es-ES", {
-    dateStyle: "full",
-    timeStyle: "medium",
-  }).format(ahora)
-);
+const dia = ahora.getDate();
+const mes = ahora.getMonth() + 1;
+const anio = ahora.getFullYear();
+const diaTexto = dia < 10 ? "0" + dia : String(dia);
+const mesTexto = mes < 10 ? "0" + mes : String(mes);
+
+console.log("Hoy es " + diaTexto + "/" + mesTexto + "/" + anio);
+console.log(ahora.toLocaleDateString("es-ES"));
 ```
 
 ## 3.1.2. El objeto `Math`
@@ -85,7 +72,7 @@ Constantes habituales: `Math.PI`, `Math.E`, `Math.SQRT2`, `Math.LN10`…
 | --- | --- |
 | `abs(x)` | Valor absoluto |
 | `ceil(x)` / `floor(x)` / `round(x)` / `trunc(x)` | Redondeos |
-| `max(...)` / `min(...)` | Mayor / menor |
+| `max(a, b)` / `min(a, b)` | Mayor / menor |
 | `pow(x, y)` | Potencia (equivalente a `x ** y`) |
 | `sqrt(x)` | Raíz cuadrada |
 | `random()` | Pseudoaleatorio en `[0, 1)` |

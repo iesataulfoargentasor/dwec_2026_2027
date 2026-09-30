@@ -30,7 +30,7 @@ console.log(txt.length); // 4
 | `startsWith` / `endsWith` | Prefijo / sufijo |
 | `indexOf` / `lastIndexOf` | Primera / última aparición (−1 si no está) |
 | `slice(inicio, fin)` | Extrae un trozo (`fin` no incluido) |
-| `split(separador)` | Parte en un array |
+| `split(separador)` | Parte la cadena en trozos (esa lista se trabaja en la UT4) |
 | `replace` / `replaceAll` | Sustituye |
 | `toLowerCase` / `toUpperCase` | Mayúsculas y minúsculas |
 | `trim()` | Quita espacios en los extremos |
@@ -45,29 +45,24 @@ Los métodos HTML del material antiguo (`bold()`, `italics()`, `fontcolor()`, `b
 
 ## Ejemplo: palíndromo
 
-Misma idea que el apunte original, con `const`, `replace` y `console.log`.
+Se lee la cadena del final al principio con un `for` (UT2) y `charAt`. Todavía no hace falta una función, ni expresiones regulares, ni métodos de array: eso llega en la UT4 y en la UT5.
 
 ```javascript
-function palindromo(cadena) {
-  const normalizada = cadena
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "") // quita tildes
-    .replace(/[^a-z0-9]/g, "");     // quita espacios y signos
+const frase = "Ana";
+const normalizada = frase.toLowerCase().trim();
+let reves = "";
 
-  const reves = [...normalizada].reverse().join("");
-  const esPal = normalizada === reves;
-
-  return esPal
-    ? `La cadena "${cadena}" es un palíndromo`
-    : `La cadena "${cadena}" no es un palíndromo`;
+for (let i = normalizada.length - 1; i >= 0; i -= 1) {
+  reves += normalizada.charAt(i);
 }
 
-console.log(palindromo("La ruta nos aporto otro paso natural"));
-console.log(palindromo("Esta frase no se parece a ningun palindromo"));
+console.log(reves); // "ana"
+if (normalizada === reves) {
+  console.log(frase + " es un palindromo");
+} else {
+  console.log(frase + " no es un palindromo");
+}
 ```
-
-`[...cadena]` despliega la cadena en caracteres con el operador **spread**. Qué es y para qué más sirve (copiar un array, unir dos, pasar un `Map` a lista) está en [4.3 Arrays](../ut4/arrays.md). En ejercicios de clase, `split("")` basta.
 
 !!! example "Prueba en consola"
     Carga un `script` al final del `body` y abre DevTools (:kbd:`F12`). No hace falta `alert` para ver el resultado.
