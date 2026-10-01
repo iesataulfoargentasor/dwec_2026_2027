@@ -110,7 +110,11 @@ hijo.addEventListener("click", () => console.log("hijo"));
 El tercer argumento `true` registra el listener en fase de **captura**. En DWEC basta con conocer que existe; casi todo el código de prácticas usa burbuja.
 
 ```javascript
-document.addEventListener("click", manejador, true); // captura
+function alHacerClic() {
+  console.log("captura");
+}
+
+document.addEventListener("click", alHacerClic, true);
 ```
 
 ## Tres formas que debes distinguir

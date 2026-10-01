@@ -23,6 +23,7 @@ En JavaScript el literal va entre **barras**: `/^\d{9}$/`. También: `new RegExp
 | `?` | El elemento anterior **0 o 1** vez |
 | `.` | Cualquier carácter (salvo salto de línea) |
 | `x\|y` | `x` **o** `y` |
+| `(abc)` | Agrupa, para aplicar `*`, `+`, `?` o `\|` a varios caracteres |
 | `{n}` | Exactamente *n* veces |
 | `{n,m}` | Entre *n* y *m* veces |
 | `{n,}` | *n* o más veces |
@@ -45,21 +46,18 @@ Para que un metacarácter sea **literal**, se escapa: `\.` es un punto, `\(` un 
 
 ## Cómo se usa en JavaScript
 
+Métodos:
+
+- **`regex.test(cadena)`:** `true` / `false`. Es el que usamos para validar.
+- **`cadena.match(regex)`:** coincidencias o `null`.
+- **`cadena.replace(regex, nuevo)`:** sustituir. `replace` de la UT3 aquí acepta un patrón, no solo un texto.
+
 ```javascript
 const soloNueveDigitos = /^\d{9}$/;
 
-soloNueveDigitos.test("942123456");  // true
-soloNueveDigitos.test("942-12-34");  // false
-
-"DAW2".search(/daw/i);               // 0 (flag i = ignore case)
-"hola 2026".match(/\d+/);            // ["2026"]
+console.log(soloNueveDigitos.test("942123456")); // true
+console.log(soloNueveDigitos.test("942-12-34")); // false
 ```
-
-Métodos:
-
-- **`regex.test(cadena)`:** `true` / `false` (el más usado en validación).
-- **`cadena.match(regex)`:** coincidencias o `null`.
-- **`cadena.replace(regex, nuevo)`:** sustituir.
 
 Flags habituales detrás de la barra: `i` (mayúsculas/minúsculas), `g` (todas las coincidencias), `m` (`^`/`$` por línea), `u` (Unicode).
 

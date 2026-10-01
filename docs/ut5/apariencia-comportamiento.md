@@ -44,6 +44,8 @@ Puedes decidir la URL de destino **según lo que marque el usuario** y luego lla
 </form>
 ```
 
+`alta.checked` es `true` si la casilla está marcada. Es la propiedad del atributo `checked` del apartado 5.3.
+
 ```javascript
 const form = document.querySelector("#gestion");
 const alta = document.querySelector("#alta");
@@ -55,17 +57,7 @@ boton.addEventListener("click", () => {
 });
 ```
 
-`HTMLFormElement.submit()` envía el formulario **sin** disparar el evento `submit`. Si necesitas que corra tu validación, dispara el envío con el botón `type="submit"` o llama tú a la función de validar **antes** de `submit()`.
-
-```javascript
-function enviarSiEsValido(form) {
-  if (!form.checkValidity()) {
-    form.reportValidity(); // muestra los mensajes HTML5
-    return;
-  }
-  form.submit();
-}
-```
+`form.submit()` envía el formulario **sin** disparar el evento `submit`. La validación (`checkValidity`, `reportValidity`) está en el apartado 5.5. Si la usas, comprueba el formulario antes de llamar a `submit()`, o deja el botón en `type="submit"` para que el navegador dispare el evento.
 
 Otras propiedades útiles del formulario:
 

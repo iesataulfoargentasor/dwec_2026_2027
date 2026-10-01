@@ -32,11 +32,11 @@ zona.addEventListener("click", () => {
 });
 
 zona.addEventListener("mouseover", () => {
-  zona.style.outline = "2px solid crimson";
+  zona.style.backgroundColor = "crimson";
 });
 
 zona.addEventListener("mouseout", () => {
-  zona.style.outline = "";
+  zona.style.backgroundColor = "";
 });
 ```
 
@@ -117,7 +117,7 @@ nombre.addEventListener("change", () => {
 
 El PDF de 2013 listaba eventos de mutación (`DOMSubtreeModified`, `DOMNodeInserted`, `DOMNodeRemoved`…). **Están obsoletos** y no deben usarse.
 
-La API actual es **`MutationObserver`**: observas un nodo y recibes un lote de cambios.
+La API actual es **`MutationObserver`**: observas un nodo y recibes un lote de cambios. Cada cambio tiene `type` (qué cambió) y, si miras hijos, `addedNodes` (los nodos nuevos; se cuenta con `length`). `childList: true` pide avisos de hijos añadidos o quitados. `createElement` y `append` son los de la UT3.
 
 ```javascript
 const lista = document.querySelector("#tareas");
@@ -133,7 +133,7 @@ observador.observe(lista, { childList: true });
 lista.append(document.createElement("li"));
 ```
 
-Opciones habituales: `childList` (hijos añadidos/quitados), `attributes`, `subtree` (también descendientes). Llama a `observador.disconnect()` cuando ya no haga falta.
+Otras opciones: `attributes` y `subtree` (también los descendientes). Llama a `observador.disconnect()` cuando ya no haga falta.
 
 !!! note "Criterio c)"
     En un examen o práctica, clasifica el evento: **ratón**, **teclado**, **documento/formulario** o **mutación del DOM**. Nombra el evento concreto (`click`, `keydown`, `submit`…) y el método de escucha (`addEventListener`).

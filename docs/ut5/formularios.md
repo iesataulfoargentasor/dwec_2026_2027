@@ -148,9 +148,11 @@ console.log(form.elements.nombre.value);
 console.log(form.nombre.value); // atajo si hay name="nombre"
 
 form.nombre.value = "Alex";
-
-const datos = new FormData(form);
-console.log(datos.get("nombre"));
 ```
 
-`FormData` recoge los campos con `name` (incluidos ficheros). Es la forma actual de leer o enviar el formulario por `fetch` sin recargar la página.
+`FormData` recoge los campos que tienen `name`, también los ficheros. `get` devuelve el valor de ese nombre.
+
+```javascript
+const datos = new FormData(form);
+console.log(datos.get("nombre")); // "Alex"
+```

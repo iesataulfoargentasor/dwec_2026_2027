@@ -111,29 +111,24 @@ function validaCheck(id) {
 
 ## Validación HTML5 y Constraint Validation API
 
-El navegador valida `required`, `type="email"`, `min`/`max`, `pattern`, etc. **antes** de disparar tu lógica si el form es inválido… salvo que uses `novalidate` o `form.noValidate = true`.
+El navegador valida `required`, `type="email"`, `min`/`max` y `minlength`/`maxlength` **antes** de disparar tu lógica si el form es inválido… salvo que el formulario lleve `novalidate` (apartado 5.3).
 
 ```html
-<input
-  id="cp"
-  name="cp"
-  type="text"
-  required
-  pattern="\d{5}"
-  title="Cinco dígitos"
->
+<input id="cp" name="cp" type="text" required minlength="5" maxlength="5">
 ```
+
+El atributo `pattern` pide un formato con una expresión regular. Los símbolos se ven en el apartado 5.6; hasta entonces bastan `required`, `minlength` y `maxlength`.
 
 Desde JavaScript:
 
 ```javascript
 const cp = document.querySelector("#cp");
 
-cp.checkValidity();           // true / false
-cp.validity.patternMismatch;  // no cumple pattern
-cp.setCustomValidity("");     // limpia error propio
+cp.checkValidity();          // true / false
+cp.validity.valueMissing;    // true si está vacío y es required
+cp.setCustomValidity("");    // limpia el error propio
 cp.setCustomValidity("CP no válido para esta provincia");
-cp.reportValidity();          // muestra el globo del navegador
+cp.reportValidity();         // muestra el globo del navegador
 ```
 
 Ejemplo combinado: HTML5 + mensaje propio + evento `submit`.
@@ -143,8 +138,8 @@ form.addEventListener("submit", (event) => {
   const dni = form.elements.dni;
   dni.setCustomValidity("");
 
-  if (!esDniValido(dni.value)) {
-    dni.setCustomValidity("DNI incorrecto (número o letra)");
+  if (dni.value.trim().length !== 9) {
+    dni.setCustomValidity("El DNI tiene 8 números y una letra");
   }
 
   if (!form.checkValidity()) {
@@ -154,17 +149,18 @@ form.addEventListener("submit", (event) => {
 });
 ```
 
-`setCustomValidity("")` hay que llamarlo cuando el dato **ya es válido**; si no, el campo permanece en error.
+`setCustomValidity("")` hay que llamarlo cuando el dato **ya es válido**; si no, el campo permanece en error. Comprobar que la letra del DNI corresponde al número es una expresión regular: apartado 5.6.
 
 ## Mensajes en la página (sin `alert`)
 
 `alert` está en el temario y vale para prácticas cortas. En una interfaz usable muestra el error junto al campo:
 
+`textContent` escribe el aviso en la página (UT3). `focus()` coloca el cursor en ese campo.
+
 ```javascript
 function mostrarError(input, texto) {
   const caja = document.querySelector("#errores");
   caja.textContent = texto;
-  input.setAttribute("aria-invalid", "true");
   input.focus();
 }
 ```
