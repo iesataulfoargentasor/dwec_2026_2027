@@ -70,6 +70,7 @@ JavaScript del navegador aplicado al **[RA5](ut5/ra5.md)**: capturar eventos, ge
 
 - [RA5 y criterios de evaluación](ut5/ra5.md)
 - [Introducción](ut5/index.md)
+- [Localizar elementos del DOM](ut5/localizar-dom.md)
 - [5.1 Modelo de eventos](ut5/modelo-eventos.md)
 - [5.2 Tipos de eventos](ut5/tipos-eventos.md)
 - [5.3 Formularios](ut5/formularios.md)

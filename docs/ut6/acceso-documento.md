@@ -59,7 +59,7 @@ No memorices los números: usa las constantes `Node.*`.
 
 ## 6.3.2. Acceso directo a los nodos
 
-El temario lista tres métodos clásicos. Hoy se suman los selectores CSS.
+El temario lista tres métodos clásicos. Hoy se suman los selectores CSS. El uso justo para enganchar un evento está resumido al principio de la [UT5](../ut5/localizar-dom.md). Aquí se ven junto al resto del árbol.
 
 | Método | Qué selecciona | Devuelve |
 | --- | --- | --- |

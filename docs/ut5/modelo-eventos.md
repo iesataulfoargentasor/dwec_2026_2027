@@ -8,6 +8,8 @@ tags:
 
 # 5.1. Modelo de gestión de eventos
 
+Para registrar un evento hace falta el elemento. Los métodos (`getElementById`, `querySelector` y el resto) están resumidos en [Localizar elementos del DOM](localizar-dom.md).
+
 Una página de solo HTML se muestra y se queda quieta. Un **evento** es el aviso del navegador de que ha pasado algo: un clic, una tecla, el envío de un formulario, el fin de la carga. Tu script no está mirando el ratón todo el rato. Registras una función y el navegador la llama cuando llega ese aviso.
 
 Esa función es el **manejador** (*handler*). El criterio **a)** pide reconocer cómo el HTML engancha el manejador en la propia etiqueta. El **b)** pide la vía de JavaScript: `addEventListener`, el objeto `event` y el recorrido del evento por el árbol. El **d)** pide escribir ese código. En ejercicios nuevos se usa `addEventListener`. Las otras dos formas se estudian para leer código antiguo y para no mezclarlas.

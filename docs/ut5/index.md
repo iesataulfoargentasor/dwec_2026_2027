@@ -18,8 +18,11 @@ Consulta el [enunciado oficial del RA5 y sus criterios de evaluación](ra5.md).
 
 ## Qué vas a trabajar
 
+El manejador se engancha a un elemento concreto. Antes del 5.1 conviene el resumen [Localizar elementos del DOM](localizar-dom.md): `getElementById`, `querySelector` y el resto de búsquedas, y qué pasa si el evento se registra sobre `null`.
+
 | Apartado | Contenido |
 | --- | --- |
+| [Localizar elementos del DOM](localizar-dom.md) | `getElementById`, `querySelector` y por qué hacen falta para el evento |
 | [5.1 Modelo de eventos](modelo-eventos.md) | Manejador, atributos HTML y `addEventListener` |
 | [5.2 Tipos de eventos](tipos-eventos.md) | Ratón, teclado, HTML/ventana y cambios en el DOM |
 | [5.3 Formularios](formularios.md) | `<form>`, controles, `name`/`value`, HTML5 |
