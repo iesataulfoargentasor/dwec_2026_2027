@@ -78,28 +78,21 @@ console.log(notas.includes(10));          // true
 Las operaciones se combinan. El array original **no cambia** si usas `map`/`filter` (son inmutables en ese sentido).
 
 ```javascript
-const mediaAprobados = notas
-  .filter((n) => n >= 5)
-  .reduce((acum, n, _, arr) => acum + n / arr.length, 0);
-
+const aprobados = notas.filter((n) => n >= 5);
+const sumaAprobados = aprobados.reduce((acum, n) => acum + n, 0);
+const mediaAprobados = sumaAprobados / aprobados.length;
 console.log(mediaAprobados);
 ```
 
-## Ejemplo con objetos
+## Ejemplo con cadenas
+
+`length` de una cadena es el de la UT3. Crear objetos con propiedades es el apartado 4.7; hasta entonces el elemento del array es un número o un texto.
 
 ```javascript
-const grupo = [
-  { nombre: "Alex", nota: 8 },
-  { nombre: "Luis", nota: 4 },
-  { nombre: "Mar", nota: 9 },
-];
-
-const nombresAprobados = grupo
-  .filter((a) => a.nota >= 5)
-  .map((a) => a.nombre);
-
-console.log(nombresAprobados); // ["Alex", "Mar"]
+const nombres = ["Alex", "Luis", "Mar"];
+const largos = nombres.filter((nombre) => nombre.length >= 4);
+console.log(largos); // ["Alex", "Luis"]
 ```
 
 !!! tip "Depurar un encadenamiento"
-    En DevTools, pon un punto de interrupción **dentro** del callback, o parte la cadena en constantes intermedias (`const filtrados = …`) y haz `console.table(filtrados)`.
+    En DevTools, pon un punto de interrupción **dentro** del callback, o parte la cadena en constantes intermedias (`const filtrados = …`) y haz `console.log(filtrados)`.

@@ -20,17 +20,17 @@ Para eso están `Map` y `Set`. Son objetos nativos, como `Date` o `JSON` (UT3), 
 | Quieres… | Usas |
 | --- | --- |
 | Una lista ordenada, acceso por posición `0`, `1`, `2`… | **Array** |
-| Una ficha con propiedades conocidas (`alumno.nombre`) | **Objeto** `{}` |
+| Una ficha con propiedades conocidas (`alumno.nombre`, apartado 4.7) | **Objeto** `{}` |
 | Un diccionario cuyas claves aparecen en tiempo de ejecución | **`Map`** |
 | Saber si un valor está, sin duplicados | **`Set`** |
 
-`edades["Juan"] = 20` sobre un array **no** crea un array asociativo: añade una propiedad al objeto. Si las claves van a ir y venir, es un `Map`.
+Si las claves van a ir y venir, es un `Map`. `alumno.nombre` es la ficha del apartado 4.7, no un array.
 
 ## 4.4.1. `Map`
 
 Un **`Map`** asocia **claves** con **valores**. Se crea con `new Map()` y se maneja con métodos, no con la notación de punto.
 
-Un objeto `{}` también guarda pares, pero sus claves acaban siendo cadenas (o símbolos). En un `Map` la clave puede ser un número, una cadena o un objeto, y se recuerda el orden en que se insertaron. El tamaño es `.size`, no `.length`.
+Un objeto `{}` también guarda pares, pero sus claves son texto. En un `Map` la clave puede ser un número, una cadena o un objeto, y se recuerda el orden en que se insertaron. El tamaño es `.size`, no `.length`. La ficha `{}` se construye en el apartado 4.7.
 
 | Método | Qué hace |
 | --- | --- |
@@ -54,11 +54,11 @@ console.log(notas.get("Alex")); // 9
 
 `notas[0]` no es el primer elemento. No es un array: `Array.isArray(notas)` es `false`.
 
-`for...of` recorre pares `[clave, valor]`, en el mismo orden en que se añadieron:
+`for...of` recorre los pares en el mismo orden en que se añadieron. Cada par es un array de dos posiciones: la `0` es la clave y la `1` es el valor.
 
 ```javascript
-for (const [nombre, nota] of notas) {
-  console.log(nombre, nota);
+for (const par of notas) {
+  console.log(par[0], par[1]);
 }
 ```
 

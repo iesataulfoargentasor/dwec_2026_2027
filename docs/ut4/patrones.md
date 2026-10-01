@@ -27,12 +27,12 @@ const carrito = (function () {
 
   return {
     add(nombre, precio) {
-      lineas.push({ nombre, precio });
+      lineas.push({ nombre: nombre, precio: precio });
     },
     listar() {
       return [...lineas];
     },
-    total,
+    total: total,
   };
 })();
 
@@ -40,7 +40,7 @@ carrito.add("Teclado", 24.5);
 console.log(carrito.total());
 ```
 
-Hoy el mismo espíritu son los **módulos ES** (`export` / `import`). El IIFE anterior es el patrón clásico cuando no hay bundler.
+Hoy el mismo espíritu son los **módulos ES** (`export` / `import`), que separan el código en ficheros. En este apartado no hacen falta: el ejemplo de arriba ya oculta `lineas`.
 
 ## Fábrica (*factory*)
 
@@ -49,8 +49,8 @@ Problema: crear objetos parecidos sin repetir `new` ni exponer la clase.
 ```javascript
 function crearAlumno(nombre, nota) {
   return {
-    nombre,
-    nota,
+    nombre: nombre,
+    nota: nota,
     aprobado() {
       return this.nota >= 5;
     },
@@ -65,7 +65,7 @@ const a2 = crearAlumno("Luis", 4);
 
 ## Singleton
 
-Problema: **una sola** instancia (configuración, registro de log).
+Problema: **una sola** instancia (configuración, registro de log). `Object.freeze` deja el objeto quieto: no se le pueden cambiar las propiedades.
 
 ```javascript
 const config = {
@@ -74,10 +74,10 @@ const config = {
 };
 
 Object.freeze(config);
-export { config };
+console.log(config.api);
 ```
 
-Un objeto módulo exportado **ya es** un singleton. No hace falta una clase con `getInstance()` al estilo Java.
+`Object.freeze` impide cambiar o añadir propiedades. Ese objeto, guardado en un único sitio, **ya es** un singleton. No hace falta una clase con `getInstance()` al estilo Java. La palabra `export`, para sacar el objeto a otro fichero, no hace falta en este ejemplo.
 
 ## Observador (*pub/sub* sencillo)
 
@@ -89,11 +89,14 @@ function crearEmisor() {
 
   return {
     on(evento, fn) {
-      oyentes[evento] ??= [];
+      if (oyentes[evento] === undefined) {
+        oyentes[evento] = [];
+      }
       oyentes[evento].push(fn);
     },
     emit(evento, dato) {
-      (oyentes[evento] ?? []).forEach((fn) => fn(dato));
+      const lista = oyentes[evento] ?? [];
+      lista.forEach((fn) => fn(dato));
     },
   };
 }

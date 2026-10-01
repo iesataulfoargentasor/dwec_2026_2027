@@ -12,6 +12,8 @@ Tú defines la **estructura** (qué propiedades y métodos tiene) y luego **crea
 
 ## Literal (un objeto suelto)
 
+Acceso: `obj.prop` o `obj["prop"]` (cuando el nombre viene en una variable). `toFixed` es el método de `Number` de la UT3.
+
 ```javascript
 const producto = {
   id: 1,
@@ -29,8 +31,6 @@ console.log(producto.precioFinal().toFixed(2));
 ```
 
 Útil para un dato único. Si vas a crear **muchos** iguales, usa una clase (o una fábrica).
-
-Acceso: `obj.prop` o `obj["prop"]` (cuando el nombre viene en una variable).
 
 ## Clase (molde)
 

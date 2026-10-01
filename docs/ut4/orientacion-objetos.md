@@ -67,11 +67,11 @@ console.log(a.aprobado());
 console.log(Object.getPrototypeOf(a) === Alumno.prototype); // true
 ```
 
-`new` crea el objeto, enlaza el prototipo y ejecuta `constructor`.
+`new` crea el objeto, enlaza el prototipo y ejecuta `constructor`. `Object.getPrototypeOf(a)` devuelve ese prototipo.
 
 ## Encapsulación (idea)
 
-Ocultar detalles y ofrecer una interfaz. En JS moderno: campos privados `#nota`, o un [módulo](patrones.md) que no exporta las variables internas.
+Ocultar detalles y ofrecer una interfaz. En JS moderno: campos privados (apartado 4.7) o un [módulo](patrones.md) que no enseña las variables internas.
 
 No hay interfaces ni modificadores `private` al estilo Java en el sentido clásico (salvo `#` y convención `_privado`).
 

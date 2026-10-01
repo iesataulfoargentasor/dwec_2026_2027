@@ -49,14 +49,16 @@ function ficha(nombre, grupo = "DAW2") {
 }
 
 function media(...notas) {
-  if (notas.length === 0) {
-    return 0;
-  }
   let suma = 0;
+  let cuantas = 0;
   for (const n of notas) {
     suma += n;
+    cuantas += 1;
   }
-  return suma / notas.length;
+  if (cuantas === 0) {
+    return 0;
+  }
+  return suma / cuantas;
 }
 
 console.log(ficha("Luis"));           // grupo por defecto
@@ -64,18 +66,8 @@ console.log(media(7, 8, 9, 6));
 ```
 
 - **Valor por defecto:** `grupo = "DAW2"`.
-- **Rest** (`...notas`): agrupa el resto de argumentos en un array. El operador [spread](arrays.md) (`[...nombres]`) hace el camino contrario: despliega una lista en elementos sueltos.
-- Primitivos se pasan **por valor**; objetos y arrays, **por referencia** (la función puede mutar el mismo objeto).
-
-```javascript
-function marcar(obj) {
-  obj.visto = true;
-}
-
-const tarea = { titulo: "UT4" };
-marcar(tarea);
-console.log(tarea.visto); // true
-```
+- **Rest** (`...notas`): agrupa los argumentos que sobran. Se recorren con `for...of`, como la lista de la UT2. `length`, `push` y el resto de métodos del array están en el [apartado 4.3](arrays.md). El [spread](arrays.md) (`[...nombres]`) hace el camino contrario: despliega una lista en elementos sueltos.
+- Un número o una cadena se pasan **por valor**: la función no cambia la variable de fuera. Un array sí se puede modificar desde la función; el ejemplo está junto a `push`, en el apartado 4.3.
 
 ## Ámbito y anidamiento
 

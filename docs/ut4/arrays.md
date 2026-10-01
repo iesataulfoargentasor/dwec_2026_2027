@@ -68,6 +68,18 @@ cola.shift();          // quita "A" → ["B", "C"]
 cola.splice(1, 0, "X"); // inserta "X" en el índice 1 → ["B", "X", "C"]
 ```
 
+Un array se pasa **por referencia**: la función recibe el mismo array, no una copia.
+
+```javascript
+function anadir(lista, elemento) {
+  lista.push(elemento);
+}
+
+const tareas = ["A"];
+anadir(tareas, "B");
+console.log(tareas); // ["A", "B"]
+```
+
 !!! warning "`delete array[i]`"
     Deja un hueco `undefined` y **no** reduce `length`. Para borrar de verdad usa `splice`.
 
@@ -78,11 +90,12 @@ Tres puntos delante de un array, una cadena, un `Map` o un `Set` **despliegan** 
 ```javascript
 const nombres = ["Zoe", "Ana"];
 const copia = [...nombres];
-console.log(copia);             // ["Zoe", "Ana"]
-console.log(copia === nombres); // false: es otro array
+copia[0] = "Luis";
+console.log(copia);      // ["Luis", "Ana"]
+console.log(nombres);    // ["Zoe", "Ana"]
 ```
 
-`copia` tiene los mismos valores y no es el mismo array. Por eso `[...nombres].sort(...)` ordena la copia y deja `nombres` como estaba: `sort` y `reverse` modifican el array sobre el que se llaman.
+`copia` tiene los mismos valores de partida y no es el mismo array: cambiar `copia[0]` deja `nombres` como estaba.
 
 ```javascript
 const a = [1, 2];
@@ -111,8 +124,10 @@ const b = [3, 4];
 const juntos = a.concat(b); // a y b intactos
 const copia = a.slice();
 
-const nombres = ["Zoe", "Ana", "Luis"];
-const ordenados = [...nombres].sort((x, y) => x.localeCompare(y, "es"));
+const notas = [10, 2, 8];
+const ordenadas = [...notas].sort((x, y) => x - y);
+console.log(ordenadas); // [2, 8, 10]
+console.log(notas);     // [10, 2, 8]
 ```
 
 `sort()` sin función compara **como texto** (`10` queda antes que `2`). Para números: `.sort((a, b) => a - b)`.
@@ -131,10 +146,10 @@ console.log(notas[1][2]); // 8  → fila 1, columna 2
 
 ## Lo que no es un array
 
-- `edades["Juan"] = 20` no crea un array asociativo: añade una **propiedad** a un objeto. Para clave/valor usa un **objeto** `{}` o un [`Map`](map-set.md). Para «está o no está», sin duplicados, un [`Set`](map-set.md).
-- `document.forms` / `document.images` son `HTMLCollection`: tienen `length` e índices, pero **no** todos los métodos de `Array`. Conviertes con `Array.from(document.images)`.
+- `edades["Juan"] = 20` no mete a Juan en la lista por posición. Para asociar un nombre con un valor usa un [`Map`](map-set.md) (apartado 4.4). Para «está o no está», sin duplicados, un [`Set`](map-set.md). El objeto `{}` hace un papel parecido al `Map` y se ve en el apartado 4.7.
+- `document.forms` y `document.images` tienen `length` e índices, pero no son un array: no tienen `push`.
 
 ```javascript
-console.log(Array.isArray(coches));          // true
-console.log(Array.isArray({ 0: "a", length: 1 })); // false
+console.log(Array.isArray(coches)); // true
+console.log(Array.isArray("Seat")); // false
 ```
