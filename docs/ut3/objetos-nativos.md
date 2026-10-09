@@ -372,3 +372,72 @@ if (bruto === null) {
 - `JSON.stringify` produce el texto que se podría guardar o enviar. `JSON.parse` crea otro objeto con los mismos datos; por eso `copiaParte.turno` funciona.
 
 Prueba el script con `12`, con `hola`, con un texto vacío y pulsando Cancelar. Cada entrada sigue una rama distinta del `if`; comprobar esos casos forma parte de terminar el ejercicio.
+
+## Ejercicio propuesto: parte de préstamo del aula móvil
+
+### Contexto
+
+El departamento de informática presta tabletas para una actividad. Antes de entregar el carro móvil, con capacidad para **28 tabletas**, la persona responsable debe registrar cuántas solicita el grupo y generar un parte que después se podría guardar o enviar.
+
+No copies el caso de la biblioteca: el objetivo es escribir tu propio script aplicando los mismos objetos nativos. Trabaja en un archivo `prestamo-aula.js` cargado al final de un HTML y revisa el resultado en la consola.
+
+### Datos de partida
+
+Declara al comienzo del script estas constantes:
+
+| Dato | Valor |
+| --- | --- |
+| Capacidad total del carro | `28` tabletas |
+| Tabletas ya prestadas a otro grupo | `9` tabletas |
+| Coste estimado de sustitución por tableta dañada | `214.5` euros |
+| Fecha del parte | Instante actual con `new Date()` |
+
+Pide mediante `prompt` la cantidad de tabletas que solicita el grupo. Recuerda que el valor recibido es texto o `null`.
+
+### Requisitos obligatorios
+
+Tu programa debe cumplir estas condiciones:
+
+1. Si la persona pulsa **Cancelar**, muestra en consola que no se ha creado el parte y termina.
+2. Si escribe un texto vacío, letras, `Infinity` o una cantidad negativa, muestra un mensaje de error y no genera el JSON.
+3. Calcula las tabletas disponibles. El resultado nunca puede ser negativo: usa `Math.max`.
+4. Genera un identificador aleatorio **entero de cuatro cifras** (desde 1000 hasta 9999, ambos incluidos).
+5. Prepara una fecha legible en formato `dd/mm/aaaa`. Ten cuidado: `getMonth()` empieza en 0 y día/mes deben tener dos cifras.
+6. Calcula el coste máximo de sustitución del lote solicitado y muéstralo con **dos decimales**. Decide y comenta en tu código si ese resultado se usa para calcular o solo para presentar: `toFixed(2)` devuelve texto.
+7. Crea un objeto llamado `partePrestamo` con, al menos, estas propiedades:
+
+   ```text
+   fecha, identificador, solicitadas, yaPrestadas,
+   disponibles, costeMaximoSustitucion
+   ```
+
+8. Convierte el objeto a texto con `JSON.stringify`, muéstralo en consola y recupéralo con `JSON.parse`.
+9. Si se solicitan más tabletas de las disponibles, muestra un aviso claro. Si caben, informa de que el préstamo puede prepararse.
+
+!!! warning "Límites del ejercicio"
+    No uses funciones de usuario, arrays, bucles, DOM, eventos, `localStorage` ni `alert`. Solo necesitas variables, condiciones de la UT2 y `Date`, `Math`, `Number`, `String` y `JSON` de este apartado.
+
+### Casos que debes probar
+
+Antes de entregar, realiza estas pruebas y conserva en un comentario del archivo qué ocurrió en cada una:
+
+| Entrada en `prompt` | Resultado que debe observarse |
+| --- | --- |
+| `6` | Se genera un JSON; hay 19 tabletas disponibles y el préstamo cabe |
+| `25` | Se genera un JSON, pero aparece un aviso: no caben todas |
+| `hola` | Error de número no válido; no se genera JSON |
+| `-3` | Error de cantidad negativa; no se genera JSON |
+| Cadena vacía | Error; no se genera JSON |
+| Cancelar | Mensaje de cancelación; no se genera JSON |
+
+### Entrega
+
+Entrega el archivo `prestamo-aula.js` y una captura de consola con el caso válido `6`. En la captura deben verse:
+
+- la fecha legible;
+- el identificador de cuatro cifras;
+- el objeto JavaScript;
+- el texto JSON;
+- una propiedad leída desde el objeto recuperado con `JSON.parse`.
+
+La corrección valora que valides antes de crear el parte, que no confundas texto y número, que el identificador esté dentro del intervalo solicitado y que el JSON sea el resultado de `JSON.stringify`, no una cadena escrita a mano.
