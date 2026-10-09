@@ -287,3 +287,88 @@ Pruébalo con estos casos:
 | `BIB-2026-ABCD` | No válido: el final no son cifras |
 | `LIB-2026-0042` | No válido: prefijo incorrecto |
 | `BIB-26-42` | No válido: longitud incorrecta |
+
+## Ejercicio propuesto: registrar un archivo de entrega
+
+### Contexto
+
+El profesorado pide que cada ejercicio de la UT3 se entregue con un nombre de archivo uniforme:
+
+```text
+ut3-apellido-nombre.js
+```
+
+Por ejemplo:
+
+```text
+ut3-garcia-ana.js
+```
+
+El alumnado suele escribir mayúsculas, espacios al principio o al final, extensiones incorrectas o nombres sin el prefijo de la unidad. Debes crear un script llamado `registro-entrega.js` que reciba un nombre de archivo mediante `prompt`, lo compruebe y muestre un resumen en la consola.
+
+No copies el caso resuelto del préstamo de biblioteca: aquí no hay un código de longitud fija ni se valida un número. El objetivo es practicar búsqueda, extracción, normalización y sustitución de texto.
+
+### Requisitos obligatorios
+
+Tu script debe cumplir estas condiciones:
+
+1. Si se pulsa **Cancelar**, muestra que no se ha registrado ninguna entrega y termina.
+2. Elimina los espacios de los extremos y pasa el nombre a minúsculas. Así, `" UT3-Garcia-Ana.JS "` debe tratarse como `"ut3-garcia-ana.js"`.
+3. Comprueba que el nombre empieza por `ut3-` y termina por `.js`.
+4. Usa `lastIndexOf(".")` para localizar el último punto y `slice` para extraer:
+
+   - el nombre sin extensión;
+   - la extensión;
+   - el texto situado después del prefijo `ut3-`.
+
+5. Recorre el texto con un `for` y `charAt` para comprobar que **no contiene espacios internos**. Si hay un espacio entre apellido y nombre, no es válido.
+6. Comprueba que, después de `ut3-`, aparece al menos un guion: separa apellido y nombre. Puede haber más si el apellido es compuesto. Puedes contarlos con un contador y un `for`.
+7. Si el archivo es válido, prepara un título legible:
+
+   ```text
+   ENTREGA UT3: garcia ana
+   ```
+
+   Para ello, usa `replaceAll("-", " ")` sobre la parte sin prefijo y sin extensión.
+
+8. Muestra una cabecera de consola formada con `repeat` y alinea el texto `Estado: aceptado` con `padEnd`.
+9. Muestra también si el nombre contiene la palabra `prueba` mediante `includes`. No lo rechaces por ello: solo avisa en consola para que el profesorado pueda revisarlo.
+
+!!! warning "Límites del ejercicio"
+    No uses funciones de usuario, arrays, `split`, DOM, eventos, expresiones regulares, `localStorage` ni `alert`. Solo necesitas `prompt`, variables, `if`, un bucle `for` y los métodos de `String` de este apartado.
+
+### Pistas de diseño
+
+No son una solución completa, pero sí el orden lógico:
+
+1. Comprueba Cancelar antes de usar `trim`.
+2. Guarda la versión normalizada en una nueva constante.
+3. Valida prefijo y extensión antes de extraer y mostrar el resumen.
+4. Calcula la posición del último punto una sola vez y guárdala en una variable.
+5. Declara un contador con `let` antes del `for`: el contador cambiará.
+6. Solo imprime el resumen final cuando todas las reglas se cumplan.
+
+### Casos que debes probar
+
+| Entrada en `prompt` | Resultado esperado |
+| --- | --- |
+| `ut3-garcia-ana.js` | Aceptado; título con `garcia ana` |
+| ` UT3-Garcia-Ana.JS ` | Aceptado; se normaliza antes de validar |
+| `ut3-lopez-de-la-vega.js` | Aceptado; los guiones adicionales son válidos |
+| `ut3-garcia ana.js` | Rechazado: hay un espacio interno |
+| `ut2-garcia-ana.js` | Rechazado: prefijo incorrecto |
+| `ut3-garcia-ana.txt` | Rechazado: extensión incorrecta |
+| `ut3-prueba-ana.js` | Aceptado, pero muestra aviso por contener `prueba` |
+| Cancelar | No se registra ninguna entrega |
+
+### Entrega
+
+Entrega `registro-entrega.js` y una captura de consola de un caso válido y otro inválido. En el caso válido deben verse:
+
+- el nombre normalizado;
+- el nombre sin extensión y la extensión extraídos con `slice`;
+- el título legible creado con `replaceAll`;
+- una línea decorativa generada con `repeat`;
+- el estado alineado mediante `padEnd`.
+
+La corrección valora que cada regla tenga un mensaje claro, que no haya espacios internos, que uses `lastIndexOf` en lugar de asumir una posición fija para el punto y que no adelantes expresiones regulares ni métodos de arrays.
