@@ -254,6 +254,13 @@ Mover o redimensionar ventanas está restringido: normalmente solo puede intenta
 
 ## Caso práctico resuelto: iniciar una sesión de lectura
 
+!!! example "Prueba el scroll en una página preparada"
+    [Abrir el laboratorio de scroll](laboratorio-scroll.html). El HTML incluye contenido largo y el script de este caso resuelto.
+
+    Abre la consola con **F12**, pulsa **«Ir a la zona de prueba»** y después **«Ejecutar el caso resuelto»**. Introduce tu nombre, acepta el inicio y cierra el último aviso: observarás el regreso suave al principio. La consola conserva la posición inicial.
+
+    El botón permite ejecutar el ejemplo cuando ya estás abajo. Su evento es solo un soporte de demostración; no forma parte de los conceptos exigidos en este caso. Puedes repetir la prueba sin recargar y consultar el código dentro del propio laboratorio.
+
 Una página de apuntes quiere preparar una sesión de lectura sin tocar el HTML. Al cargarse, el script pregunta el nombre, solicita confirmación para comenzar y muestra en consola un resumen de la sesión:
 
 1. Nombre de la persona (o cancelación).
