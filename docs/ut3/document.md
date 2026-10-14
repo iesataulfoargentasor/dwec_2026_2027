@@ -28,6 +28,12 @@ console.log(window.document === document); // true
 
 El objeto existe mientras la página esté cargada. Si cambias de URL, se carga otro documento y el `document` anterior deja de ser el que ves.
 
+## Antes de probar: propiedades, métodos y carga del HTML
+
+`document.title = "Mis apuntes"` asigna una propiedad: no llama a un método ni recibe argumentos. En cambio, `document.getElementById("alta")` llama a un método y le pasa la cadena `"alta"` como argumento. Los paréntesis indican la llamada.
+
+Coloca el `<script src="practica.js"></script>` justo antes de cerrar `</body>`, o usa un script externo con `defer` en el `head`. Así el cuerpo ya estará creado al ejecutar el código. Si ejecutas el script demasiado pronto, `document.body` puede ser `null`. Para estas prácticas prepara un HTML sencillo con `<html lang="es">`, un `<title>`, un encabezado y varios párrafos.
+
 ## Propiedades útiles
 
 | Propiedad | Significado |
@@ -88,6 +94,10 @@ document.body.style.color = "#1f2937";
 document.body.style.fontSize = "18px";
 ```
 
+En `document.body.style.fontSize = "18px"`, `document.body` selecciona el cuerpo, `style` permite cambiar su estilo en línea y `fontSize` corresponde a `font-size` en CSS. `"18px"` es una cadena: `18` indica el tamaño y `px` la unidad. No escribas `18` sin unidad para este tamaño. Los valores `"#fff7ed"` y `"#1f2937"` son colores CSS hexadecimales, no nombres de variables.
+
+`color` fija el color del texto y `backgroundColor`, el fondo. Los estilos de los elementos hijos pueden tener sus propios colores o tamaños y prevalecer sobre los heredados del cuerpo. Estos cambios no editan el archivo HTML guardado; al recargar se vuelven a cargar los estilos originales (y se ejecuta otra vez el script).
+
 Este mecanismo es útil para una modificación puntual. Para un tema completo, es preferible añadir o quitar una **clase**: la regla visual sigue en CSS y el script solo expresa el comportamiento.
 
 Mejor aún: clases, para no mezclar diseño en el script:
@@ -112,6 +122,10 @@ document.body.classList.toggle("tema-oscuro");
 | `remove("clase")` | Quita la clase si estaba |
 | `toggle("clase")` | La añade si falta o la quita si existe |
 
+El argumento `"tema-oscuro"` es el nombre de la clase **sin punto**. El punto se usa en el selector CSS (`body.tema-oscuro`), no en `add`, `remove` o `toggle`. Estas operaciones cambian el atributo `class`; necesitas la regla CSS para que se vea un efecto.
+
+En las dos líneas del ejemplo, `add` añade la clase y el `toggle` siguiente la quita: pruébalas por separado si quieres observar el cambio. Repetir `add` no duplica la clase, mientras que repetir `toggle` alterna entre ponerla y quitarla.
+
 Eso cubre el criterio **c)**: cambiar el aspecto del documento con objetos del lenguaje, de forma actual.
 
 ## Colecciones `forms` / `images` / `links`
@@ -132,10 +146,18 @@ En esta unidad puedes usar `querySelector` / `querySelectorAll` (estándar DOM).
 | El primer elemento que cumple un selector CSS | `document.querySelector("main p")` |
 | Todos los elementos que cumplen un selector | `document.querySelectorAll("a")` |
 
+Los argumentos son cadenas con lo que se desea buscar:
+
+- `getElementById("alta")` recibe el identificador sin `#`.
+- `querySelector("#alta")` recibe un selector CSS: `#` significa identificador.
+- `querySelector(".aviso")` busca el primer elemento con la clase `aviso`; el punto significa clase.
+- `querySelector("main p")` busca el primer párrafo dentro de un `main`: el espacio indica descendencia.
+- `querySelectorAll("a")` busca todos los enlaces; `a` es el nombre de la etiqueta, no una variable. Si no hay coincidencias devuelve una colección vacía.
+
 `querySelector` devuelve un elemento o `null` si no encuentra ninguno. `querySelectorAll` devuelve una colección de elementos; se recorrerá con detalle cuando ya se hayan trabajado arrays y funciones.
 
 !!! failure "`document.write`"
-    `document.write("Hola")` solo es seguro **mientras** el HTML se está parseando. Si lo llamas después, **borra la página**. No lo uses para actualizar la interfaz. El apartado [3.7](generar-html.md) muestra las alternativas.
+    `document.write("Hola")` recibe texto que el navegador interpreta como HTML. Durante la carga puede insertar contenido en el flujo del documento; después de la carga puede abrir un documento nuevo y borrar el contenido existente. No lo uses para actualizar la interfaz. El apartado [3.7](generar-html.md) muestra las alternativas.
 
 ## Caso práctico resuelto: preparar el modo de lectura
 
@@ -153,6 +175,7 @@ Debe:
 Solo se usan `prompt`, `const`/`let`, `if`, `String`, `Date`, `document` y estilos en línea. No hay funciones de usuario, eventos, arrays, creación de nodos, `innerHTML` ni selectores.
 
 ```javascript
+// Ejecuta el script al final del body, cuando el cuerpo ya existe.
 const respuestaBruta = prompt("Elige tema de lectura: claro u oscuro", "claro");
 
 if (respuestaBruta === null) {
@@ -205,3 +228,63 @@ if (respuestaBruta === null) {
 - Un `referrer` vacío no es un error: es normal al escribir la URL, abrir un marcador o si una política de privacidad no lo envía.
 
 Prueba `claro`, `OSCURO`, una respuesta desconocida, solo espacios y Cancelar. Comprueba también que el título de la pestaña cambia cuando el tema es válido.
+
+## Ejercicio propuesto: preparar una página para estudiar
+
+### Contexto
+
+Una página de apuntes ofrece dos perfiles: **normal** y **ampliado**. Crea `modo-estudio.js` basándote en el caso resuelto. Debe preguntar el perfil, cambiar el título de la pestaña y el aspecto del cuerpo, y mostrar un resumen en consola.
+
+Prepara un HTML sencillo con `lang="es"`, un título y varios párrafos. Enlaza el script al final del `body`. No apliques estilos particulares a los párrafos, para observar los que heredan del cuerpo.
+
+### Requisitos obligatorios
+
+1. Pide el perfil con `prompt("Elige perfil: normal o ampliado", "normal")`. El primer argumento es el mensaje; el segundo rellena inicialmente el campo. Aceptar devuelve texto y Cancelar devuelve `null`.
+2. Si se pulsa Cancelar, informa en consola y no cambies el título ni los estilos.
+3. Normaliza la respuesta con `trim().toLowerCase()`. Acepta únicamente `normal` o `ampliado`. Una entrada vacía o desconocida debe producir un mensaje de error sin modificar la página.
+4. Para un perfil válido, guarda el título original y aplica los valores de esta tabla:
+
+| Propiedad | Perfil normal | Perfil ampliado |
+| --- | --- | --- |
+| `document.title` | `DWEC · Estudio normal` | `DWEC · Estudio ampliado` |
+| `document.body.style.backgroundColor` | `"#ffffff"` | `"#fff7ed"` |
+| `document.body.style.color` | `"#1f2937"` | `"#1f2937"` |
+| `document.body.style.fontSize` | `"16px"` | `"20px"` |
+
+5. Crea la fecha y hora de preparación con `Date`. Muestra la hora como `HH:MM` con `String` y `padStart`.
+6. Muestra una cabecera, el perfil, la fecha, la hora, el título original, el nuevo título, `document.URL`, `document.documentElement.lang` y `document.lastModified`. Identifica esta última como información del servidor, no como fecha garantizada de actualización de los apuntes.
+7. Si el idioma HTML está vacío, indica «Idioma no declarado». No lo confundas con el idioma del navegador.
+8. Si `document.referrer` está vacío, indica «Origen no comunicado: acceso directo o restricciones de privacidad». Si contiene texto, muéstralo. No afirmes que un valor vacío demuestra un acceso directo.
+
+!!! warning "Límites del ejercicio"
+    Usa variables, condiciones, plantillas, `Date`, `String`, `prompt` y las propiedades de `document`. No necesitas selectores, clases, funciones de usuario, arrays, bucles, eventos, creación de nodos, `innerHTML`, `document.write` ni almacenamiento.
+
+### Pistas de diseño
+
+1. Comprueba `null` antes de llamar a los métodos de cadena.
+2. Organiza la validación para que una respuesta incorrecta no llegue a las asignaciones de estilos.
+3. Guarda el título original antes de reemplazarlo. Cambiar `document.title` no modifica el encabezado visible.
+4. Usa `if` / `else if` para aplicar cada perfil y un bloque común para el resumen de los perfiles válidos.
+5. Los valores de estilo son cadenas CSS. Puedes leerlos después mediante la misma propiedad; el navegador puede expresar un color hexadecimal como `rgb(...)` sin que eso sea un error.
+6. Recarga entre pruebas. La práctica no guarda preferencias y volverá a preguntar al ejecutar el script.
+
+### Casos que debes probar
+
+| Entrada o situación | Resultado esperado |
+| --- | --- |
+| `normal` | Fondo blanco, texto de 16px y título de estudio normal |
+| ` AMPLIADO ` | Se normaliza; fondo crema, texto de 20px y título de estudio ampliado |
+| `oscuro` | Mensaje de error; título y estilos sin cambios |
+| Vacío o solo espacios | Error; sin cambios |
+| Cancelar | Cancelación; sin cambios |
+| HTML con `lang="es"` | El resumen muestra `es` |
+| HTML sin atributo `lang` | El resumen indica que no se declaró idioma |
+| `referrer` vacío | Origen no comunicado, sin asegurar una causa concreta |
+
+Para probar la falta de idioma, quita temporalmente el atributo del HTML, recarga y restáuralo antes de entregar. Para observar el origen, compara una apertura directa y otra desde un enlace: las políticas del navegador pueden mantenerlo vacío en ambos casos.
+
+### Entrega
+
+Entrega el HTML y `modo-estudio.js`, con capturas de ambos perfiles y de una entrada inválida. Incluye el resumen de consola y comprueba visualmente el título de la pestaña y el tamaño del texto.
+
+Explica qué significa `"20px"`, por qué se usa `fontSize` en JavaScript y qué diferencia hay entre el título de la pestaña y el encabezado del documento. La corrección valora que valides antes de modificar, mantengas el nivel del caso resuelto y puedas explicar cada propiedad utilizada.
