@@ -92,7 +92,11 @@ Cada uno devuelve (o no devuelve) algo diferente:
 | `confirm(mensaje)` | Aceptar / Cancelar | `true` o `false` |
 | `prompt(mensaje, valorInicial)` | Campo de texto | Texto escrito o `null` al cancelar |
 
-`prompt` **siempre** devuelve texto, aunque el usuario escriba `18`. Si el caso necesita un número, conviértelo explícitamente y valida, como ya viste en la UT2 y en [3.1](objetos-nativos.md).
+En `prompt("Tu nombre:", "")`, el primer argumento es el mensaje y el segundo es el texto inicial del campo. `""` deja el campo vacío; `"Ana"` lo rellenaría con Ana, pero la persona puede cambiarlo. El segundo argumento es opcional. Aceptar con el campo vacío devuelve `""`, mientras que Cancelar devuelve `null`.
+
+En `alert(mensaje)` y `confirm(mensaje)`, el argumento es el texto del cuadro. `confirm` no borra ni cambia datos por sí mismo: solo devuelve la decisión para que el programa actúe.
+
+Al aceptar, `prompt` devuelve texto, aunque el usuario escriba `18`. Si el caso necesita un número, conviértelo explícitamente y valida, como ya viste en la UT2 y en [3.1](objetos-nativos.md).
 
 ```javascript
 const bruto = prompt("¿Cuántas copias?", "1");
@@ -111,6 +115,11 @@ En interfaces reales se sustituyen por HTML (modales, formularios). En esta unid
 
 ## Temporizadores
 
+`setTimeout(funcion, retraso)` programa una ejecución; `setInterval(funcion, intervalo)` programa repeticiones. El primer argumento es la función que se ejecutará después. El segundo es un tiempo en **milisegundos**: `1000` equivale a un segundo y `2000`, a dos. No es una hora del reloj ni una garantía de puntualidad.
+
+En `() => { ... }`, los paréntesis indican que la función no recibe parámetros y las llaves contienen sus instrucciones. Aquí solo necesitas reconocer esa sintaxis; se desarrolla en la UT4.
+
+
 ```javascript
 const id = setTimeout(() => {
   console.log("Han pasado 2 segundos");
@@ -124,6 +133,8 @@ const repetir = setInterval(() => {
 
 // clearInterval(repetir);
 ```
+
+`id` y `repetir` guardan los identificadores devueltos por el navegador. `clearTimeout(id)` cancela la ejecución pendiente y `clearInterval(repetir)` detiene las repeticiones: su argumento es el identificador, no el tiempo. Las líneas que empiezan por `//` son comentarios; para detener el intervalo debes ejecutar `clearInterval(repetir)`.
 
 Pasa **una función**, no una cadena (`setTimeout("Mover()", 100)` evalúa código: inseguro y obsoleto).
 
@@ -165,29 +176,78 @@ Los temporizadores necesitan una **función de devolución** (*callback*): una i
 
 ## Tamaño y desplazamiento
 
+Consultar una propiedad no es lo mismo que llamar a un método: `window.innerHeight` lee la altura visible; `window.scrollTo(...)` pide al navegador que desplace la página. Las distancias de estos ejemplos se expresan en **píxeles CSS**.
+
+### Dos números: horizontal y vertical
+
 ```javascript
-console.log("Viewport:", window.innerWidth, window.innerHeight);
+window.scrollTo(0, 300);
+window.scrollBy(0, 300);
+```
+
+- En `scrollTo(x, y)` los argumentos son la **posición de destino**: `0` sitúa el borde izquierdo al inicio y `300` sitúa el borde superior a 300 píxeles del inicio del documento.
+- En `scrollBy(x, y)` son el **desplazamiento desde la posición actual**: `0` no cambia la posición horizontal y `300` baja otros 300 píxeles. Un valor vertical negativo sube.
+- Si estás en Y = 500, `scrollTo(0, 300)` intenta llevarte a Y = 300; `scrollBy(0, 300)` intenta llevarte a Y = 800. El recorrido queda limitado por el espacio desplazable de la página.
+
+### Un objeto de opciones: ¿qué significa cada parte?
+
+```javascript
 window.scrollTo({ top: 0, behavior: "smooth" });
 ```
 
-`scrollTo` mueve la página a una posición concreta. `scrollBy` desplaza una cantidad respecto a la posición actual:
+La llamada recibe **un solo argumento**, el objeto situado entre `{ }`. Dentro hay parejas `nombre: valor` separadas por comas. No son dos argumentos ni un bloque de instrucciones: son opciones que lee el método.
+
+| Opción | Significado en `scrollTo` |
+| --- | --- |
+| `top: 0` | Destino vertical: volver al principio del documento |
+| `left: 0` | Destino horizontal: volver al borde izquierdo |
+| `behavior: "smooth"` | Animar el recorrido de forma suave, en lugar de un salto brusco |
+
+`top` y `behavior` son nombres de propiedades. `0` es un número y `"smooth"` es una cadena con un valor reconocido por el navegador; debe escribirse entre comillas. No es una variable que tengas que declarar. Al omitir `left` se conserva la posición horizontal actual.
+
+`behavior` indica **cómo** desplazarse, no hasta dónde ni durante cuántos segundos:
+
+| Valor | Efecto |
+| --- | --- |
+| `"smooth"` | Desplazamiento animado; el navegador decide la duración |
+| `"instant"` | Salto inmediato a la posición indicada |
+| `"auto"` | Sigue el valor CSS de `scroll-behavior`; no significa siempre salto inmediato |
+
+Si omites `behavior` se utiliza `"auto"`. Para volver arriba y a la izquierda con animación puedes escribir:
 
 ```javascript
-window.scrollTo(0, 0); // arriba a la izquierda
-window.scrollBy(0, 300); // 300 píxeles hacia abajo
+window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 ```
 
-La forma con objeto permite explicar la intención:
+`scrollBy` admite las mismas opciones, pero `top` y `left` representan **cantidades que se suman** a la posición actual:
 
 ```javascript
-window.scrollTo({ top: 0, behavior: "smooth" });
+window.scrollBy({ top: 300, left: 0, behavior: "smooth" }); // bajar 300
+window.scrollBy({ top: -150, left: 0, behavior: "instant" }); // subir 150
 ```
 
-`moveTo`, `moveBy`, `resizeTo` y `resizeBy` **solo funcionan** en ventanas abiertas por script, y muchos navegadores los ignoran. No cuentes con ellos en una pestaña normal.
+Prueba cada línea por separado en una página larga. Espera a que termine un movimiento antes de ejecutar el siguiente. Si todo el contenido cabe en la ventana, o ya estás en el límite solicitado, no apreciarás movimiento.
 
-`print()` abre el diálogo de impresión: `window.print()`.
+!!! warning "La animación no detiene el script"
+    Después de llamar a `scrollTo` con `"smooth"`, JavaScript continúa. Leer `scrollY` en la línea siguiente no garantiza obtener la posición final. Para registrar el punto de partida, guarda `scrollX` y `scrollY` **antes** de desplazar. Un diálogo modal abierto durante la animación puede interferir con su visualización.
 
-`focus()` / `blur()` cambian el foco; úsalos con cuidado (accesibilidad).
+Referencia: [opciones de scrollTo en MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo).
+
+### Otros métodos de la ventana
+
+Estos métodos afectan a la ventana del navegador, no al desplazamiento del documento:
+
+| Método | Argumentos y efecto |
+| --- | --- |
+| `moveTo(x, y)` | Intenta colocar la ventana en unas coordenadas de la pantalla |
+| `moveBy(dx, dy)` | Intenta moverla una cantidad horizontal y vertical desde su posición actual |
+| `resizeTo(ancho, alto)` | Intenta fijar las dimensiones exteriores de la ventana, en píxeles |
+| `resizeBy(deltaAncho, deltaAlto)` | Intenta aumentar o reducir esas dimensiones; los valores negativos reducen |
+| `print()` | Sin argumentos: abre el diálogo de impresión del documento actual; no imprime sin intervención del usuario |
+| `focus()` | Sin argumentos: solicita el foco para la ventana |
+| `blur()` | Sin argumentos: solicita retirar el foco; es un método desaconsejado y puede no tener efecto |
+
+Mover o redimensionar ventanas está restringido: normalmente solo puede intentarse con ventanas abiertas por script, y aun así el navegador puede impedirlo. El foco también está sujeto a restricciones. No bases una práctica en que funcionen en una pestaña normal. La apertura de ventanas se estudia en el apartado 3.8.
 
 !!! tip "Depuración"
     En la consola, `window` es el global. Escribe `location` o `innerWidth` y pulsa Intro. En **Sources** puedes poner un punto de interrupción dentro del `setTimeout`.
@@ -222,7 +282,8 @@ if (nombreBruto === null) {
     const empezar = confirm(`Hola, ${nombre}. ¿Quieres iniciar la sesión de lectura?`);
 
     if (empezar) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const desplazamientoInicialX = window.scrollX;
+      const desplazamientoInicialY = window.scrollY;
 
       console.log("================================");
       console.log(" SESIÓN DE LECTURA INICIADA ");
@@ -230,10 +291,12 @@ if (nombreBruto === null) {
       console.log(`Alumno/a: ${nombre}`);
       console.log(`Hora de inicio: ${hora}:${minutos}`);
       console.log(`Zona de lectura: ${window.innerWidth} × ${window.innerHeight}`);
-      console.log(`Desplazamiento inicial: X=${window.scrollX}, Y=${window.scrollY}`);
+      console.log(`Desplazamiento inicial: X=${desplazamientoInicialX}, Y=${desplazamientoInicialY}`);
       console.log("Si necesitas una copia en papel, usa el menú del navegador o window.print().");
 
       alert(`Sesión iniciada, ${nombre}. Revisa la consola para ver el resumen.`);
+      // Después de cerrar el diálogo: destino vertical 0, recorrido animado.
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       console.log(`${nombre} ha decidido no iniciar la sesión.`);
     }
@@ -246,8 +309,72 @@ if (nombreBruto === null) {
 - `prompt` devuelve texto o `null`; por eso se comprueba Cancelar antes de llamar a `trim`.
 - `trim` evita aceptar como nombre una cadena formada solo por espacios.
 - `confirm` devuelve un booleano: el bloque de inicio se ejecuta solo cuando vale `true`.
-- `window.scrollTo` utiliza el desplazamiento de la página. En una página ya arriba apenas se apreciará el cambio.
+- `window.scrollTo({ top: 0, behavior: "smooth" })` vuelve al principio vertical con una animación y conserva la posición horizontal. Se ejecuta después de cerrar el aviso para que el diálogo no interrumpa el movimiento. En una página ya arriba apenas se apreciará el cambio.
+- Las constantes `desplazamientoInicialX` y `desplazamientoInicialY` guardan la posición anterior al movimiento. El resumen no confunde el inicio con una lectura tomada durante la animación.
 - `innerWidth` e `innerHeight` muestran el tamaño de la zona donde se lee el contenido, no el de la pantalla completa.
 - El caso **no ejecuta** `window.print()` automáticamente: abrir un diálogo de impresión nada más cargar sería intrusivo. La línea informa de que existe; el método se prueba manualmente desde consola.
 
 Prueba cuatro recorridos: Cancelar el primer diálogo, escribir solo espacios, pulsar Cancelar en la confirmación y aceptar. Cada uno termina en una rama distinta sin necesitar eventos ni funciones de usuario.
+
+## Ejercicio propuesto: preparar una sesión de repaso
+
+### Contexto
+
+Antes de repasar la UT3, quieres que una página de apuntes pregunte tu nombre, confirme el inicio y prepare la zona de lectura. Crea un archivo `sesion-repaso.js` tomando como referencia el caso resuelto.
+
+La práctica mantiene los mismos conceptos, pero permite elegir entre volver al principio con una animación o con un salto inmediato. El resultado se muestra en la consola, sin modificar el HTML mediante JavaScript.
+
+### Requisitos obligatorios
+
+1. Pide el nombre con `window.prompt`. Usa como segundo argumento una cadena vacía para que el campo aparezca vacío.
+2. Si se pulsa Cancelar, escribe «Repaso cancelado» en consola y no continúes con los demás diálogos ni desplaces la página.
+3. Elimina los espacios de los extremos con `trim`. Si el nombre queda vacío, muestra un único `alert` que indique el error y no inicies la sesión.
+4. Solicita confirmación con `window.confirm`, incluyendo el nombre en el mensaje. Si la respuesta es `false`, informa en consola de que la sesión no se ha iniciado y no hagas más preguntas.
+5. Si se acepta, crea la fecha y hora del inicio con `Date`. Muestra la hora como `HH:MM`, usando `String` y `padStart`.
+6. Guarda `window.scrollX` y `window.scrollY` antes de mover la página. Muestra una cabecera, el nombre limpio, la fecha, la hora, `innerWidth`, `innerHeight` y el desplazamiento inicial.
+7. Pregunta mediante otro `confirm`: «¿Quieres volver al principio con una animación? Aceptar: suave. Cancelar: salto inmediato». En este diálogo, Cancelar **elige el salto inmediato**, no cancela la sesión.
+8. Usa `window.scrollTo` con un objeto de opciones para volver arriba y a la izquierda:
+
+    - `top` y `left` deben valer `0`: indican el destino.
+    - Si se acepta la última pregunta, usa `behavior: "smooth"`.
+    - Si se cancela esa pregunta, usa `behavior: "instant"`.
+
+9. Informa en consola del tipo de movimiento solicitado. No afirmes que la animación ya ha terminado ni abras otro diálogo después de iniciarla.
+10. Muestra una instrucción para probar `window.print()` manualmente desde la consola. No ejecutes la impresión automáticamente: el método no recibe argumentos y abre el diálogo de impresión de la página actual.
+
+!!! warning "Límites del ejercicio"
+    No uses funciones de usuario, temporizadores, arrays, DOM, eventos, `location`, `history`, almacenamiento ni apertura de ventanas. Basta con variables, condiciones, plantillas, `Date`, `String` y los miembros de `window` explicados en este apartado.
+
+### Pistas de diseño
+
+1. Comprueba `null` antes de llamar a `trim`. Un nombre vacío y Cancelar son situaciones diferentes.
+2. Organiza el programa con bloques `if` / `else` para que las ramas canceladas no alcancen las instrucciones de inicio. No necesitas un `return` fuera de una función.
+3. Guarda cada respuesta de `confirm` en una constante con un nombre distinto: una decide si se inicia y otra el tipo de desplazamiento.
+4. Toma la fecha después de aceptar el inicio para que corresponda al momento de empezar.
+5. Lee la posición inicial antes de llamar a `scrollTo`. No uses una lectura inmediata posterior como prueba de que el movimiento suave ha finalizado.
+6. Recuerda que `{ top: 0, left: 0, behavior: "smooth" }` es un solo argumento de tipo objeto, con tres propiedades. No necesitas crear una función ni una clase para usarlo.
+
+### Casos que debes probar
+
+| Entrada o decisión | Resultado esperado |
+| --- | --- |
+| Cancelar el nombre | Mensaje de cancelación, sin más diálogos ni movimiento |
+| Nombre vacío o solo espacios | Aviso de error; no se inicia el repaso |
+| ` Ana ` y Cancelar el inicio | No se inicia; no se pregunta por la animación |
+| ` Ana `, aceptar el inicio y aceptar la animación | Resumen con `Ana` y vuelta suave al principio |
+| Nombre válido, aceptar el inicio y cancelar la animación | Sesión iniciada y salto inmediato al principio |
+| Página situada a mitad del documento | El resumen conserva el desplazamiento anterior al movimiento |
+| Página ya al principio o sin contenido suficiente para desplazar | La sesión funciona, aunque no se observe movimiento |
+
+Para observar el efecto, utiliza un HTML con suficiente contenido para hacer scroll. Puedes ejecutar el contenido del script desde la consola después de desplazarte hacia abajo; recarga entre pruebas para evitar redeclarar constantes. Prueba también el archivo enlazado al final del `body`. Si se ejecuta al cargar y la página ya está arriba, no habrá recorrido visible.
+
+### Entrega
+
+Entrega `sesion-repaso.js` y dos capturas de consola: una sesión iniciada y una cancelada. Añade una explicación breve de:
+
+- qué devuelve cada uno de los dos `confirm` y qué significa Cancelar en cada caso;
+- qué hacen `top`, `left` y `behavior`;
+- en qué se diferencian `"smooth"` e `"instant"`;
+- por qué la posición inicial se guarda antes de desplazar.
+
+La corrección valora las ramas de cancelación, el tratamiento del nombre, la claridad del resumen y que puedas explicar los argumentos de los métodos utilizados. No se pide entregar una solución con funciones o eventos de unidades posteriores.
