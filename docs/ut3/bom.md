@@ -219,3 +219,80 @@ if (anchoVentana < 800) {
 - La fecha se prepara con `Date`; `padStart` evita que las 9:05 aparezcan como `9:5`.
 
 Prueba el script con la pestaña a pantalla completa y después estrechándola. Observa que cambia el ancho de `window.innerWidth`; la resolución de `screen.width` suele mantenerse.
+
+## Ejercicio propuesto: ficha del equipo para una sesión de estudio
+
+### Contexto
+
+Antes de trabajar con los apuntes de DWEC, quieres obtener una ficha breve del equipo que vas a utilizar. Crea un script llamado `ficha-estudio.js` que muestre en la **consola** información del navegador, las dimensiones de la pantalla y el tamaño de la pestaña, junto con algunas recomendaciones.
+
+Toma como referencia el caso resuelto del diagnóstico del aula. En esta ocasión, añadirás el área disponible de la pantalla y distinguirás tres tamaños de pestaña.
+
+### Requisitos obligatorios
+
+1. Crea un objeto `Date` con el momento de ejecución. Muestra la fecha y la hora en formato `HH:MM`. Utiliza `String` y `padStart` para que horas y minutos tengan dos cifras.
+2. Muestra una cabecera con el título `FICHA DE LA SESIÓN DE ESTUDIO` y una línea separadora creada mediante `repeat`.
+3. Muestra el idioma principal del navegador y el número aproximado de núcleos lógicos.
+4. Muestra estas tres parejas de dimensiones, identificándolas con etiquetas diferentes:
+
+    - **Pantalla completa:** `screen.width` y `screen.height`.
+    - **Área disponible de la pantalla:** `screen.availWidth` y `screen.availHeight`.
+    - **Área de contenido de la pestaña:** `window.innerWidth` y `window.innerHeight`.
+
+5. Consulta `navigator.onLine` y muestra el mensaje correspondiente:
+
+    - Si es `true`: «Red: el navegador indica que está en línea».
+    - Si es `false`: «Red: el navegador indica que está sin conexión; consulta los materiales que tengas guardados».
+
+6. Consulta `navigator.cookieEnabled` e indica si el navegador acepta cookies o si están desactivadas.
+7. Comprueba si existe `"geolocation"` en `navigator`. Informa de si la API está disponible, **sin solicitar la ubicación ni pedir permiso**.
+8. Utiliza `if` / `else if` / `else` para mostrar una recomendación según el ancho de la **pestaña**:
+
+    - Menos de 700 píxeles: «Pestaña estrecha: amplía la ventana para leer los ejemplos».
+    - Desde 700 hasta menos de 1100 píxeles: «Pestaña mediana: espacio suficiente para consultar los apuntes».
+    - A partir de 1100 píxeles: «Pestaña amplia: puedes consultar los apuntes con comodidad».
+
+9. Termina con este recordatorio: «Los datos son orientativos: estar en línea no garantiza acceso a Internet y disponer de la API de geolocalización no significa tener permiso para usarla».
+
+!!! warning "Límites del ejercicio"
+    No uses funciones de usuario, arrays, DOM, eventos, diálogos (`prompt`, `alert`, `confirm`), `location`, `history`, almacenamiento ni apertura de ventanas.
+
+    Solo necesitas variables, plantillas de texto, condiciones, operadores, `Date`, `String`, `navigator`, `screen`, `window` y `console.log`.
+
+### Pistas de diseño
+
+1. Prepara la fecha, las horas y los minutos al principio.
+2. Guarda las dimensiones en constantes cuyos nombres distingan pantalla, área disponible y pestaña.
+3. Imprime primero la cabecera y los datos; después, los mensajes y recomendaciones.
+4. Para clasificar la pestaña, comprueba primero si su ancho es menor que 700 y después si es menor que 1100. El último `else` cubre el resto.
+5. Utiliza el ancho de `window` para la recomendación: una pantalla grande puede contener una ventana estrecha.
+6. Ejecuta de nuevo el script después de redimensionar la ventana. Sin eventos, la ficha no se actualiza automáticamente.
+
+### Casos que debes probar
+
+| Situación | Resultado esperado |
+| --- | --- |
+| Hora 9:05 | Se muestra `09:05` |
+| Ancho de pestaña de 699 píxeles | Pestaña estrecha |
+| Ancho de pestaña de 700 píxeles | Pestaña mediana |
+| Ancho de pestaña de 1099 píxeles | Pestaña mediana |
+| Ancho de pestaña de 1100 píxeles | Pestaña amplia |
+| `navigator.onLine` vale `true` | Informa de que está en línea, sin garantizar Internet |
+| `navigator.onLine` vale `false` | Informa de que está sin conexión |
+| Cookies activadas o desactivadas | Mensaje correspondiente |
+| Geolocalización disponible o no disponible | Informa de su existencia sin pedir permisos |
+
+Prueba al menos dos anchos reales cambiando el tamaño de la ventana y ejecutando de nuevo el script.
+
+Para comprobar límites exactos o condiciones que no puedas reproducir, puedes sustituir temporalmente un dato guardado en una variable por un valor de prueba. Indica qué casos has simulado y restaura la lectura del BOM antes de entregar. No intentes modificar las propiedades de `navigator` o `screen`.
+
+### Entrega
+
+Entrega `ficha-estudio.js` y dos capturas de consola con distintos anchos de pestaña y recomendaciones diferentes. Deben verse la fecha, la hora, los datos del navegador, las tres parejas de dimensiones y todos los mensajes.
+
+Añade una explicación breve:
+
+- ¿Qué dimensiones han cambiado al redimensionar la ventana?
+- ¿Por qué `navigator.onLine` no permite asegurar que la web del centro funcione?
+
+La corrección valora que distingas pantalla y pestaña, clasifiques correctamente los valores límite y muestres mensajes claros utilizando únicamente los conceptos trabajados hasta este apartado.
