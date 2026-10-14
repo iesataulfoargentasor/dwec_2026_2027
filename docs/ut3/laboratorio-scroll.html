@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorio de scroll · DWEC</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font: 18px/1.65 system-ui, sans-serif; color: #193248; background: #f5f7fa; }
+main { max-width: 900px; margin: auto; padding: 28px; }
+header, section { padding: 36px; margin-bottom: 28px; border-radius: 18px; background: white; border: 1px solid #d9e2eb; }
+header { border-top: 8px solid #087f8c; }
+section.tramo { min-height: 85vh; display: flex; flex-direction: column; justify-content: center; }
+.numero { font-size: 64px; font-weight: 800; color: #087f8c; margin: 0; }
+h1,h2 { line-height: 1.2; }
+code { background: #edf2f7; padding: 3px 6px; border-radius: 4px; }
+button,a.boton { display: inline-block; padding: 14px 22px; border: 0; border-radius: 9px; background: #075e69; color: white; font: inherit; text-decoration: none; cursor: pointer; }
+button:focus-visible,a:focus-visible { outline: 4px solid #df8700; outline-offset: 4px; }
+.nota { padding: 18px; background: #fff4d6; border-left: 4px solid #c67c00; }
+pre { overflow: auto; padding: 20px; background: #edf2f7; font-size: 14px; }
+pre code { padding: 0; }
+#prueba { border-top: 8px solid #087f8c; }
+@media(max-width:600px) { main { padding: 12px; } header,section { padding: 22px; } }
+</style>
+</head>
+<body>
+<main>
+<header id="inicio">
+<p>DWEC · UT3 · El objeto window</p>
+<h1>Observa cómo se mueve la página</h1>
+<p>Este documento tiene varios tramos altos para que exista recorrido vertical. El caso práctico resuelto está incluido y se ejecuta al pulsar el botón situado al final.</p>
+<ol>
+<li>Abre la consola del navegador (F12 → Consola).</li>
+<li>Baja con la rueda del ratón o utiliza el enlace siguiente.</li>
+<li>Pulsa «Ejecutar el caso resuelto», escribe un nombre y acepta el inicio.</li>
+<li>Cierra el aviso final y observa el regreso suave hasta aquí.</li>
+</ol>
+<a class="boton" href="#prueba">Ir a la zona de prueba ↓</a>
+<p class="nota">No se ejecuta el caso al cargar: en ese momento normalmente estarías arriba y no se apreciaría movimiento. El enlace baja mediante un ancla HTML, sin JavaScript.</p>
+</header>
+<section class="tramo">
+<p class="numero">01</p><h2>La pantalla muestra solo una parte</h2>
+<p>El documento es más alto que el área visible. <code>window.innerHeight</code> indica la altura de esa área, no la altura de todo este HTML.</p>
+<p>Desplázate y ejecuta <code>window.scrollY</code> en consola: informa de cuántos píxeles CSS has bajado desde el principio.</p>
+</section>
+<section class="tramo">
+<p class="numero">02</p><h2>Posición de destino</h2>
+<p><code>window.scrollTo({ top: 0, behavior: "smooth" })</code> solicita volver a la posición vertical cero.</p>
+<p><code>top: 0</code> indica el destino; <code>behavior: "smooth"</code>, que el recorrido se anime. El navegador decide su duración.</p>
+<p>Como no se indica <code>left</code>, la posición horizontal se conserva. Esta página está diseñada para practicar el desplazamiento vertical.</p>
+</section>
+<section class="tramo">
+<p class="numero">03</p><h2>La posición inicial se guarda antes</h2>
+<p>El caso resuelto guarda <code>scrollX</code> y <code>scrollY</code> antes de solicitar el movimiento. Por eso el resumen conserva el lugar desde el que comenzaste.</p>
+<p>La animación no detiene JavaScript. Leer <code>scrollY</code> inmediatamente después de llamar al método no garantiza que el recorrido haya terminado.</p>
+</section>
+<section id="prueba">
+<p>Zona de prueba</p><h2>Inicia la sesión desde aquí</h2>
+<p>Ya estás lejos del comienzo del documento. Deja la consola abierta y pulsa el botón.</p>
+<button id="ejecutar" type="button">Ejecutar el caso resuelto ↑</button>
+<p><strong>Resultado esperado:</strong> al aceptar los diálogos y cerrar el último aviso, la página vuelve suavemente al inicio. En consola queda el desplazamiento inicial, normalmente con Y mayor que cero.</p>
+<p>Cancelar el nombre, escribir solo espacios o rechazar el inicio no debe mover la página mediante el script. El navegador puede ajustar la vista al enfocar controles o abrir herramientas.</p>
+<p>Para repetir, vuelve a bajar mediante el enlace del inicio. No hace falta recargar.</p>
+<details><summary>Ver el código del caso resuelto</summary><pre><code id="codigo"></code></pre></details>
+</section>
+<section>
+<h2>Cómo aplicar tu propio script</h2>
+<p>El botón es un soporte de demostración: su evento permite ejecutar el ejemplo cuando ya has bajado. No forma parte de los conceptos exigidos en el caso de la UT3.</p>
+<p>En el código fuente, busca los comentarios <strong>INICIO DEL CASO RESUELTO</strong> y <strong>FIN DEL CASO RESUELTO</strong>. Puedes reemplazar únicamente el contenido entre ellos.</p>
+<p>También puedes ejecutar el ejemplo directamente en consola, después de bajar, sin utilizar el botón. Si lo enlazas como un script que se ejecuta al cargar, el movimiento puede no apreciarse porque la página ya estará al principio.</p>
+</section>
+</main>
+<script>
+// Soporte de demostración: el evento espera al clic y permite repetir
+// el ejemplo sin redeclarar sus constantes en el ámbito global.
+document.getElementById("ejecutar").addEventListener("click", () => {
+// INICIO DEL CASO RESUELTO
+const nombreBruto = prompt("¿Cómo te llamas?", "");
+const ahora = new Date();
+const hora = String(ahora.getHours()).padStart(2, "0");
+const minutos = String(ahora.getMinutes()).padStart(2, "0");
+
+if (nombreBruto === null) {
+  console.log("Sesión no iniciada: se ha pulsado Cancelar.");
+} else {
+  const nombre = nombreBruto.trim();
+
+  if (nombre === "") {
+    alert("Escribe un nombre para iniciar la sesión.");
+  } else {
+    const empezar = confirm(`Hola, ${nombre}. ¿Quieres iniciar la sesión de lectura?`);
+
+    if (empezar) {
+      const desplazamientoInicialX = window.scrollX;
+      const desplazamientoInicialY = window.scrollY;
+
+      console.log("================================");
+      console.log(" SESIÓN DE LECTURA INICIADA ");
+      console.log("================================");
+      console.log(`Alumno/a: ${nombre}`);
+      console.log(`Hora de inicio: ${hora}:${minutos}`);
+      console.log(`Zona de lectura: ${window.innerWidth} × ${window.innerHeight}`);
+      console.log(`Desplazamiento inicial: X=${desplazamientoInicialX}, Y=${desplazamientoInicialY}`);
+      console.log("Si necesitas una copia en papel, usa el menú del navegador o window.print().");
+
+      alert(`Sesión iniciada, ${nombre}. Revisa la consola para ver el resumen.`);
+      // Después de cerrar el diálogo: destino vertical 0, recorrido animado.
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      console.log(`${nombre} ha decidido no iniciar la sesión.`);
+    }
+  }
+}
+// FIN DEL CASO RESUELTO
+});
+// Muestra el mismo ejemplo como texto; no lo ejecuta.
+document.getElementById("codigo").textContent = "const nombreBruto = prompt(\"¿Cómo te llamas?\", \"\");\nconst ahora = new Date();\nconst hora = String(ahora.getHours()).padStart(2, \"0\");\nconst minutos = String(ahora.getMinutes()).padStart(2, \"0\");\n\nif (nombreBruto === null) {\n  console.log(\"Sesión no iniciada: se ha pulsado Cancelar.\");\n} else {\n  const nombre = nombreBruto.trim();\n\n  if (nombre === \"\") {\n    alert(\"Escribe un nombre para iniciar la sesión.\");\n  } else {\n    const empezar = confirm(`Hola, ${nombre}. ¿Quieres iniciar la sesión de lectura?`);\n\n    if (empezar) {\n      const desplazamientoInicialX = window.scrollX;\n      const desplazamientoInicialY = window.scrollY;\n\n      console.log(\"================================\");\n      console.log(\" SESIÓN DE LECTURA INICIADA \");\n      console.log(\"================================\");\n      console.log(`Alumno/a: ${nombre}`);\n      console.log(`Hora de inicio: ${hora}:${minutos}`);\n      console.log(`Zona de lectura: ${window.innerWidth} × ${window.innerHeight}`);\n      console.log(`Desplazamiento inicial: X=${desplazamientoInicialX}, Y=${desplazamientoInicialY}`);\n      console.log(\"Si necesitas una copia en papel, usa el menú del navegador o window.print().\");\n\n      alert(`Sesión iniciada, ${nombre}. Revisa la consola para ver el resumen.`);\n      // Después de cerrar el diálogo: destino vertical 0, recorrido animado.\n      window.scrollTo({ top: 0, behavior: \"smooth\" });\n    } else {\n      console.log(`${nombre} ha decidido no iniciar la sesión.`);\n    }\n  }\n}\n";
+</script>
+</body>
+</html>
+
