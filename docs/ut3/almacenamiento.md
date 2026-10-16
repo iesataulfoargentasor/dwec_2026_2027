@@ -13,7 +13,7 @@ Hasta ahora, las variables y los cambios de la página se perdían al cargar un 
 Este apartado desarrolla el criterio **g)** del [RA3](ra3.md), dedicado al almacenamiento y recuperación de información, y el criterio **h)**, sobre depuración y documentación. Se corresponde con el módulo **0612, Desarrollo web en entorno cliente**, del CFGS de Desarrollo de Aplicaciones Web, en el [Real Decreto 405/2023](https://www.boe.es/eli/es/rd/2023/05/29/405) y el currículo de Cantabria de la [Orden EDU/72/2025](https://boc.cantabria.es/boces/verAnuncioAction.do?idAnuBlob=425244).
 
 !!! note "Alcance del apartado"
-    Necesitas variables, condiciones, cadenas, `prompt` y `document.getElementById`. Para localizar elementos del DOM usaremos únicamente este método, tanto en los ejemplos como en el ejercicio. El caso resuelto y el ejercicio obligatorio no requieren arrays, funciones de usuario ni eventos. La serialización con JSON y el selector de color se presentan como ampliaciones. Las cookies se desarrollan con más detalle en la [UT5](../ut5/cookies.md).
+    Necesitas variables, condiciones, cadenas, `prompt` y `document.getElementById`. Para localizar elementos del DOM usaremos únicamente este método, tanto en los ejemplos como en el ejercicio. El caso resuelto y el ejercicio obligatorio no requieren arrays, funciones de usuario ni eventos. Reutilizamos los objetos literales y los métodos JSON estudiados en 3.1: guardar y recuperar objetos es parte obligatoria de ambas prácticas. Las cookies se desarrollan con más detalle en la [UT5](../ut5/cookies.md).
 
 ## Recordatorio: localizar un elemento por su identificador
 
@@ -28,7 +28,7 @@ if (estado !== null) {
 
 El argumento `"estado"` es el valor del atributo `id`, **sin `#`**. El método devuelve el elemento o `null` si no lo encuentra. La variable guarda la referencia al párrafo; `textContent` permite cambiar su texto, pero no es otro método para buscar elementos.
 
-En el selector de color leeremos además `select.value`, el valor de la opción elegida. Para cambiar la apariencia utilizaremos `document.body.style`: `document.body` da acceso directo al cuerpo de la página. Estas propiedades se aplican a elementos ya disponibles; no necesitamos búsquedas por clases, etiquetas ni selectores CSS. Coloca los scripts al final del `body` para que los elementos existan cuando se ejecute el código.
+Para cambiar la apariencia usaremos la propiedad `style` del cuerpo de la página, localizado también por su `id`. Modificar `style` o `textContent` no es buscar otro elemento. Coloca el script al final del `body` para que los elementos existan cuando se ejecute.
 
 ## Antes de probar: elegir qué debe conservarse
 
@@ -176,129 +176,66 @@ try {
 
 Como referencia, Web Storage suele disponer de unos **5 MiB para cada almacén por origen**, pero las cuotas y restricciones efectivas dependen del entorno. No programes suponiendo capacidad ilimitada. `QuotaExceededError` suele indicar un problema de cuota y `SecurityError`, una restricción de acceso. En navegación privada los datos suelen eliminarse al terminar la sesión privada; no asumas que la API está siempre deshabilitada.
 
-### Objetos y JSON: ampliación
+### Objetos y JSON: guardar y recuperar una ficha
 
-Guardar un objeto directamente lo convierte normalmente en `"[object Object]"`, perdiendo la estructura. `JSON.stringify` crea una representación textual y `JSON.parse` intenta reconstruir el dato. Esto recupera un valor, no una conexión automática con el objeto original.
+Web Storage guarda **cadenas**, no objetos JavaScript. Para conservar juntas varias propiedades utilizamos lo estudiado en [3.1 Objetos nativos](objetos-nativos.md):
 
-Escritura de un ejemplo propio:
-
-```javascript
-const preferencias = { tema: "claro", grupo: "DAW2" };
-try {
-  localStorage.setItem("dwec.ut3.demo.preferencias", JSON.stringify(preferencias));
-} catch (error) {
-  console.error("No se pudieron guardar las preferencias:", error);
-}
-```
-
-Lectura independiente, incluso después de una recarga:
+- `JSON.stringify(objeto)` produce una cadena con la representación JSON del objeto.
+- `JSON.parse(texto)` interpreta una cadena JSON y devuelve el valor representado. No lee el almacenamiento: primero hay que obtener el texto con `getItem`.
 
 ```javascript
-try {
-  const texto = localStorage.getItem("dwec.ut3.demo.preferencias");
-  if (texto === null) {
-    console.log("No hay preferencias guardadas.");
-  } else {
-    const dato = JSON.parse(texto);
-    if (dato !== null && typeof dato === "object" && !Array.isArray(dato)
-        && (dato.tema === "claro" || dato.tema === "oscuro")
-        && typeof dato.grupo === "string") {
-      console.log("Tema:", dato.tema, "Grupo:", dato.grupo);
-    } else {
-      console.log("El dato no tiene la estructura esperada.");
-    }
-  }
-} catch (error) {
-  console.error("No se pudo leer o interpretar el dato guardado:", error);
-}
+const preferencias = { tema: "oscuro", tamano: 20 };
+const texto = JSON.stringify(preferencias);
+localStorage.setItem("dwec.ut3.prueba.json", texto);
+console.log(texto);        // {"tema":"oscuro","tamano":20}
+console.log(typeof texto); // "string"
 ```
 
-`JSON.parse` puede fallar si el texto no es JSON válido. Incluso un JSON válido puede contener un número, `null`, un array o un objeto con campos incorrectos: por eso se comprueba la estructura. `Array.isArray` permite reconocer arrays, que se estudiarán en la UT4. Cambiar `dato.tema` no guarda nada por sí mismo; hay que serializar y escribir otra vez. Esta ampliación no es necesaria para las prácticas de cadenas que siguen.
-
-## Ejemplo unido al selector de color
-
-Retomamos el selector de [Generar HTML](generar-html.md), con una paleta reducida para centrarnos en **guardar y restaurar**. Este ejemplo anticipa funciones y el evento `change`; el caso principal posterior funciona sin eventos.
-
-**`colores.html`**
-
-```html
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>DWEC · Color guardado</title>
-</head>
-<body>
-  <h1>Preferencia de color</h1>
-  <label for="color">Color del fondo:</label>
-  <select id="color">
-    <option value="white">Blanco</option>
-    <option value="navy">Azul oscuro</option>
-    <option value="gold">Amarillo</option>
-  </select>
-  <p id="estado" role="status">Blanco por defecto.</p>
-  <script src="colores.js"></script>
-</body>
-</html>
-```
-
-**`colores.js`**
+En otra ejecución, recuperamos el texto y reconstruimos el objeto:
 
 ```javascript
-const clave = "dwec.ut3.colores.fondo";
-const select = document.getElementById("color");
-const estado = document.getElementById("estado");
-
-function aplicarColor(color) {
-  document.body.style.backgroundColor = color;
-  document.body.style.color = color === "navy" ? "white" : "#111";
-}
-
-if (select === null || estado === null) {
-  console.error('Faltan los elementos con id="color" o id="estado".');
-} else {
-  aplicarColor("white");
+const textoGuardado = localStorage.getItem("dwec.ut3.prueba.json");
+if (textoGuardado !== null) {
   try {
-    const guardado = localStorage.getItem(clave);
-    if (guardado === "white" || guardado === "navy" || guardado === "gold") {
-      select.value = guardado;
-      aplicarColor(guardado);
-      estado.textContent = "Color recuperado del almacenamiento.";
-    } else if (guardado !== null) {
-      estado.textContent = "El valor guardado no es un color admitido; se usa blanco.";
+    const recuperado = JSON.parse(textoGuardado);
+    if (recuperado !== null && typeof recuperado === "object"
+        && (recuperado.tema === "claro" || recuperado.tema === "oscuro")
+        && (recuperado.tamano === 16 || recuperado.tamano === 20)) {
+      console.log(recuperado.tema);
+      console.log(recuperado.tamano + 2); // 22 si se guardó 20
+    } else {
+      console.log("El JSON no contiene unas preferencias válidas.");
     }
   } catch (error) {
-    estado.textContent = "No se pudo recuperar el color; se usa blanco.";
-    console.error(error);
+    console.log("El texto guardado no es JSON válido.");
   }
-
-  select.addEventListener("change", () => {
-    const color = select.value;
-    if (color !== "white" && color !== "navy" && color !== "gold") {
-      estado.textContent = "Color no admitido.";
-      return;
-    }
-    aplicarColor(color);
-    try {
-      localStorage.setItem(clave, color);
-      estado.textContent = "Color aplicado y guardado.";
-    } catch (error) {
-      estado.textContent = "Color aplicado solo a esta página; no se pudo guardar.";
-      console.error(error);
-    }
-  });
 }
 ```
 
-`aplicarColor` agrupa las dos asignaciones de estilo. Se mantiene texto claro sobre azul oscuro y oscuro sobre blanco o amarillo. `change` ejecuta la función cuando cambia la selección; `return` termina esa función si el valor no es admisible.
+Este fragmento se centra en JSON y supone que el acceso al almacén está permitido; el caso completo también controla los errores de acceso. Para terminar la prueba, elimina únicamente `dwec.ut3.prueba.json` con `removeItem`.
 
-Aplicar un color y guardarlo son operaciones distintas: si la escritura falla, el cambio visual sigue presente hasta recargar. Tampoco basta con guardar para que cambie el fondo; al cargar hay que leer, validar y aplicar el valor. No se exige sincronización visual inmediata entre pestañas: cada una restaura al cargar.
+El número `20` sigue siendo un número después de `parse`, y un booleano como `false` seguiría siendo booleano. En cambio, si se guardó la propiedad `"tamano":"20"`, se recupera una cadena. JSON conserva los tipos representados; **no corrige los datos**.
+
+No pases el objeto directamente a `setItem`: un objeto literal ordinario se convierte en `"[object Object]"`, que no contiene sus propiedades y no es JSON válido. Tampoco basta con que `parse` no falle: `null`, `25` o `{"tema":"azul"}` son JSON válido, pero no son la ficha que espera nuestro programa. Primero comprobamos que hay un objeto no nulo y después sus propiedades. El operador `&&` evita consultar las propiedades cuando las comprobaciones anteriores fallan.
+
+!!! note "Usar métodos no es definir funciones"
+    Aquí llamamos a métodos ya disponibles, como `JSON.parse`, `JSON.stringify` o `getItem`. No declaramos funciones propias, funciones flecha ni manejadores de eventos. El código se ejecuta de arriba abajo al cargar la página; para repetir la interacción, recargamos.
 
 ## Caso práctico resuelto: recordar el tema de lectura
 
-Una página de apuntes debe recuperar el tema anterior y permitir conservarlo, cambiarlo o borrar la preferencia. Trabajaremos con **una clave propia**, `dwec.ut3.lectura.tema`, que solo admite `claro` y `oscuro`.
+Vamos a recordar **el tema y el tamaño del texto juntos**. Usaremos un objeto con dos propiedades y lo guardaremos como JSON en `localStorage`. Al volver a la página lo recuperaremos con `JSON.parse`, validaremos su contenido y lo aplicaremos al documento.
 
-El script lee la preferencia, pregunta una vez mediante `prompt` y presenta el resultado. Cancelar no modifica el almacenamiento; `borrar` elimina únicamente esta clave y vuelve al tema claro. El valor recuperado se valida porque puede haber sido modificado desde otra página o desde las herramientas del navegador.
+| Decisión | Valor |
+| --- | --- |
+| Clave | `dwec.ut3.lectura.preferencias` |
+| Objeto inicial | `{ tema: "claro", tamano: 16 }` |
+| Temas admitidos | `claro` y `oscuro` |
+| Tamaños admitidos | Números `16` y `20`, en píxeles |
+| Cancelar cualquiera de los dos `prompt` | No escribir ni borrar; conservar la configuración preparada |
+| Orden `borrar` en el primer diálogo | Eliminar solo esta clave y aplicar los valores iniciales |
+| Error al guardar o borrar | Informar y conservar la configuración preparada |
+
+La clave es distinta de la antigua `dwec.ut3.lectura.tema`, que contenía solo una cadena. El programa no utiliza ni elimina esa clave antigua. Prueba los dos archivos desde un servidor local, con el mismo origen entre ejecuciones.
 
 **`lectura.html`**
 
@@ -308,15 +245,14 @@ El script lee la preferencia, pregunta una vez mediante `prompt` y presenta el r
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DWEC · Preferencia de lectura</title>
-  <style>
-    body { font-family: sans-serif; line-height: 1.6; padding: 1rem; }
-  </style>
+  <title>Preferencias de lectura</title>
+  <style>body { font-family: sans-serif; line-height: 1.6; padding: 2rem; }</style>
 </head>
-<body>
-  <h1>Preferencia de lectura</h1>
-  <p>Esta actividad recuerda el tema elegido entre visitas.</p>
+<body id="pagina">
+  <h1>Mi espacio de lectura</h1>
+  <p>El tema y el tamaño del texto se recuerdan entre visitas.</p>
   <p id="estado" role="status">Preparando la lectura.</p>
+  <p>Recarga para cambiar las preferencias. Escribe borrar para olvidarlas.</p>
   <script src="lectura.js"></script>
 </body>
 </html>
@@ -325,149 +261,183 @@ El script lee la preferencia, pregunta una vez mediante `prompt` y presenta el r
 **`lectura.js`**
 
 ```javascript
-const clave = "dwec.ut3.lectura.tema";
+const clave = "dwec.ut3.lectura.preferencias";
+const pagina = document.getElementById("pagina");
 const estado = document.getElementById("estado");
-let tema = "claro";
-let mensaje = "No hay preferencia guardada; se usa el tema claro.";
+let preferencias = { tema: "claro", tamano: 16 };
+let mensaje = "No había preferencias guardadas. Se usan los valores iniciales.";
+let textoGuardado = null;
 let lecturaDisponible = true;
 
-if (estado === null) {
-  console.error('Falta el párrafo con id="estado" en lectura.html.');
-} else {
+// 1. Leer la cadena. La ausencia de clave no es un error.
+try {
+  textoGuardado = localStorage.getItem(clave);
+} catch (error) {
+  lecturaDisponible = false;
+  mensaje = "No se pudo acceder al almacenamiento. Se usan los valores iniciales.";
+}
+
+// 2. Reconstruir el objeto y comprobar sus propiedades.
+if (lecturaDisponible && textoGuardado !== null) {
   try {
-    const guardado = localStorage.getItem(clave);
-    if (guardado === "claro" || guardado === "oscuro") {
-      tema = guardado;
-      mensaje = "Preferencia recuperada.";
-    } else if (guardado !== null) {
-      mensaje = "Preferencia guardada no válida; se usa claro sin modificar la clave.";
+    const dato = JSON.parse(textoGuardado);
+    if (dato !== null && typeof dato === "object"
+        && (dato.tema === "claro" || dato.tema === "oscuro")
+        && (dato.tamano === 16 || dato.tamano === 20)) {
+      preferencias = dato;
+      mensaje = "Preferencias recuperadas del JSON guardado.";
+    } else {
+      mensaje = "La estructura o los valores no son válidos. Se usan los valores iniciales.";
     }
   } catch (error) {
-    lecturaDisponible = false;
-    mensaje = "No se pudo leer el almacenamiento; se usa claro sin guardar.";
-    console.error("Error de lectura:", error);
+    mensaje = "El texto guardado no es JSON válido. Se usan los valores iniciales.";
   }
+}
 
-  // Si no pudimos leer, mantenemos el valor de respaldo sin pedir cambios.
-  if (lecturaDisponible) {
-    const respuesta = prompt("Tema: claro u oscuro. Escribe borrar para olvidar la preferencia.", tema);
-
-    if (respuesta === null) {
-      mensaje += " Cambio cancelado; no se modifica el almacenamiento.";
-    } else {
-      const opcion = respuesta.trim().toLowerCase();
-      if (opcion === "claro" || opcion === "oscuro") {
-        try {
-          localStorage.setItem(clave, opcion);
-          // Solo confirmamos y cambiamos el tema después de guardar con éxito.
-          tema = opcion;
-          mensaje = "Preferencia guardada correctamente.";
-        } catch (error) {
-          mensaje = "No se pudo guardar; se mantiene el tema anterior de esta página.";
-          console.error("Error de escritura:", error);
-        }
-      } else if (opcion === "borrar") {
-        try {
-          localStorage.removeItem(clave);
-          tema = "claro";
-          mensaje = "Preferencia eliminada; se vuelve al tema claro.";
-        } catch (error) {
-          mensaje = "No se pudo borrar; se mantiene el tema anterior de esta página.";
-          console.error("Error de borrado:", error);
-        }
-      } else {
-        mensaje += " Entrada no válida: escribe claro, oscuro o borrar. No se guarda ningún cambio.";
+// 3. Pedir datos. Solo guardamos cuando ambos son válidos.
+if (lecturaDisponible) {
+  const entradaTema = prompt("Tema: claro, oscuro o borrar", preferencias.tema);
+  if (entradaTema === null) {
+    mensaje += " Cambio cancelado; no se modifica el almacenamiento.";
+  } else {
+    const temaElegido = entradaTema.trim().toLowerCase();
+    if (temaElegido === "borrar") {
+      try {
+        localStorage.removeItem(clave);
+        preferencias = { tema: "claro", tamano: 16 };
+        mensaje = "Preferencias eliminadas. Se usan los valores iniciales.";
+      } catch (error) {
+        mensaje += " No se pudo borrar; se conserva la configuración preparada.";
       }
+    } else if (temaElegido === "claro" || temaElegido === "oscuro") {
+      const entradaTamano = prompt("Tamaño del texto: 16 o 20", String(preferencias.tamano));
+      if (entradaTamano === null) {
+        mensaje += " Cambio cancelado; no se modifica el almacenamiento.";
+      } else {
+        const tamanoElegido = Number(entradaTamano.trim());
+        if (tamanoElegido === 16 || tamanoElegido === 20) {
+          const nuevas = { tema: temaElegido, tamano: tamanoElegido };
+          try {
+            const textoNuevo = JSON.stringify(nuevas);
+            localStorage.setItem(clave, textoNuevo);
+            preferencias = nuevas;
+            mensaje = "Preferencias guardadas correctamente como JSON.";
+          } catch (error) {
+            mensaje += " No se pudo guardar; se conserva la configuración preparada.";
+          }
+        } else {
+          mensaje += " Tamaño no válido; no se guarda ningún cambio.";
+        }
+      }
+    } else {
+      mensaje += " Tema no válido; no se guarda ningún cambio.";
     }
   }
+}
 
-  if (tema === "oscuro") {
-    document.body.style.backgroundColor = "#111827";
-    document.body.style.color = "#f9fafb";
+// 4. Aplicar el objeto preparado a los elementos localizados por su id.
+if (pagina !== null) {
+  if (preferencias.tema === "oscuro") {
+    pagina.style.backgroundColor = "#202124";
+    pagina.style.color = "#f1f3f4";
   } else {
-    document.body.style.backgroundColor = "#fffdf7";
-    document.body.style.color = "#1f2937";
+    pagina.style.backgroundColor = "#ffffff";
+    pagina.style.color = "#202124";
   }
-
-  estado.textContent = `${mensaje} Tema aplicado: ${tema}.`;
+  pagina.style.fontSize = preferencias.tamano + "px";
+}
+if (estado !== null) {
+  estado.textContent = mensaje + " Tema: " + preferencias.tema
+    + ". Tamaño: " + preferencias.tamano + " px.";
 }
 ```
 
 ### Lectura del resultado
 
-1. En la primera visita, la clave no existe y `getItem` devuelve `null`. El tema de respaldo es claro.
-2. Si escribes ` OSCURO `, se normaliza a `oscuro`, se guarda la cadena y después se aplica el estilo.
-3. Al recargar, la variable `tema` vuelve a crearse, pero el script recupera la cadena guardada. Pulsa Cancelar para comprobar que mantiene el tema sin escribir de nuevo.
-4. Si escribes `borrar`, se elimina solo `dwec.ut3.lectura.tema`. La siguiente lectura devolverá `null`; no se guarda una cadena `"null"` ni un valor vacío.
-5. Una entrada vacía o desconocida no sobrescribe la preferencia. Si el dato almacenado ya era inválido, se usa claro y se conserva la clave hasta que elijas un valor válido o la borres.
-6. Si falla la lectura, no se pregunta y se usa claro. Si falla una escritura o un borrado, no se anuncia éxito y se conserva el tema que estaba preparado.
+1. **Primera visita:** si la clave no existe, `getItem` devuelve `null`. Se prepara el objeto inicial; todavía no se escribe nada.
+2. **Guardar:** introduce `oscuro` y `20`. `Number` convierte el segundo dato del diálogo en número. `stringify` genera `{"tema":"oscuro","tamano":20}` y `setItem` guarda esa cadena. Solo después de una escritura correcta se aplica el nuevo objeto.
+3. **Recuperar:** recarga y pulsa Cancelar en el primer diálogo. `getItem` obtiene la cadena, `parse` reconstruye el objeto y la validación permite aplicar oscuro y 20 px. Cancelar conserva lo recuperado.
+4. **Evitar cambios parciales:** si eliges claro pero cancelas el tamaño o introduces `18`, se conserva toda la configuración anterior. No se guarda el tema por separado.
+5. **Borrar:** escribe `borrar`. Se elimina esa clave y se aplica claro con 16 px; no se vuelve a guardar el objeto inicial. Las otras claves permanecen intactas.
+6. **Datos alterados:** cambia el valor desde las herramientas del navegador y recarga. Con `{` falla `parse`; con `{"tema":"azul","tamano":16}` se interpreta el JSON, pero falla la validación. En ambos casos se preparan los valores iniciales. Cancelar conserva el texto incorrecto; una nueva elección válida lo sustituye y `borrar` lo elimina.
 
-El script se ejecuta al final del `body`, cuando existe el párrafo con `id="estado"`. `document.getElementById("estado")` lo localiza y `estado.textContent` muestra el resultado. No hay actualización automática entre pestañas ni persistencia del estilo por sí mismo: se guarda **el nombre del tema**, y las asignaciones de CSS se repiten en cada carga.
+| Prueba | Resultado esperado |
+| --- | --- |
+| Sin clave; Cancelar | Claro, 16 px y clave ausente |
+| ` OSCURO ` y `20` | Objeto normalizado guardado como JSON; oscuro, 20 px |
+| Recarga; Cancelar | Recuperación del objeto guardado |
+| Tema válido; Cancelar en tamaño | Ninguna escritura parcial |
+| Tema vacío, `azul`, tamaño vacío o `18` | Aviso y configuración anterior |
+| JSON `null` o `{"tema":"claro","tamano":"20"}` | Respaldo: claro, 16 px; tipos incorrectos rechazados |
+| Texto `{` | Aviso de JSON inválido sin detener el script |
+| `borrar` | Solo se elimina la clave de la práctica |
+| Acceso al almacén restringido | Respaldo y aviso; no se solicitan cambios |
+| Escritura o borrado fallidos | Aviso sin anunciar éxito ni cambiar la configuración preparada |
 
-Esta política difiere del selector anterior: aquel permite aplicar un color aunque no se guarde; aquí solo se cambia al nuevo tema cuando la escritura tiene éxito. Ambas decisiones son posibles, pero el mensaje debe explicar lo que realmente ocurrió.
+El valor guardado sigue siendo una cadena. Las propiedades pertenecen al objeto reconstruido, no al texto: `textoGuardado.tamano` no recupera el tamaño. Esta separación entre **objeto → texto → almacenamiento → texto → objeto** es lo que debes saber explicar.
 
-Comprueba la clave en las herramientas del navegador y prueba también a cambiar manualmente su valor por `azul`. Recarga y pulsa Cancelar: debe verse el aviso de preferencia inválida, sin romper la página.
-
-## Ejercicio propuesto: preferencias y actividad de la pestaña
+## Ejercicio propuesto: ficha de una actividad de estudio
 
 ### Contexto
 
-Una página de estudio recordará el **perfil de lectura** entre visitas, pero conservará la **actividad actual** únicamente en la sesión de esa pestaña. Debes implementar ambos comportamientos y demostrar que no tienen el mismo ámbito.
+Crea `estudio.html` y `estudio.js` para conservar la ficha de una actividad durante la sesión de una pestaña. Al recargar, la página debe recuperar y mostrar la ficha anterior. En esta práctica usarás `sessionStorage`, mientras que el caso resuelto utiliza `localStorage`.
 
-Prepara `estudio.html` con idioma, codificación, título, encabezado y dos párrafos de salida: uno con `id="perfil"` y otro con `id="actividad"`. Enlaza `estudio.js` al final del `body`.
+La ficha tendrá esta estructura de ejemplo (no es la solución del programa):
+
+```javascript
+const ficha = { nombre: "Repasar objetos nativos", minutos: 25, completada: false };
+```
+
+Las tres propiedades deben guardarse juntas como JSON bajo la clave `dwec.ut3.estudio.ficha`. Necesitarás **tanto `JSON.stringify` como `JSON.parse`**. No se requieren arrays, funciones propias ni eventos.
 
 ### Requisitos obligatorios
 
-1. Obtén los párrafos mediante `document.getElementById("perfil")` y `document.getElementById("actividad")`. Guarda sus referencias y comprueba que ninguna sea `null` antes de utilizarlas. Usa exactamente estas claves: `dwec.ut3.estudio.perfil` en `localStorage` y `dwec.ut3.estudio.actividad` en `sessionStorage`.
-2. Recupera el perfil. Solo admite `normal` o `ampliado`; ante ausencia o valor inválido, usa `normal` e informa de la causa sin modificar automáticamente la clave.
-3. Pregunta el perfil con `prompt`, ofreciendo el perfil recuperado como valor inicial. Normaliza con `trim().toLowerCase()`. Cancelar conserva el estado; vacío o desconocido produce un aviso sin guardar. Un valor válido se guarda y se aplica solo si la escritura tiene éxito.
-4. Acepta también `borrar` como orden para eliminar únicamente la clave del perfil. Si se elimina correctamente, aplica `normal`; si falla, conserva el perfil preparado y muestra el error.
-5. Asigna `document.body.style.fontSize = "16px"` para `normal` y `"20px"` para `ampliado`. El párrafo con `id="perfil"` debe indicar el perfil aplicado y si se recuperó, guardó, borró, canceló o no pudo completarse la operación.
-6. Recupera la actividad desde `sessionStorage`. Si está ausente, vacía o solo contiene espacios, muestra «Sin actividad». En otro caso, utiliza el texto sin espacios exteriores, conservando sus mayúsculas.
-7. Pide el nombre de la actividad en un segundo `prompt`, con el nombre recuperado como valor inicial o `""` si no existe. Cancelar no cambia nada. Aceptar vacío o solo espacios elimina únicamente su clave; un nombre no vacío se guarda con `setItem` después de `trim()`.
-8. Actualiza el nombre mostrado solo si su escritura o eliminación termina correctamente. Informa en el párrafo con `id="actividad"` del nombre vigente y del resultado. Usa `textContent` sobre la referencia obtenida con `getElementById`, también si se escriben etiquetas HTML como parte del nombre.
-9. Gestiona por separado los fallos de ambos almacenes. Si falla la lectura de uno, muestra su valor de respaldo y no preguntes por él, pero continúa con el otro. Si falla una modificación, conserva el valor mostrado anteriormente y no anuncies éxito.
-10. Añade comentarios sobre la elección de cada almacén y documenta las pruebas. No uses `clear()` ni alteres claves de otras actividades.
-
-!!! note "Límites del ejercicio"
-    Para localizar elementos utiliza únicamente `document.getElementById`. Usa variables, condiciones, cadenas, `prompt`, `try/catch`, `textContent`, `document.body.style.fontSize` y los métodos de Storage explicados. No necesitas JSON, arrays, funciones de usuario, eventos, cookies, temporizadores ni sincronización entre pestañas.
+1. Incluye párrafos con los identificadores `nombre`, `minutos`, `completada` y `estado`. Localízalos exclusivamente con `document.getElementById` y muestra los datos con `textContent`. Sitúa el script al final del `body`.
+2. Prepara una ficha inicial: nombre `"Sin actividad"`, minutos `0` y completada `false`. Es un respaldo visual; no se guarda automáticamente ni es una ficha válida para recuperar.
+3. Lee la clave. Si no existe, muestra el respaldo. Si existe, usa `JSON.parse` dentro de `try/catch` y valida: objeto no nulo, nombre de tipo cadena no vacío tras `trim`, minutos de tipo número entero entre 1 y 120 y completada de tipo booleano. Un JSON válido con propiedades incorrectas también debe rechazarse.
+4. Pide el nombre mediante `prompt`. Cancelar conserva la ficha preparada. Un nombre vacío no se acepta. Reserva la entrada `borrar` (ignorando espacios y mayúsculas) para eliminar únicamente la clave de esta práctica y mostrar el respaldo, solo si el borrado tiene éxito.
+5. Para un nombre válido, pide los minutos con otro `prompt`; convierte y valida el dato. Cancelar o introducir un valor incorrecto no debe guardar siquiera el nombre.
+6. Tras validar nombre y minutos, usa `confirm("¿Has completado la actividad?")`. Aquí **Aceptar significa `true` y Cancelar significa `false`**: ambos son respuestas válidas, no una cancelación de la edición. Guarda el booleano directamente en la propiedad `completada`.
+7. Construye la nueva ficha, conviértela con `JSON.stringify` y guárdala con `setItem`. Sustituye la ficha preparada y anuncia el éxito solo después de guardar correctamente.
+8. Controla los errores de lectura, JSON, escritura y borrado. Si no puedes leer el almacén, muestra el respaldo y no solicites cambios. Si falla guardar o borrar, conserva la ficha preparada e informa. Con JSON incorrecto puedes permitir una nueva ficha válida o el borrado; Cancelar no debe modificar el texto almacenado.
+9. Muestra el estado de finalización como `"Completada"` o `"Pendiente"`. La presentación debe partir de la ficha preparada después de todas las comprobaciones.
 
 ### Pistas de diseño
 
-1. Organiza dos bloques independientes: perfil persistente y actividad de pestaña. Que falle uno no debe impedir procesar el otro.
-2. Distingue la cadena almacenada, el valor validado que vas a mostrar y la nueva respuesta. No cambies el valor vigente antes de saber si la operación se completó.
-3. Comprueba `null` antes de llamar a `trim()`. Para el perfil, vacío significa entrada inválida; para la actividad, vacío significa borrar: son decisiones diferentes del enunciado.
-4. No conviertas el nombre de la actividad a minúsculas. La normalización del perfil sirve para comparar opciones cerradas, pero un nombre puede tener mayúsculas significativas.
-5. Borrar una clave y aplicar un valor por defecto no exige guardar ese valor por defecto. Comprueba que `getItem` devuelve realmente `null` tras eliminar.
-6. Recarga para recuperar los datos. Guardarlos en otra pestaña no modifica automáticamente el texto de la que ya estaba abierta.
+- Sigue cuatro fases: preparar el respaldo, recuperar y validar, solicitar y guardar, mostrar. Escribe instrucciones y condiciones consecutivas, sin declarar funciones.
+- Comprueba `entrada === null` antes de llamar a `trim`: Cancelar no devuelve una cadena.
+- Para el número recuperado, comprueba su tipo y después `Number.isInteger(valor)` y los límites. Para la entrada de `prompt`, convierte con `Number`; vacío se convierte en 0 y queda fuera del intervalo.
+- No conviertas el dato recuperado antes de validarlo: `"25"` en el JSON debe rechazarse porque se exige un número. Tampoco uses `Boolean("false")`, que devuelve `true`; exige que la propiedad sea booleana.
+- El orden de las comprobaciones importa: primero objeto no nulo, después tipos de propiedades, por último métodos de cadenas y límites numéricos.
+- Utiliza una variable para la nueva ficha. Si cambias la ficha preparada antes de guardar y falla la escritura, mostrarías como guardados datos que no persistieron.
+- No uses `clear()`: en el mismo origen pueden convivir otras prácticas.
 
 ### Casos que debes probar
 
-| Entrada o situación | Resultado esperado |
+| Situación | Resultado esperado |
 | --- | --- |
-| Sin claves, Cancelar en ambos diálogos | Perfil normal y «Sin actividad»; no se crean claves |
-| Perfil ` AMPLIADO ` y actividad ` Repaso UT3 ` | Texto de 20px; perfil `ampliado` local y actividad `Repaso UT3` en la sesión |
-| Recargar y Cancelar en ambos | Se recuperan los dos valores |
-| Perfil vacío o `oscuro` | Aviso; no sustituye el perfil guardado |
-| Actividad vacía o solo espacios | Se elimina su clave y aparece «Sin actividad» |
-| Orden `borrar` para el perfil | Se elimina solo su clave y se aplica normal |
-| Nombre `<strong>Repaso</strong> & HTML` | Texto literal; no se crea un elemento `strong` |
-| Modificar el perfil guardado a `gigante` desde DevTools | Respaldo normal y aviso; Cancelar no sobrescribe la clave inválida |
-| Nueva pestaña independiente con la misma URL | Recupera el perfil local; comienza sin actividad de sesión |
-| Cambiar de puerto del servidor | Los almacenes pertenecen a otro origen; las claves no se comparten |
-| Lectura de un almacén no disponible | Mensaje y respaldo de ese bloque; el otro sigue funcionando |
+| Clave ausente; Cancelar nombre | Respaldo; no se crea la clave |
+| Nombre válido, `25`, Aceptar confirmación | JSON con número 25 y booleano true; ficha completada |
+| Nombre válido, `10`, Cancelar confirmación | Se guarda completada false; ficha pendiente |
+| Recargar y Cancelar nombre | Recuperación fiel de las tres propiedades |
+| Cancelar minutos | Conservación de toda la ficha anterior |
+| Nombre vacío; minutos vacíos, `0`, `121`, `2.5` o `abc` | Aviso y ninguna escritura |
+| JSON mal formado, por ejemplo `{` | Respaldo y aviso; Cancelar no altera el texto |
+| JSON `null`, sin una propiedad, minutos `"25"` o completada `"false"` | Rechazo por estructura o tipos |
+| Orden `borrar` | Clave ausente y respaldo; otras claves intactas |
+| Nueva pestaña independiente, escribiendo la misma URL | Sesión propia sin la ficha de la primera pestaña |
+| Error al guardar o borrar | Aviso y conservación de la ficha preparada |
 
-Para comparar pestañas, usa el mismo perfil de navegador y abre una nueva escribiendo la URL. Para comparar puertos, sirve la carpeta en un segundo puerto. Los resultados de ausencia presuponen que no has guardado previamente esas mismas claves en el contexto de prueba.
-
-Comprueba también que borrar las claves de esta práctica no elimina `dwec.ut3.lectura.tema` del caso resuelto. No llenes el almacenamiento para provocar errores: si no puedes reproducir una restricción, indica ese límite y explica qué bloques la gestionarían. La prueba de fallos puede simularse de forma controlada en el aula.
+Para comparar pestañas, usa el mismo origen y perfil, sin duplicar ni restaurar una pestaña y sin abrirla desde otra con `opener`: esos mecanismos pueden copiar o restaurar datos. Si no puedes reproducir una restricción del almacenamiento, documenta la limitación y explica qué bloque la controlaría; no llenes el almacén para provocar errores.
 
 ### Entrega
 
-Entrega `estudio.html` y `estudio.js`, capturas de ambos almacenes con las claves de la actividad y una tabla con entradas, resultados esperados y observados. Incluye una prueba de recarga y otra de pestaña independiente.
+Entrega los dos archivos, una captura del JSON en Session Storage y una tabla con entradas, resultados esperados y observados. Incluye una recarga y una prueba con pestaña independiente.
 
-Explica por qué el perfil y la actividad usan almacenes distintos, qué diferencia hay entre `null` y `""`, por qué guardar `false` no produce un booleano y qué ocurriría si utilizases `clear()` en el origen compartido del sitio de clase.
+Explica qué recibe y devuelve cada método JSON, por qué no basta con guardar el objeto directamente, qué tipos tienen las propiedades recuperadas y por qué esta ficha usa `sessionStorage`. Compara también Cancelar en `prompt` con Cancelar en `confirm`.
 
-La corrección valora guardar, recuperar y eliminar los datos apropiados (**RA3.g**), el tratamiento coherente de entradas y errores y la documentación de las pruebas (**RA3.h**). No se exige implementar todos los mecanismos de almacenamiento en el mismo programa.
+La corrección valora la conservación y recuperación de las tres propiedades (**RA3.g**), la validación, el tratamiento de errores y la documentación de pruebas (**RA3.h**).
+
 
 ## Privacidad, límites y depuración
 
