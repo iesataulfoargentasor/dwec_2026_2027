@@ -13,7 +13,7 @@ Una página puede contener otro documento dentro de un **marco** o abrir una **v
 Este apartado desarrolla especialmente el criterio **f)** del [RA3](ra3.md), sobre el uso de las características del lenguaje en documentos con varias ventanas, y el criterio **h)**, sobre depuración y documentación. Su referencia es el módulo **0612, Desarrollo web en entorno cliente**, del CFGS de Desarrollo de Aplicaciones Web, recogido en el [Real Decreto 405/2023](https://www.boe.es/eli/es/rd/2023/05/29/405) y en el currículo de Cantabria de la [Orden EDU/72/2025](https://boc.cantabria.es/boces/verAnuncioAction.do?idAnuBlob=425244).
 
 !!! note "Qué necesitas saber"
-    Retomaremos `window`, `document`, condiciones, cadenas, selectores y `textContent`. El caso resuelto y el ejercicio obligatorio usan un iframe propio, sin arrays, funciones de usuario ni eventos. El ejemplo de ventanas emergentes anticipa unas funciones y eventos de las UT4 y UT5, necesarios para responder a botones. Se explican como ampliación guiada.
+    Retomaremos `window`, `document`, condiciones, cadenas, `document.getElementById` y `textContent`. Para localizar elementos usaremos únicamente `getElementById`, con el valor del atributo `id` sin `#`. El caso resuelto y el ejercicio obligatorio usan un iframe propio, sin arrays, funciones de usuario ni eventos. El ejemplo de ventanas emergentes anticipa unas funciones y eventos de las UT4 y UT5, necesarios para responder a botones. Se explican como ampliación guiada.
 
 ## 3.8.1. De `frameset` a `iframe`
 
@@ -37,7 +37,7 @@ Un `<iframe>` tiene otra finalidad: **incrustar un documento independiente** den
 | Atributo | Para qué sirve |
 | --- | --- |
 | `src` | URL del documento que se carga; `panel.html` se resuelve respecto a la URL base del contenedor |
-| `id` | Identifica el elemento HTML para CSS o `querySelector("#panel")` |
+| `id` | Identifica el elemento HTML; `document.getElementById("panel")` permite localizarlo |
 | `name` | Da nombre al contexto de navegación; un enlace con `target="panelActividad"` puede cargar ahí su destino |
 | `title` | Describe el marco para las tecnologías de asistencia |
 | `width` / `height` | Dimensiones iniciales; también pueden establecerse mediante CSS |
@@ -104,7 +104,7 @@ Después de asignar `src` o llamar a `open`, la página de destino puede seguir 
 Desde el contenedor se puede escuchar el evento `load` del iframe antes de iniciar la carga. El siguiente patrón es una ampliación para un iframe propio que inicialmente **no tenga `src`** y que exista antes de ejecutar el script:
 
 ```javascript
-const marco = document.querySelector("#panel");
+const marco = document.getElementById("panel");
 
 if (marco !== null) {
   marco.addEventListener("load", () => {
@@ -177,10 +177,10 @@ Crea estos tres archivos en la misma carpeta. Abre `ventanas.html` desde el serv
 
 ```javascript
 let secundaria = null;
-const estado = document.querySelector("#estado");
+const estado = document.getElementById("estado");
 
 // Estos botones y el párrafo están definidos en ventanas.html.
-document.querySelector("#abrir").addEventListener("click", () => {
+document.getElementById("abrir").addEventListener("click", () => {
   if (secundaria === null || secundaria.closed) {
     secundaria = window.open("ayuda.html", "ayudaUT3", "popup,width=600,height=400");
   }
@@ -195,7 +195,7 @@ document.querySelector("#abrir").addEventListener("click", () => {
   }
 });
 
-document.querySelector("#cerrar").addEventListener("click", () => {
+document.getElementById("cerrar").addEventListener("click", () => {
   if (secundaria === null || secundaria.closed) {
     estado.textContent = "No hay una ventana de ayuda abierta que cerrar.";
   } else {
@@ -224,12 +224,14 @@ El código antiguo que usaba `moveBy`, `resizeTo` o temporizadores para mover ve
 
 | Dirección | Referencia para empezar |
 | --- | --- |
-| Contenedor → iframe | `document.querySelector("#panel").contentWindow` |
+| Contenedor → iframe | `document.getElementById("panel").contentWindow` |
 | Iframe → contenedor | `parent` |
 | Principal → ventana auxiliar | La referencia devuelta por `window.open` |
 | Auxiliar → principal | `opener`, si existe y sigue disponible |
 
-Selecciona primero la ventana correcta y después su documento. Por ejemplo, `document.querySelector("#estado")` busca en el documento actual; `parent.document.querySelector("#estado")` busca en el padre, si el acceso está permitido. Los identificadores pertenecen a cada documento: un selector del padre no atraviesa automáticamente un iframe.
+Selecciona primero la ventana correcta y después su documento. Por ejemplo, `document.getElementById("estado")` busca en el documento actual; `parent.document.getElementById("estado")` busca en el padre, si el acceso está permitido. Es el mismo método que ya conoces, aplicado a otro documento. Los identificadores pertenecen a cada documento: una búsqueda en el padre no atraviesa automáticamente un iframe.
+
+Guarda el resultado y comprueba si es `null` antes de utilizarlo cuando el elemento pueda faltar. `contentWindow` permite acceder a la ventana del marco ya localizado; `textContent` lee o modifica el texto de un elemento. Son propiedades, no métodos alternativos para buscar elementos.
 
 ### Comprobar antes de escribir
 
@@ -240,7 +242,7 @@ if (window.opener === null || window.opener.closed) {
   console.log("No hay una ventana de origen disponible.");
 } else {
   try {
-    const destino = window.opener.document.querySelector("#estado");
+    const destino = window.opener.document.getElementById("estado");
     if (destino !== null) {
       destino.textContent = "La ventana de ayuda ha respondido.";
     } else {
@@ -252,7 +254,7 @@ if (window.opener === null || window.opener.closed) {
 }
 ```
 
-Hay tres problemas diferentes: no existe referencia, existe pero no se permite acceder al documento, o el documento es accesible pero falta el elemento. `try` intenta ejecutar el bloque; `catch` recibe un error si se produce y permite informar de él. No concede permisos ni evita la política de origen.
+Hay tres problemas diferentes: no existe referencia, existe pero no se permite acceder al documento, o el documento es accesible pero `getElementById` devuelve `null` porque falta el elemento. `try` intenta ejecutar el bloque; `catch` recibe un error si se produce y permite informar de él. No concede permisos ni evita la política de origen.
 
 El encadenamiento opcional `?.` sirve para ciertas lecturas y llamadas cuando una referencia puede faltar. **No puede usarse como destino de una asignación**, ni evita un error de seguridad al acceder a un documento de otro origen. Guarda el elemento, comprueba que existe y después asigna su `textContent`, como arriba.
 
@@ -312,7 +314,7 @@ Crea una carpeta con estos tres archivos y ábrela desde el servidor local del a
 **`panel.js`**
 
 ```javascript
-const resumen = document.querySelector("#resumen");
+const resumen = document.getElementById("resumen");
 
 if (resumen === null) {
   console.error("Falta el párrafo #resumen en panel.html.");
@@ -320,8 +322,8 @@ if (resumen === null) {
   resumen.textContent = "Panel abierto directamente: no hay un contenedor al que responder.";
 } else {
   try {
-    const actividad = parent.document.querySelector("#actividad");
-    const estado = parent.document.querySelector("#estado");
+    const actividad = parent.document.getElementById("actividad");
+    const estado = parent.document.getElementById("estado");
 
     if (actividad === null || estado === null) {
       resumen.textContent = "El contenedor no tiene los elementos #actividad y #estado necesarios.";
@@ -370,22 +372,22 @@ Una página de actividades debe mostrar, dentro de un iframe, una ficha con el n
 1. Crea `actividad.html`, `seguimiento.html` y `seguimiento.js`. Los dos HTML deben declarar `lang="es"`, codificación UTF-8 y un título apropiado. Sirve todos los archivos desde el mismo origen HTTP local.
 2. En la principal, coloca **antes del iframe** un elemento `#nombre-actividad`, otro `#modo` y un párrafo `#estado-panel` con el texto «Panel pendiente». Usa inicialmente «Práctica de ventanas» y «practica» como datos.
 3. Añade un iframe con `id="seguimiento"`, `src="seguimiento.html"` y un `title` descriptivo. Incluye fuera un enlace para abrir `seguimiento.html` directamente.
-4. En el documento hijo, prepara un encabezado y tres párrafos: `#nombre-recibido`, `#modo-recibido` y `#diagnostico`. Enlaza su script al final del `body` y comprueba que existen antes de usarlos.
+4. En el documento hijo, prepara un encabezado y tres párrafos con los identificadores `nombre-recibido`, `modo-recibido` y `diagnostico`. Enlaza su script al final del `body`. Localiza cada párrafo con `document.getElementById`, guarda su referencia y comprueba que no sea `null` antes de usarla.
 5. Si se abre directamente, muestra en el diagnóstico «Abre actividad.html para conectar este panel» y no intentes consultar elementos de una principal.
-6. Si está incrustado, busca en `parent.document` los tres elementos requeridos. Si falta alguno, informa en el diagnóstico y no anuncies éxito. Mantén la comprobación de errores de acceso del caso resuelto.
+6. Si está incrustado, localiza los tres elementos requeridos mediante `parent.document.getElementById("nombre-actividad")`, `parent.document.getElementById("modo")` y `parent.document.getElementById("estado-panel")`. Si alguna referencia es `null`, informa en el diagnóstico y no anuncies éxito. Mantén la comprobación de errores de acceso del caso resuelto.
 7. Lee el nombre, elimina espacios de los extremos y, si queda vacío, usa «Actividad sin nombre». Muéstralo con `textContent`.
 8. Normaliza el modo con `trim().toLowerCase()`. Acepta únicamente `practica` y `repaso`, y muestra respectivamente «Modo práctica» o «Modo repaso». Para cualquier otro valor, incluido el vacío, muestra «Modo no reconocido» y actualiza `#estado-panel` con «Revisa el modo de la actividad».
 9. Cuando nombre y modo se hayan procesado y el modo sea válido, muestra «Comunicación completada» en `#diagnostico` y «Panel preparado:» seguido del nombre en `#estado-panel`. Para un modo inválido, explica también el problema en `#diagnostico`.
 10. Conserva los encabezados y la estructura de ambos documentos. Añade comentarios que expliquen el orden de carga y la comprobación de `window === parent`.
 
 !!! note "Límites del ejercicio"
-    Usa variables, cadenas, condiciones, selectores, `textContent`, `parent` y el bloque `try/catch` explicado. No necesitas arrays, funciones de usuario, eventos, temporizadores, `postMessage` ni almacenamiento. No uses `document.write`, `innerHTML`, `frameset`, redirecciones ni cambios de configuración de seguridad del navegador.
+    Para localizar elementos utiliza únicamente `getElementById`, sobre `document` o `parent.document` según corresponda. Usa variables, cadenas, condiciones, `textContent`, `parent` y el bloque `try/catch` explicado. No necesitas arrays, funciones de usuario, eventos, temporizadores, `postMessage` ni almacenamiento. No uses `document.write`, `innerHTML`, `frameset`, redirecciones ni cambios de configuración de seguridad del navegador.
 
 ### Pistas de diseño
 
 1. Distingue las referencias del hijo de las del padre: `document` y `parent.document` no buscan en el mismo lugar.
 2. Comprueba primero los elementos locales, después si existe un padre distinto y, por último, los elementos del padre.
-3. No confundas un selector que devuelve `null` con un acceso a otro origen que provoca una excepción. Se detectan de manera distinta.
+3. No confundas una llamada a `getElementById` que devuelve `null` con un acceso a otro origen que provoca una excepción. Se detectan de manera distinta.
 4. Prepara los mensajes con condiciones y escribe el estado de éxito únicamente al terminar la validación.
 5. Si modificas los datos de los archivos, guarda y recarga la principal. No se pide actualización automática mientras están abiertos.
 
@@ -419,7 +421,7 @@ Se valora que haya comunicación real entre documentos (**RA3.f**), que las refe
 | --- | --- |
 | El marco no carga la actividad | Ruta de `src`, respuesta HTTP y posibles políticas de incrustación |
 | `SecurityError` al acceder al padre | Origen de ambos documentos y restricciones del marco |
-| Un selector devuelve `null` | Identificador, documento en el que buscas y orden de carga |
+| `getElementById` devuelve `null` | Identificador sin `#`, documento en el que buscas y orden de carga |
 | `opener` es `null` | Apertura directa, `noopener` o aislamiento entre ventanas |
 | No aparece la ventana auxiliar | Acción directa, bloqueador y referencia devuelta por `open` |
 | Cerrar no produce el efecto esperado | Si la ventana sigue abierta y si el navegador permite cerrarla por script |
