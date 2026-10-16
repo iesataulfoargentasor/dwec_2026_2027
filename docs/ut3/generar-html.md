@@ -106,53 +106,40 @@ app.append("Pasos de trabajo:", lista);
 
 Si insertas **el mismo nodo** en otro contenedor, se mueve; no se duplica. Para dos párrafos diferentes, llama dos veces a `createElement("p")`. Para añadir nuevos elementos sin borrar los anteriores, usa `append`; para reemplazar todo por texto, usa `textContent`.
 
-### Selector de colores: ampliación guiada
+### Crear una tarjeta de color con código secuencial
 
-Este ejemplo conserva la idea del formulario de colores del material original. **Es una ampliación**: utiliza un array de pares, un bucle `for...of` con desestructuración y una función para responder al clic. Puedes estudiar ahora cómo se crean los controles y volver al resto después de las UT4 y UT5.
-
-Usa el HTML inicial, cambiando su `h1` por «Selector de color», y este `app.js`:
+Usa el HTML inicial y este `app.js`. El programa pide un color al cargar y crea una tarjeta con la elección validada. Para cambiarla, recarga. No necesita controles con eventos, arrays ni funciones propias.
 
 ```javascript
 const app = document.getElementById("app");
-
-const etiqueta = document.createElement("label");
-etiqueta.textContent = "Selecciona un color para el fondo:";
-etiqueta.setAttribute("for", "color");
-
-const select = document.createElement("select");
-select.id = "color";
-
-const colores = [
-  ["crimson", "Rojo"],
-  ["navy", "Azul"],
-  ["gold", "Amarillo"],
-  ["seagreen", "Verde"],
-  ["black", "Negro"],
-  ["white", "Blanco"],
-];
-
-for (const [valor, texto] of colores) {
-  const opcion = document.createElement("option");
-  opcion.value = valor;
-  opcion.textContent = texto;
-  select.append(opcion);
+const entrada = prompt("Color de la tarjeta: azul o amarillo", "azul");
+let color = "azul";
+let mensaje = "Se utiliza el color inicial.";
+if (entrada !== null) {
+  const elegido = entrada.trim().toLowerCase();
+  if (elegido === "azul" || elegido === "amarillo") {
+    color = elegido;
+    mensaje = "Color elegido: " + color + ".";
+  } else {
+    mensaje = "Color no válido. Se utiliza azul.";
+  }
 }
-
-const boton = document.createElement("button");
-boton.type = "button";
-boton.textContent = "Modifica el color";
-boton.addEventListener("click", () => {
-  document.body.style.backgroundColor = select.value;
-  const fondoClaro = select.value === "white" || select.value === "gold";
-  document.body.style.color = fondoClaro ? "#111" : "#fff";
-});
-
-app.append(etiqueta, select, boton);
+if (app !== null) {
+  const tarjeta = document.createElement("p");
+  tarjeta.textContent = mensaje;
+  tarjeta.style.padding = "1rem";
+  if (color === "amarillo") {
+    tarjeta.style.backgroundColor = "#ffdf00";
+    tarjeta.style.color = "#111111";
+  } else {
+    tarjeta.style.backgroundColor = "#000080";
+    tarjeta.style.color = "#ffffff";
+  }
+  app.append(tarjeta);
+}
 ```
 
-`setAttribute("for", "color")` vincula la etiqueta con el `select` que tiene `id="color"`; pulsar la etiqueta facilita acceder al control. En cada opción, `value` guarda el valor CSS y `textContent` muestra el nombre en español. El botón tiene `type="button"` para que no envíe un formulario si más adelante lo colocas dentro de uno.
-
-`addEventListener` recibe el evento `"click"` y la función que se ejecutará al pulsar. El operador `? :` elige texto oscuro para blanco o amarillo y claro para los demás fondos de esta paleta. Es una decisión para estos colores concretos, no un cálculo general de contraste.
+`getElementById` localiza el contenedor existente; `createElement` crea el párrafo y `append` lo incorpora. Cancelar conserva azul; una entrada desconocida muestra un aviso. Prueba también espacios y mayúsculas. El texto introducido no se interpreta como HTML.
 
 ### `innerHTML`: cuándo una cadena se interpreta como HTML
 
@@ -163,7 +150,7 @@ app.append(etiqueta, select, boton);
 app.innerHTML = "<p class='aviso'>Listo</p>";
 ```
 
-Aquí sí se crea un párrafo. La asignación reemplaza los hijos anteriores de `app`. Si contenían controles con manejadores de eventos, los nuevos elementos no conservan aquellos manejadores registrados con `addEventListener`. Evita `app.innerHTML += ...`: también reconstruye el contenido anterior.
+Aquí sí se crea un párrafo. La asignación reemplaza los hijos anteriores de `app`. Los nodos sustituidos dejan de ser los que se muestran en el contenedor. Evita `app.innerHTML += ...`: también reconstruye el contenido anterior.
 
 | Necesidad | Opción apropiada |
 | --- | --- |

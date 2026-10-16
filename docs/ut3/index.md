@@ -8,7 +8,7 @@ tags:
 
 # U.T. 3. Utilización de los objetos predefinidos del lenguaje
 
-Un **objeto** agrupa **propiedades** (valores), **métodos** (funciones) y, en el navegador, **eventos** (acciones). Se accede con la notación de punto:
+Un **objeto** agrupa **propiedades** (valores) y **métodos** (operaciones disponibles). En esta UT llamamos a métodos predefinidos; no definimos funciones propias ni registramos eventos. Las funciones se estudiarán en la UT4 y los eventos en la UT5. Se accede con la notación de punto:
 
 ```javascript
 objeto.propiedad;

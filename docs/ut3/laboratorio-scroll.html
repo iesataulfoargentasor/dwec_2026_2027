@@ -28,11 +28,11 @@ pre code { padding: 0; }
 <header id="inicio">
 <p>DWEC · UT3 · El objeto window</p>
 <h1>Observa cómo se mueve la página</h1>
-<p>Este documento tiene varios tramos altos para que exista recorrido vertical. El caso práctico resuelto está incluido y se ejecuta al pulsar el botón situado al final.</p>
+<p>Este documento tiene varios tramos altos para que exista recorrido vertical. El caso práctico resuelto está incluido y se ejecuta desde la consola cuando ya estés abajo.</p>
 <ol>
 <li>Abre la consola del navegador (F12 → Consola).</li>
 <li>Baja con la rueda del ratón o utiliza el enlace siguiente.</li>
-<li>Pulsa «Ejecutar el caso resuelto», escribe un nombre y acepta el inicio.</li>
+<li>Copia el bloque de código de la zona de prueba y ejecútalo en consola. Escribe un nombre y acepta el inicio.</li>
 <li>Cierra el aviso final y observa el regreso suave hasta aquí.</li>
 </ol>
 <a class="boton" href="#prueba">Ir a la zona de prueba ↓</a>
@@ -56,25 +56,12 @@ pre code { padding: 0; }
 </section>
 <section id="prueba">
 <p>Zona de prueba</p><h2>Inicia la sesión desde aquí</h2>
-<p>Ya estás lejos del comienzo del documento. Deja la consola abierta y pulsa el botón.</p>
-<button id="ejecutar" type="button">Ejecutar el caso resuelto ↑</button>
+<p>Ya estás lejos del comienzo del documento. Deja la consola abierta y ejecuta en ella el bloque mostrado.</p>
+<p>Selecciona y copia el código completo, incluidas las llaves exteriores. Es un bloque de instrucciones, no una función.</p>
 <p><strong>Resultado esperado:</strong> al aceptar los diálogos y cerrar el último aviso, la página vuelve suavemente al inicio. En consola queda el desplazamiento inicial, normalmente con Y mayor que cero.</p>
 <p>Cancelar el nombre, escribir solo espacios o rechazar el inicio no debe mover la página mediante el script. El navegador puede ajustar la vista al enfocar controles o abrir herramientas.</p>
 <p>Para repetir, vuelve a bajar mediante el enlace del inicio. No hace falta recargar.</p>
-<details><summary>Ver el código del caso resuelto</summary><pre><code id="codigo"></code></pre></details>
-</section>
-<section>
-<h2>Cómo aplicar tu propio script</h2>
-<p>El botón es un soporte de demostración: su evento permite ejecutar el ejemplo cuando ya has bajado. No forma parte de los conceptos exigidos en el caso de la UT3.</p>
-<p>En el código fuente, busca los comentarios <strong>INICIO DEL CASO RESUELTO</strong> y <strong>FIN DEL CASO RESUELTO</strong>. Puedes reemplazar únicamente el contenido entre ellos.</p>
-<p>También puedes ejecutar el ejemplo directamente en consola, después de bajar, sin utilizar el botón. Si lo enlazas como un script que se ejecuta al cargar, el movimiento puede no apreciarse porque la página ya estará al principio.</p>
-</section>
-</main>
-<script>
-// Soporte de demostración: el evento espera al clic y permite repetir
-// el ejemplo sin redeclarar sus constantes en el ámbito global.
-document.getElementById("ejecutar").addEventListener("click", () => {
-// INICIO DEL CASO RESUELTO
+<details><summary>Ver el código del caso resuelto</summary><pre><code id="codigo">{
 const nombreBruto = prompt("¿Cómo te llamas?", "");
 const ahora = new Date();
 const hora = String(ahora.getHours()).padStart(2, "0");
@@ -111,11 +98,16 @@ if (nombreBruto === null) {
     }
   }
 }
-// FIN DEL CASO RESUELTO
-});
-// Muestra el mismo ejemplo como texto; no lo ejecuta.
-document.getElementById("codigo").textContent = "const nombreBruto = prompt(\"¿Cómo te llamas?\", \"\");\nconst ahora = new Date();\nconst hora = String(ahora.getHours()).padStart(2, \"0\");\nconst minutos = String(ahora.getMinutes()).padStart(2, \"0\");\n\nif (nombreBruto === null) {\n  console.log(\"Sesión no iniciada: se ha pulsado Cancelar.\");\n} else {\n  const nombre = nombreBruto.trim();\n\n  if (nombre === \"\") {\n    alert(\"Escribe un nombre para iniciar la sesión.\");\n  } else {\n    const empezar = confirm(`Hola, ${nombre}. ¿Quieres iniciar la sesión de lectura?`);\n\n    if (empezar) {\n      const desplazamientoInicialX = window.scrollX;\n      const desplazamientoInicialY = window.scrollY;\n\n      console.log(\"================================\");\n      console.log(\" SESIÓN DE LECTURA INICIADA \");\n      console.log(\"================================\");\n      console.log(`Alumno/a: ${nombre}`);\n      console.log(`Hora de inicio: ${hora}:${minutos}`);\n      console.log(`Zona de lectura: ${window.innerWidth} × ${window.innerHeight}`);\n      console.log(`Desplazamiento inicial: X=${desplazamientoInicialX}, Y=${desplazamientoInicialY}`);\n      console.log(\"Si necesitas una copia en papel, usa el menú del navegador o window.print().\");\n\n      alert(`Sesión iniciada, ${nombre}. Revisa la consola para ver el resumen.`);\n      // Después de cerrar el diálogo: destino vertical 0, recorrido animado.\n      window.scrollTo({ top: 0, behavior: \"smooth\" });\n    } else {\n      console.log(`${nombre} ha decidido no iniciar la sesión.`);\n    }\n  }\n}\n";
-</script>
+}</code></pre></details>
+</section>
+<section>
+<h2>Cómo aplicar tu propio script</h2>
+<p>Esta página no registra eventos ni ejecuta el caso automáticamente. El enlace de navegación es HTML y el ejemplo usa instrucciones secuenciales.</p>
+<p>Puedes sustituir el bloque mostrado por tu propio script secuencial y ejecutarlo desde la consola después de bajar.</p>
+<p>También puedes ejecutar el ejemplo directamente en consola, después de bajar, sin funciones propias ni eventos. Si lo enlazas como un script que se ejecuta al cargar, el movimiento puede no apreciarse porque la página ya estará al principio.</p>
+</section>
+</main>
+
 </body>
 </html>
 

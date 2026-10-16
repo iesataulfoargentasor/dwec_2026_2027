@@ -24,11 +24,9 @@ Por privacidad, una página no puede leer las URLs visitadas. Las propiedades `c
 ```javascript
 console.log("Entradas de historial:", history.length);
 
-const botonAtras = document.getElementById("atras");
-if (botonAtras !== null) {
-  botonAtras.addEventListener("click", () => {
-    history.back();
-  });
+const volver = confirm("¿Quieres volver a la entrada anterior del historial?");
+if (volver) {
+  history.back();
 }
 ```
 
@@ -53,7 +51,7 @@ history.go(1);     // una entrada adelante
 
 Si no existe la entrada solicitada, el desplazamiento no se realiza. `history.length` incluye la entrada actual y puede incluir entradas por delante: no permite calcular cuántas veces puedes volver atrás. Prueba las llamadas por separado, nunca todas seguidas al cargar el script.
 
-Para probar el ejemplo, coloca `<button id="atras" type="button">Atrás</button>` antes del script. `document.getElementById("atras")` localiza el botón por su identificador, sin `#`. Se guarda su referencia y se comprueba que no sea `null` antes de utilizarla. `addEventListener("click", () => { ... })` recibe el nombre del evento y una función que se ejecutará al hacer clic. Es un anticipo de la UT5; no necesitas usarlo en el caso ni en el ejercicio propuesto.
+Prueba este fragmento por separado desde la consola de una página de práctica. Aceptar solicita volver; Cancelar conserva la página. No necesita un botón ni registrar eventos.
 
 !!! warning "No supongas qué hay detrás"
     Un `history.back()` puede volver a otra página de tu sitio, a un buscador, a una pestaña en blanco o no hacer nada visible si no hay una entrada anterior. No lo uses como sustituto de un enlace explícito a la página que quieres ofrecer.
@@ -114,12 +112,10 @@ En cambio, asignar `location.href`, llamar a `assign`, `replace` o `reload` inic
 | `reload()` | Vuelve a cargar la URL actual; la gestión de caché depende del navegador y del servidor |
 
 ```javascript
-// Navegar (déjalo detrás de un botón; si lo pones suelto en el script, la página salta al cargar)
-const botonIr = document.getElementById("ir-google");
-if (botonIr !== null) {
-  botonIr.addEventListener("click", () => {
-    location.assign("https://www.google.es");
-  });
+// Ejecuta esta prueba por separado; Cancelar conserva la página.
+const navegar = confirm("¿Quieres abrir Google en esta pestaña?");
+if (navegar) {
+  location.assign("https://www.google.es");
 }
 ```
 
@@ -127,7 +123,7 @@ Asignar `location.href = "..."` equivale a `assign`.
 
 `assign(url)` y `replace(url)` reciben una cadena con el destino. Una URL absoluta, como `"https://www.google.es"`, incluye protocolo y servidor. Una relativa, como `"indice.html"`, se resuelve respecto a la URL base del documento (que puede cambiar con `<base>`). Desde `/ut3/history-location/`, sin `<base>`, `"indice.html"` apunta a `/ut3/history-location/indice.html`, mientras que `"../"` apunta a `/ut3/`. Los nombres de archivo del ejemplo son ilustrativos: el destino debe existir.
 
-`reload()` no necesita argumentos. No uses `reload(true)` como una forma portable de evitar la caché. Para el ejemplo de navegación, coloca `<button id="ir-google" type="button">Ir a Google</button>` antes del script. `document.getElementById("ir-google")` recibe el identificador sin `#`; `"click"` es el evento y la función contiene la navegación. Si falta el botón, la comprobación de `null` evita utilizar una referencia inexistente.
+`reload()` no necesita argumentos. No uses `reload(true)` como una forma portable de evitar la caché. Ejecuta la prueba anterior por separado: la confirmación decide si se solicita navegar y no necesita funciones propias.
 
 ### `assign` frente a `replace`
 
