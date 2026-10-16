@@ -20,7 +20,7 @@ En el código de las preguntas, los elementos se localizan únicamente con **`ge
 | 3.5–3.6 | Propiedades del documento, búsqueda por identificador, `null`, URL e historial |
 | 3.7 | Texto literal, creación e inserción, sustitución del contenido y referencias a nodos |
 | 3.8 | Apertura bloqueada, `parent` y `opener`, mismo origen y orden de carga |
-| 3.9 | Recuperación, objetos y JSON, tipos, borrado selectivo, sesiones de pestaña, validación, fallos y cookies |
+| 3.9 | Recuperación y actualización de textos, tipos, borrado selectivo, sesiones de pestaña, validación, fallos y cookies |
 
 Las preguntas de 3.7, 3.8 y 3.9 refuerzan los criterios **RA3.d, RA3.f y RA3.g**; sus explicaciones y diagnósticos ayudan a practicar **RA3.h**. El test complementa las prácticas: acertar una respuesta no sustituye ejecutar, depurar y documentar un programa.
 
