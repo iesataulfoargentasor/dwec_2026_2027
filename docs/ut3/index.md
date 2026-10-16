@@ -29,6 +29,9 @@ Esta unidad cubre el **[RA3](ra3.md)**: escribir código identificando y aplican
 
 Consulta el [enunciado oficial del RA3 y sus criterios de evaluación](ra3.md).
 
+!!! note "Localización de elementos del DOM en esta unidad"
+    Utilizaremos únicamente `document.getElementById("identificador")` para localizar elementos, escribiendo el valor del atributo `id` sin `#`. En documentos relacionados se aplica el mismo método sobre el documento correspondiente, como `parent.document.getElementById("estado")`. Las propiedades de los elementos ya localizados y las operaciones para crear o insertar contenido se explican en sus apartados.
+
 ## Qué vas a trabajar
 
 | Apartado | Contenido |
