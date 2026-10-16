@@ -62,7 +62,7 @@
       "topic": "3.2 String (length)",
       "href": "../string/",
       "prompt": "Cadenas, como en 3.2. ¿Qué se escribe en consola?",
-      "code": "const txt = \"DWEC\";\nconsole.log(txt.length);\nconsole.log(txt[0]);",
+      "code": "const txt = \"DWEC\";\nconsole.log(txt.length);\nconsole.log(txt.charAt(0));",
       "options": [
         "4 y \"D\"",
         "4 y \"C\"",
@@ -70,7 +70,7 @@
         "5 y \"D\" (cuenta las comillas)"
       ],
       "answer": 0,
-      "explain": "length es la longitud (4). El primer carácter está en el índice 0, así que txt[0] (o charAt(0)) es \"D\". Evita new String(\"DWEC\")."
+      "explain": "length es la longitud (4). El primer carácter está en el índice 0, así que txt.charAt(0) es \"D\". Evita new String(\"DWEC\")."
     },
     {
       "topic": "3.2 includes",
@@ -101,18 +101,18 @@
       "explain": "slice(0, 4) toma los índices 0, 1, 2 y 3: DWEC. El 4 no entra. En código nuevo se prefiere slice a substring. substr está obsoleto."
     },
     {
-      "topic": "3.2 trim y split",
+      "topic": "3.2 trim y extracción de texto",
       "href": "../string/",
-      "prompt": "trim y split, de la tabla de 3.2. ¿Qué imprime la última línea?",
-      "code": "const bruto = \"  Ana,Luis,Eva  \";\nconst partes = bruto.trim().split(\",\");\nconsole.log(partes[0], partes.length);",
+      "prompt": "Se separan dos datos mediante métodos de String. ¿Qué imprime la última línea?",
+      "code": "const bruto = \"  DAW2:Ana  \";\nconst limpio = bruto.trim();\nconst posicion = limpio.indexOf(\":\");\nconst nombre = limpio.slice(posicion + 1);\nconsole.log(nombre, typeof nombre);",
       "options": [
-        "\"  Ana\" y 3",
-        "undefined y 0",
-        "Ana,Luis,Eva y 1",
-        "Ana y 3"
+        "\"Ana\" y \"string\".",
+        "\"DAW2\" y \"string\".",
+        "\"Ana\" y \"object\".",
+        "\":Ana\" y \"string\"."
       ],
-      "answer": 3,
-      "explain": "trim() quita espacios de los extremos. split(\",\") parte en un array de 3 elementos; el primero es \"Ana\". replace / toUpperCase siguen el mismo estilo: el string original no cambia a menos que guardes el resultado."
+      "answer": 0,
+      "explain": "trim elimina los espacios de los extremos; indexOf localiza los dos puntos y slice extrae desde la posición siguiente. nombre es una cadena, no un array. No se modifica la cadena original."
     },
     {
       "topic": "3.3 BOM",
