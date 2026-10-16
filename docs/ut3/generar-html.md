@@ -39,21 +39,23 @@ Prepara este archivo `index.html` y un archivo `app.js` en la misma carpeta:
 </html>
 ```
 
-El script está al final del `body` para que `#app` exista al ejecutarlo. Otra opción es un script **externo** con `defer` en el `head`. `document.querySelector("#app")` recibe un selector CSS y devuelve el elemento cuyo identificador es `app`, o `null` si no existe. `document.getElementById("app")` sería una alternativa; recibe el identificador sin `#`.
+El script está al final del `body` para que el contenedor con `id="app"` exista al ejecutarlo. Otra opción es un script **externo** con `defer` en el `head`. Para localizar elementos utilizaremos únicamente `document.getElementById("app")`: recibe el valor del atributo `id`, **sin `#`**, y devuelve el elemento o `null` si no existe. Cada identificador debe ser único dentro del documento.
+
+Localizar un elemento existente y crear uno nuevo son operaciones distintas. `getElementById` localiza el contenedor; `createElement` crea los elementos que aprenderemos a generar en este apartado, `textContent` establece su texto y `append` los inserta. Estos últimos no son métodos de búsqueda.
 
 Prueba cada ejemplo de manera independiente, reemplazando el contenido de `app.js` y recargando. No pegues todos los bloques seguidos: algunos declaran las mismas constantes y otros sustituyen el contenido anterior.
 
 ## Texto seguro: `textContent`
 
 ```javascript
-const app = document.querySelector("#app");
+const app = document.getElementById("app");
 app.textContent = "Hola Mundo";
 ```
 
 `textContent` es una **propiedad**: se asigna con `=`, sin paréntesis. Muestra texto sin interpretarlo como etiquetas. Por eso es la opción adecuada para presentar nombres, comentarios o datos recibidos desde una URL.
 
 ```javascript
-const app = document.querySelector("#app");
+const app = document.getElementById("app");
 app.textContent = "Estudiamos <strong>JavaScript</strong> & HTML";
 ```
 
@@ -66,7 +68,7 @@ Para conservar una estructura y cambiar solo un mensaje, asigna `textContent` al
 ### Crear, configurar e insertar
 
 ```javascript
-const app = document.querySelector("#app");
+const app = document.getElementById("app");
 const parrafo = document.createElement("p");
 parrafo.textContent = "Este párrafo se ha generado con JavaScript.";
 parrafo.classList.add("aviso");
@@ -89,7 +91,7 @@ La clase `aviso` solo tendrá un efecto visual si has definido una regla CSS par
 ### Construir una estructura y conservar lo que ya existe
 
 ```javascript
-const app = document.querySelector("#app");
+const app = document.getElementById("app");
 const lista = document.createElement("ul");
 const primero = document.createElement("li");
 const segundo = document.createElement("li");
@@ -111,7 +113,7 @@ Este ejemplo conserva la idea del formulario de colores del material original. *
 Usa el HTML inicial, cambiando su `h1` por «Selector de color», y este `app.js`:
 
 ```javascript
-const app = document.querySelector("#app");
+const app = document.getElementById("app");
 
 const etiqueta = document.createElement("label");
 etiqueta.textContent = "Selecciona un color para el fondo:";
@@ -194,7 +196,7 @@ El objetivo es generar un `article` con un encabezado y una lista que muestre la
 Guarda el HTML inicial como `material.html` y cambia su referencia al script por `<script src="ficha-material.js"></script>`. Conserva el `div` con `id="app"`. Crea `ficha-material.js` con este código completo:
 
 ```javascript
-const app = document.querySelector("#app");
+const app = document.getElementById("app");
 
 if (app === null) {
   console.error('No se encuentra el contenedor con id="app".');
@@ -273,18 +275,18 @@ Prepara `actividad.html` con `lang="es"`, un título de pestaña, un `h1`, un `<
 
 ### Requisitos obligatorios
 
-1. Busca `#app`. Si no existe, escribe un error claro en consola y no intentes generar la ficha.
+1. Localiza el contenedor mediante `document.getElementById("app")` y guarda su referencia. Si devuelve `null`, escribe un error claro en consola y no intentes generar la ficha.
 2. Si existe, pide el nombre de la actividad mediante `prompt`. Comprueba primero si devuelve `null`. Si se cancela, se deja vacío o solo contiene espacios, utiliza «Actividad sin nombre»; en otro caso, conserva el nombre sin espacios iniciales ni finales.
 3. Crea un `article` con `id="ficha-actividad"`, un `h2` para el nombre y un párrafo con el texto «Resumen de navegación generado con JavaScript».
 4. Crea una lista `ul` con cinco `li`: URL completa, protocolo, servidor (`location.host`), ruta y número de entradas del historial. Si `host` está vacío, muestra «Servidor no indicado en la URL». Etiqueta la cantidad como «Entradas de esta sesión»; no la interpretes como número de páginas anteriores de tu sitio.
 5. Añade otro párrafo para la consulta. Distingue: vacía («Sin consulta»); exactamente `?modo=practica` («Modo práctica solicitado»); cualquier otra («Otra consulta:», seguida del valor). Solo se comparan cadenas.
 6. Añade un párrafo para el fragmento. Si está vacío, muestra «Sin fragmento»; si existe, muestra su valor y aclara que no se ha comprobado el destino.
 7. Inserta los elementos en este orden: encabezado, presentación, lista, consulta y fragmento. Usa `textContent` para todos los textos, incluido el nombre escrito por la persona.
-8. Vacía únicamente `#app` antes de insertar la ficha. Conserva los encabezados y las instrucciones originales de la página.
+8. Vacía únicamente el contenedor con `id="app"`, usando la referencia guardada, antes de insertar la ficha. Conserva los encabezados y las instrucciones originales de la página.
 9. Documenta por qué compruebas `null` y por qué muestras los datos con `textContent`. Comprueba la estructura en Elements y corrige los errores de consola.
 
 !!! note "Límites del ejercicio"
-    Usa variables, condiciones, cadenas, `prompt`, `location`, `history.length` y las operaciones del DOM explicadas aquí. No necesitas arrays, bucles, funciones de usuario, eventos ni almacenamiento. No uses `innerHTML` ni `document.write`. No cambies de página ni asignes propiedades de `location`.
+    Para localizar elementos utiliza únicamente `document.getElementById`. Usa variables, condiciones, cadenas, `prompt`, `location`, `history.length` y las operaciones de creación e inserción del DOM explicadas aquí. No necesitas arrays, bucles, funciones de usuario, eventos ni almacenamiento. No uses `innerHTML` ni `document.write`. No cambies de página ni asignes propiedades de `location`.
 
 ### Pistas de diseño
 
