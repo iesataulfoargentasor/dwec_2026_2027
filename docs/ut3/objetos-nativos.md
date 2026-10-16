@@ -242,6 +242,8 @@ if (count1.toFixed(2) === count2.toFixed(2)) {
 
 **JSON** (*JavaScript Object Notation*) es un **formato de texto** para guardar o enviar datos: un objeto, una lista, un número, una cadena, un booleano o `null`. No es “un objeto JavaScript con otro nombre”: es la **cadena** que lo representa, la que viaja en una API o la que cabe en `localStorage` (solo admite texto; lo verás en el apartado 3.9).
 
+En los ejemplos y ejercicios de esta UT trabajamos con objetos de propiedades nombradas, sin arrays. Las listas JSON se estudiarán junto con los arrays en la UT4.
+
 El objeto nativo `JSON` **no se instancia**. Tiene dos métodos:
 
 | Método | Qué hace |

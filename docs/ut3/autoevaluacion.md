@@ -10,7 +10,7 @@ tags:
 
 Treinta y seis preguntas de **opción múltiple** (una correcta por pregunta) sobre los contenidos de la UT3. Incluyen los conceptos de 3.1–3.6 y los casos ampliados de generación de HTML, ventanas y almacenamiento. `Map` y `Set` no entran aquí: van en la UT4.
 
-Los fragmentos no definen funciones propias ni registran eventos. Los temporizadores se evalúan únicamente de forma conceptual.
+Los fragmentos no utilizan arrays ni métodos de arrays, no definen funciones propias ni registran eventos. Los métodos de cadenas se aplican a valores de tipo String. Los temporizadores se evalúan únicamente de forma conceptual.
 
 En el código de las preguntas, los elementos se localizan únicamente con **`getElementById`**, usando el identificador sin `#`. Cuando se trabaja con otra ventana, se aplica el mismo método a su documento. Crear un nodo con `createElement` e insertarlo con `append` son operaciones diferentes de localizarlo.
 

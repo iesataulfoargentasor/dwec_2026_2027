@@ -8,7 +8,7 @@ tags:
 
 # U.T. 3. Utilización de los objetos predefinidos del lenguaje
 
-Un **objeto** agrupa **propiedades** (valores) y **métodos** (operaciones disponibles). En esta UT llamamos a métodos predefinidos; no definimos funciones propias ni registramos eventos. Las funciones se estudiarán en la UT4 y los eventos en la UT5. Se accede con la notación de punto:
+Un **objeto** agrupa **propiedades** (valores) y **métodos** (operaciones disponibles). En esta UT llamamos a métodos predefinidos; los ejemplos y ejercicios no utilizan arrays ni métodos de arrays, no definen funciones propias ni registran eventos. Las funciones se estudiarán en la UT4 y los eventos en la UT5. Se accede con la notación de punto:
 
 ```javascript
 objeto.propiedad;
@@ -37,7 +37,7 @@ Consulta el [enunciado oficial del RA3 y sus criterios de evaluación](ra3.md).
 | Apartado | Contenido |
 | --- | --- |
 | [3.1 Objetos nativos](objetos-nativos.md) | `Date`, `Math`, `Number`, `JSON` |
-| [3.2 String](string.md) | Cadenas: `length`, `includes`, `split`, plantillas |
+| [3.2 String](string.md) | Cadenas: `length`, `includes`, `slice`, plantillas |
 | [3.3 BOM](bom.md) | Modelo de objetos del navegador, `navigator`, `screen` |
 | [3.4 Window](window.md) | Ventana, diálogos, temporizadores |
 | [3.5 Document](document.md) | Documento cargado: título, URL, estilo con CSS |

@@ -47,13 +47,12 @@ Esto evita efectos inesperados: si quieres conservar el resultado, asígnalo a u
 const codigo = "DAW2";
 
 console.log(codigo.length);        // 4
-console.log(codigo[0]);            // "D"
+console.log(codigo.charAt(0));            // "D"
 console.log(codigo.charAt(3));     // "2"
-console.log(codigo[4]);            // undefined
 console.log(codigo.charAt(4));     // ""
 ```
 
-`txt[i]` es la forma habitual actual; `charAt(i)` sigue existiendo y resulta útil para ver la diferencia con una posición inexistente.
+`charAt(i)` devuelve el carácter situado en esa posición. Si la posición no existe, devuelve una cadena vacía. El dato sigue siendo una cadena: no hemos creado un array.
 
 !!! warning "El índice no es un número de orden humano"
     El primer carácter es el índice `0`, no el `1`. Si una cadena mide 4, sus posiciones son `0`, `1`, `2` y `3`.
@@ -154,31 +153,47 @@ console.log(aviso.replaceAll("error", "aviso"));
 
 No usamos expresiones regulares todavía: llegarán en la UT5. En este apartado, los argumentos de búsqueda son textos simples.
 
-## 3.2.6. Separar texto: `split`
+## 3.2.6. Separar dos datos sin crear un array
 
-`split(separador)` divide el texto y devuelve una **lista**. La lista resultante es un `Array`, que se estudia formalmente en la UT4. Ahora basta con reconocer la operación:
+Podemos localizar un separador con `indexOf` y extraer cada parte con `slice`. Ambas operaciones se aplican a una **cadena**; cada parte obtenida sigue siendo una cadena.
 
 ```javascript
-const asignatura = "Desarrollo-Web-Cliente";
-const partes = asignatura.split("-");
+const dato = "  DAW2:Ana  ";
+const limpio = dato.trim();
+const separador = limpio.indexOf(":");
 
-console.log(partes); // ["Desarrollo", "Web", "Cliente"]
+if (separador === -1) {
+  console.log("Falta el separador :");
+} else {
+  const grupo = limpio.slice(0, separador).trim();
+  const nombre = limpio.slice(separador + 1).trim();
+  if (grupo === "" || nombre === "") {
+    console.log("El grupo y el nombre deben tener contenido.");
+  } else {
+    console.log("Grupo: " + grupo);   // Grupo: DAW2
+    console.log("Nombre: " + nombre); // Nombre: Ana
+  }
+}
 ```
 
-No necesitas `split` para los casos prácticos de esta página; se incluye porque es frecuente al leer datos CSV, rutas o fechas.
+`indexOf` devuelve la posición del primer separador o `-1` si no aparece. El primer `slice` termina antes de los dos puntos; el segundo empieza justo después. Si hay otros dos puntos, quedan dentro del nombre: este ejemplo separa únicamente por el primero. Prueba también `"DAW2"`, `":Ana"` y `"DAW2:"` para comprobar los avisos.
+
+`split` se estudiará en la UT4 porque devuelve un array. No lo usamos en los ejemplos ni en los ejercicios de esta unidad.
 
 ## Resumen de métodos
 
+Todos los métodos de esta tabla se aplican a **String**. Aunque algunos nombres, como `slice`, `includes` o `indexOf`, también existen en arrays, aquí trabajan con cadenas y no requieren arrays ni sus métodos.
+
 | Necesito… | Método |
 | --- | --- |
-| Una posición / un carácter | `length`, `txt[i]`, `charAt(i)` |
+| Una posición / un carácter | `length`, `charAt(i)` |
 | Comprobar contenido | `includes`, `startsWith`, `endsWith` |
 | Localizar una posición | `indexOf`, `lastIndexOf` |
 | Cortar un tramo | `slice` |
 | Limpiar o unificar para comparar | `trim`, `toLowerCase`, `toUpperCase` |
 | Sustituir una o todas las apariciones | `replace`, `replaceAll` |
 | Mostrar con ceros o columnas | `padStart`, `padEnd` |
-| Dividir por un separador | `split` (la lista se ve en UT4) |
+| Separar dos partes de una cadena | `indexOf` + `slice` |
 
 Los métodos HTML del material antiguo (`bold()`, `italics()`, `fontcolor()`, `blink()`, `anchor()`, `link()`…) están obsoletos. El aspecto se cambia con **HTML + CSS**, no generando etiquetas desde el `String`.
 

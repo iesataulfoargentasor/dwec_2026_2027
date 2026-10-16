@@ -59,7 +59,7 @@ ventana principal: aula.html
 | Referencia | Qué representa |
 | --- | --- |
 | `window` / `self` | El contexto en el que se ejecuta el código |
-| `window.frames` | Permite acceder a los contextos de los marcos hijos; `frames[0]` es el primero |
+| `window.frames` | Representa los contextos de los marcos hijos; en esta UT accedemos a cada marco por su `id` y su propiedad `contentWindow` |
 | `iframe.contentWindow` | La ventana del documento contenido en ese elemento iframe |
 | `parent` | El contexto padre inmediato; si no hay padre, es la propia ventana |
 | `top` | El contexto superior de la jerarquía de marcos |
