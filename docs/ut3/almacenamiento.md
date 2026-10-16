@@ -13,7 +13,22 @@ Hasta ahora, las variables y los cambios de la página se perdían al cargar un 
 Este apartado desarrolla el criterio **g)** del [RA3](ra3.md), dedicado al almacenamiento y recuperación de información, y el criterio **h)**, sobre depuración y documentación. Se corresponde con el módulo **0612, Desarrollo web en entorno cliente**, del CFGS de Desarrollo de Aplicaciones Web, en el [Real Decreto 405/2023](https://www.boe.es/eli/es/rd/2023/05/29/405) y el currículo de Cantabria de la [Orden EDU/72/2025](https://boc.cantabria.es/boces/verAnuncioAction.do?idAnuBlob=425244).
 
 !!! note "Alcance del apartado"
-    Necesitas variables, condiciones, cadenas, `prompt`, `document` y `textContent`. El caso resuelto y el ejercicio obligatorio no requieren arrays, funciones de usuario ni eventos. La serialización con JSON y el selector de color se presentan como ampliaciones. Las cookies se desarrollan con más detalle en la [UT5](../ut5/cookies.md).
+    Necesitas variables, condiciones, cadenas, `prompt` y `document.getElementById`. Para localizar elementos del DOM usaremos únicamente este método, tanto en los ejemplos como en el ejercicio. El caso resuelto y el ejercicio obligatorio no requieren arrays, funciones de usuario ni eventos. La serialización con JSON y el selector de color se presentan como ampliaciones. Las cookies se desarrollan con más detalle en la [UT5](../ut5/cookies.md).
+
+## Recordatorio: localizar un elemento por su identificador
+
+Si el HTML contiene `<p id="estado">Preparando la lectura.</p>`, podemos obtener ese párrafo así:
+
+```javascript
+const estado = document.getElementById("estado");
+if (estado !== null) {
+  estado.textContent = "Lectura preparada.";
+}
+```
+
+El argumento `"estado"` es el valor del atributo `id`, **sin `#`**. El método devuelve el elemento o `null` si no lo encuentra. La variable guarda la referencia al párrafo; `textContent` permite cambiar su texto, pero no es otro método para buscar elementos.
+
+En el selector de color leeremos además `select.value`, el valor de la opción elegida. Para cambiar la apariencia utilizaremos `document.body.style`: `document.body` da acceso directo al cuerpo de la página. Estas propiedades se aplican a elementos ya disponibles; no necesitamos búsquedas por clases, etiquetas ni selectores CSS. Coloca los scripts al final del `body` para que los elementos existan cuando se ejecute el código.
 
 ## Antes de probar: elegir qué debe conservarse
 
@@ -231,8 +246,8 @@ Retomamos el selector de [Generar HTML](generar-html.md), con una paleta reducid
 
 ```javascript
 const clave = "dwec.ut3.colores.fondo";
-const select = document.querySelector("#color");
-const estado = document.querySelector("#estado");
+const select = document.getElementById("color");
+const estado = document.getElementById("estado");
 
 function aplicarColor(color) {
   document.body.style.backgroundColor = color;
@@ -240,7 +255,7 @@ function aplicarColor(color) {
 }
 
 if (select === null || estado === null) {
-  console.error("Faltan los elementos #color o #estado.");
+  console.error('Faltan los elementos con id="color" o id="estado".');
 } else {
   aplicarColor("white");
   try {
@@ -311,13 +326,13 @@ El script lee la preferencia, pregunta una vez mediante `prompt` y presenta el r
 
 ```javascript
 const clave = "dwec.ut3.lectura.tema";
-const estado = document.querySelector("#estado");
+const estado = document.getElementById("estado");
 let tema = "claro";
 let mensaje = "No hay preferencia guardada; se usa el tema claro.";
 let lecturaDisponible = true;
 
 if (estado === null) {
-  console.error("Falta el párrafo #estado en lectura.html.");
+  console.error('Falta el párrafo con id="estado" en lectura.html.');
 } else {
   try {
     const guardado = localStorage.getItem(clave);
@@ -387,7 +402,7 @@ if (estado === null) {
 5. Una entrada vacía o desconocida no sobrescribe la preferencia. Si el dato almacenado ya era inválido, se usa claro y se conserva la clave hasta que elijas un valor válido o la borres.
 6. Si falla la lectura, no se pregunta y se usa claro. Si falla una escritura o un borrado, no se anuncia éxito y se conserva el tema que estaba preparado.
 
-El script se ejecuta al final del `body`, cuando existe `#estado`. No hay actualización automática entre pestañas ni persistencia del estilo por sí mismo: se guarda **el nombre del tema**, y las asignaciones de CSS se repiten en cada carga.
+El script se ejecuta al final del `body`, cuando existe el párrafo con `id="estado"`. `document.getElementById("estado")` lo localiza y `estado.textContent` muestra el resultado. No hay actualización automática entre pestañas ni persistencia del estilo por sí mismo: se guarda **el nombre del tema**, y las asignaciones de CSS se repiten en cada carga.
 
 Esta política difiere del selector anterior: aquel permite aplicar un color aunque no se guarde; aquí solo se cambia al nuevo tema cuando la escritura tiene éxito. Ambas decisiones son posibles, pero el mensaje debe explicar lo que realmente ocurrió.
 
@@ -399,23 +414,23 @@ Comprueba la clave en las herramientas del navegador y prueba también a cambiar
 
 Una página de estudio recordará el **perfil de lectura** entre visitas, pero conservará la **actividad actual** únicamente en la sesión de esa pestaña. Debes implementar ambos comportamientos y demostrar que no tienen el mismo ámbito.
 
-Prepara `estudio.html` con idioma, codificación, título, encabezado y dos párrafos de salida: `#perfil` y `#actividad`. Enlaza `estudio.js` al final del `body`.
+Prepara `estudio.html` con idioma, codificación, título, encabezado y dos párrafos de salida: uno con `id="perfil"` y otro con `id="actividad"`. Enlaza `estudio.js` al final del `body`.
 
 ### Requisitos obligatorios
 
-1. Comprueba que existen ambos párrafos antes de utilizarlos. Usa exactamente estas claves: `dwec.ut3.estudio.perfil` en `localStorage` y `dwec.ut3.estudio.actividad` en `sessionStorage`.
+1. Obtén los párrafos mediante `document.getElementById("perfil")` y `document.getElementById("actividad")`. Guarda sus referencias y comprueba que ninguna sea `null` antes de utilizarlas. Usa exactamente estas claves: `dwec.ut3.estudio.perfil` en `localStorage` y `dwec.ut3.estudio.actividad` en `sessionStorage`.
 2. Recupera el perfil. Solo admite `normal` o `ampliado`; ante ausencia o valor inválido, usa `normal` e informa de la causa sin modificar automáticamente la clave.
 3. Pregunta el perfil con `prompt`, ofreciendo el perfil recuperado como valor inicial. Normaliza con `trim().toLowerCase()`. Cancelar conserva el estado; vacío o desconocido produce un aviso sin guardar. Un valor válido se guarda y se aplica solo si la escritura tiene éxito.
 4. Acepta también `borrar` como orden para eliminar únicamente la clave del perfil. Si se elimina correctamente, aplica `normal`; si falla, conserva el perfil preparado y muestra el error.
-5. Aplica `fontSize = "16px"` para `normal` y `"20px"` para `ampliado`. El párrafo `#perfil` debe indicar el perfil aplicado y si se recuperó, guardó, borró, canceló o no pudo completarse la operación.
+5. Asigna `document.body.style.fontSize = "16px"` para `normal` y `"20px"` para `ampliado`. El párrafo con `id="perfil"` debe indicar el perfil aplicado y si se recuperó, guardó, borró, canceló o no pudo completarse la operación.
 6. Recupera la actividad desde `sessionStorage`. Si está ausente, vacía o solo contiene espacios, muestra «Sin actividad». En otro caso, utiliza el texto sin espacios exteriores, conservando sus mayúsculas.
 7. Pide el nombre de la actividad en un segundo `prompt`, con el nombre recuperado como valor inicial o `""` si no existe. Cancelar no cambia nada. Aceptar vacío o solo espacios elimina únicamente su clave; un nombre no vacío se guarda con `setItem` después de `trim()`.
-8. Actualiza el nombre mostrado solo si su escritura o eliminación termina correctamente. Informa en `#actividad` del nombre vigente y del resultado. Usa `textContent`, también si se escriben etiquetas HTML como parte del nombre.
+8. Actualiza el nombre mostrado solo si su escritura o eliminación termina correctamente. Informa en el párrafo con `id="actividad"` del nombre vigente y del resultado. Usa `textContent` sobre la referencia obtenida con `getElementById`, también si se escriben etiquetas HTML como parte del nombre.
 9. Gestiona por separado los fallos de ambos almacenes. Si falla la lectura de uno, muestra su valor de respaldo y no preguntes por él, pero continúa con el otro. Si falla una modificación, conserva el valor mostrado anteriormente y no anuncies éxito.
 10. Añade comentarios sobre la elección de cada almacén y documenta las pruebas. No uses `clear()` ni alteres claves de otras actividades.
 
 !!! note "Límites del ejercicio"
-    Usa variables, condiciones, cadenas, `prompt`, `try/catch`, `textContent`, `style.fontSize` y los métodos de Storage explicados. No necesitas JSON, arrays, funciones de usuario, eventos, cookies, temporizadores ni sincronización entre pestañas.
+    Para localizar elementos utiliza únicamente `document.getElementById`. Usa variables, condiciones, cadenas, `prompt`, `try/catch`, `textContent`, `document.body.style.fontSize` y los métodos de Storage explicados. No necesitas JSON, arrays, funciones de usuario, eventos, cookies, temporizadores ni sincronización entre pestañas.
 
 ### Pistas de diseño
 
