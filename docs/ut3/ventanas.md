@@ -13,7 +13,7 @@ Una página puede contener otro documento dentro de un **marco** o abrir una **v
 Este apartado desarrolla especialmente el criterio **f)** del [RA3](ra3.md), sobre el uso de las características del lenguaje en documentos con varias ventanas, y el criterio **h)**, sobre depuración y documentación. Su referencia es el módulo **0612, Desarrollo web en entorno cliente**, del CFGS de Desarrollo de Aplicaciones Web, recogido en el [Real Decreto 405/2023](https://www.boe.es/eli/es/rd/2023/05/29/405) y en el currículo de Cantabria de la [Orden EDU/72/2025](https://boc.cantabria.es/boces/verAnuncioAction.do?idAnuBlob=425244).
 
 !!! note "Qué necesitas saber"
-    Retomaremos `window`, `document`, condiciones, cadenas, `document.getElementById` y `textContent`. Para localizar elementos usaremos únicamente `getElementById`, con el valor del atributo `id` sin `#`. El caso resuelto y el ejercicio obligatorio usan un iframe propio, sin arrays, funciones de usuario ni eventos. El ejemplo de ventanas emergentes anticipa unas funciones y eventos de las UT4 y UT5, necesarios para responder a botones. Se explican como ampliación guiada.
+    Retomaremos `window`, `document`, condiciones, cadenas, `document.getElementById` y `textContent`. Para localizar elementos usaremos únicamente `getElementById`, con el valor del atributo `id` sin `#`. El caso resuelto y el ejercicio obligatorio usan un iframe propio, sin arrays, funciones de usuario ni eventos. Las pruebas de ventanas emergentes se ejecutan por pasos desde la consola, sin funciones propias ni eventos.
 
 ## 3.8.1. De `frameset` a `iframe`
 
@@ -101,24 +101,9 @@ Un iframe con `sandbox` introduce restricciones adicionales. Sin `allow-scripts`
 
 Después de asignar `src` o llamar a `open`, la página de destino puede seguir cargándose. No supongas que ya existen sus elementos ni lo resuelvas esperando un número fijo de milisegundos.
 
-Desde el contenedor se puede escuchar el evento `load` del iframe antes de iniciar la carga. El siguiente patrón es una ampliación para un iframe propio que inicialmente **no tenga `src`** y que exista antes de ejecutar el script:
+En esta UT, el documento hijo ejecuta su propio script al final de su `body`, cuando sus elementos ya existen. Si debe leer un párrafo del padre, ese párrafo se coloca antes del iframe en el HTML del contenedor. Así se organiza el caso resuelto de este apartado.
 
-```javascript
-const marco = document.getElementById("panel");
-
-if (marco !== null) {
-  marco.addEventListener("load", () => {
-    const documentoHijo = marco.contentDocument;
-    if (documentoHijo !== null && documentoHijo.body !== null) {
-      documentoHijo.body.style.backgroundColor = "#eef6ff";
-      documentoHijo.body.style.color = "#172033";
-    }
-  });
-  marco.src = "panel.html";
-}
-```
-
-`contentDocument` devuelve el documento accesible del marco, o `null` si no es del mismo origen. `load` indica que se ha producido una carga, pero **no demuestra que el recurso solicitado exista**: también debes comprobar la URL, los elementos esperados y los errores de red. En el caso resuelto evitamos esta coordinación haciendo que el hijo ejecute su script al final de su propio `body`.
+`contentDocument` permite consultar el documento accesible del iframe y puede devolver `null` si no es del mismo origen. No garantiza que los elementos de la página de destino estén ya preparados. No escribas una lectura inmediata tras asignar `src`: la coordinación de cargas mediante eventos se estudiará en la UT5.
 
 ## 3.8.2. Abrir y cerrar ventanas (`window.open`)
 
@@ -132,84 +117,48 @@ La llamada tiene esta forma: `window.open(url, destino, opciones)`. Los tres arg
 
 `"_blank"` solicita un contexto nuevo; un nombre como `"ayudaUT3"` permite reutilizarlo. La presentación final como pestaña o ventana depende del navegador. El tamaño y la posición solicitados no son garantías; tampoco puedes controlar libremente las barras del navegador ni mover ventanas ajenas.
 
-### Ejemplo guiado con botones
+### Ejemplo guiado por pasos desde la consola
 
-Crea estos tres archivos en la misma carpeta. Abre `ventanas.html` desde el servidor local.
+Crea `ventanas.html` con un párrafo `<p id="estado">Ayuda sin abrir.</p>` y un enlace `<a href="ayuda.html">Consultar ayuda</a>`. Crea también `ayuda.html` con un encabezado y un texto de ayuda. Ambos deben ser documentos HTML completos con `<!doctype html>`, idioma español, codificación UTF-8, título y cuerpo. Sírvelos desde el mismo servidor local.
 
-**`ventanas.html`**
+Abre `ventanas.html` y su consola. Ejecuta **cada bloque por separado**, observando el resultado antes de continuar. No los unas en un script que abra y cierre la ayuda inmediatamente.
 
-```html
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DWEC · Ventana de ayuda</title>
-</head>
-<body>
-  <h1>Ayuda en una ventana secundaria</h1>
-  <button id="abrir" type="button">Abrir ayuda (otra ventana o pestaña)</button>
-  <button id="cerrar" type="button">Cerrar ayuda</button>
-  <p id="estado" role="status">Ayuda sin abrir.</p>
-  <p><a href="ayuda.html">Consultar la ayuda en esta pestaña</a></p>
-  <script src="ventanas.js"></script>
-</body>
-</html>
-```
-
-**`ayuda.html`**
-
-```html
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>Ayuda de la UT3</title>
-</head>
-<body>
-  <h1>Ayuda de la UT3</h1>
-  <p>Consulta las propiedades de window y las relaciones entre documentos.</p>
-</body>
-</html>
-```
-
-**`ventanas.js`**
+**Paso 1. Solicitar la apertura y guardar la referencia.**
 
 ```javascript
-let secundaria = null;
-const estado = document.getElementById("estado");
-
-// Estos botones y el párrafo están definidos en ventanas.html.
-document.getElementById("abrir").addEventListener("click", () => {
-  if (secundaria === null || secundaria.closed) {
-    secundaria = window.open("ayuda.html", "ayudaUT3", "popup,width=600,height=400");
-  }
-
-  if (secundaria === null) {
-    estado.textContent = "No se ha obtenido una ventana de ayuda. Usa el enlace de esta página.";
-  } else if (secundaria.closed) {
-    estado.textContent = "La referencia no permite controlar la ayuda.";
-  } else {
-    secundaria.focus();
-    estado.textContent = "Ayuda abierta; se reutiliza si vuelves a pulsar.";
-  }
-});
-
-document.getElementById("cerrar").addEventListener("click", () => {
-  if (secundaria === null || secundaria.closed) {
-    estado.textContent = "No hay una ventana de ayuda abierta que cerrar.";
-  } else {
-    secundaria.close();
-    estado.textContent = "Se ha solicitado el cierre de la ayuda.";
-  }
-});
+let secundaria = window.open("ayuda.html", "ayudaUT3", "popup,width=600,height=400");
+if (secundaria === null) {
+  console.log("No se obtuvo una referencia. Usa el enlace de ayuda.");
+} else {
+  console.log("Referencia obtenida; espera a que cargue la ayuda.");
+}
 ```
 
-`let` permite actualizar la referencia. `closed` es una propiedad booleana; `close()` y `focus()` son métodos sin argumentos. El operador `||` deja de evaluar al encontrar una condición verdadera: si la referencia es `null`, no intenta consultar `null.closed`.
+La consola no garantiza que el navegador permita abrir una ventana. Si se bloquea, documenta el resultado y usa el enlace; no necesitas cambiar la configuración de seguridad. La comunicación entre documentos se practica de forma reproducible con el iframe del caso resuelto.
 
-En `addEventListener("click", () => { ... })`, el primer argumento identifica el evento y el segundo es la función que se ejecuta al pulsar. Aquí se introduce solo lo necesario para que `open` responda directamente a una acción de la persona.
+**Paso 2. Consultar el estado y solicitar el foco.** Vuelve a la consola de la principal cuando la ayuda haya cargado.
 
-Prueba abrir dos veces, cerrar, volver a abrir y cerrar manualmente la ventana antes de pulsar «Cerrar ayuda». La página consulta el estado al pulsar: no lo actualiza automáticamente cuando cierras la auxiliar con la X.
+```javascript
+if (secundaria === null || secundaria.closed) {
+  console.log("No hay una ayuda disponible.");
+} else {
+  secundaria.focus();
+  console.log("Se ha solicitado el foco de la ayuda.");
+}
+```
+
+**Paso 3. Solicitar el cierre.**
+
+```javascript
+if (secundaria === null || secundaria.closed) {
+  console.log("No hay una ayuda abierta que cerrar.");
+} else {
+  secundaria.close();
+  console.log("Se ha solicitado el cierre de la ayuda.");
+}
+```
+
+`closed` es una propiedad booleana; `focus()` y `close()` son métodos sin argumentos. El operador `||` evita consultar `closed` cuando la referencia es `null`. Prueba también cerrar manualmente la auxiliar antes del paso 3. Para repetir sin redeclarar `let`, ejecuta solo la asignación `secundaria = window.open("ayuda.html", "ayudaUT3");` y después los pasos 2 y 3.
 
 !!! warning "Bloqueo y referencias"
     Sin una acción directa de la persona, una apertura puede ser bloqueada. Si falla, `open` puede devolver `null`; compruébalo. No afirmes que toda llamada al cargar falla siempre: influyen los permisos y el navegador. Además, `noopener` devuelve `null` aunque se abra el destino, y ciertas políticas de aislamiento pueden separar las referencias.
@@ -235,7 +184,7 @@ Guarda el resultado y comprueba si es `null` antes de utilizarlo cuando el eleme
 
 ### Comprobar antes de escribir
 
-Este fragmento se ejecutaría **desde una auxiliar propia del mismo origen**, una vez cargada. La principal debe tener un elemento con `id="estado"`, como `ventanas.html`. No forma parte del archivo `ayuda.html` anterior: puedes añadirlo en un script al final de su `body` para experimentar con la comunicación de vuelta.
+Este fragmento se ejecutaría **desde una auxiliar propia del mismo origen**, una vez cargada. La principal debe tener un elemento con `id="estado"`, como `ventanas.html`. Puedes añadirlo al archivo `ayuda.html` de la prueba anterior en un script al final de su `body` para experimentar con la comunicación de vuelta.
 
 ```javascript
 if (window.opener === null || window.opener.closed) {

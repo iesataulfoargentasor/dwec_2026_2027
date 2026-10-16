@@ -10,11 +10,13 @@ tags:
 
 Treinta y seis preguntas de **opción múltiple** (una correcta por pregunta) sobre los contenidos de la UT3. Incluyen los conceptos de 3.1–3.6 y los casos ampliados de generación de HTML, ventanas y almacenamiento. `Map` y `Set` no entran aquí: van en la UT4.
 
+Los fragmentos no definen funciones propias ni registran eventos. Los temporizadores se evalúan únicamente de forma conceptual.
+
 En el código de las preguntas, los elementos se localizan únicamente con **`getElementById`**, usando el identificador sin `#`. Cuando se trabaja con otra ventana, se aplica el mismo método a su documento. Crear un nodo con `createElement` e insertarlo con `append` son operaciones diferentes de localizarlo.
 
 | Bloque | Qué vas a comprobar |
 | --- | --- |
-| 3.1–3.4 | Fechas, números, cadenas, BOM, diálogos y temporizadores |
+| 3.1–3.4 | Fechas, números, cadenas, BOM, diálogos y finalidad de los temporizadores |
 | 3.5–3.6 | Propiedades del documento, búsqueda por identificador, `null`, URL e historial |
 | 3.7 | Texto literal, creación e inserción, sustitución del contenido y referencias a nodos |
 | 3.8 | Apertura bloqueada, `parent` y `opener`, mismo origen y orden de carga |

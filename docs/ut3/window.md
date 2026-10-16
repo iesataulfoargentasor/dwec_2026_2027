@@ -115,64 +115,24 @@ En interfaces reales se sustituyen por HTML (modales, formularios). En esta unid
 
 ## Temporizadores
 
-`setTimeout(funcion, retraso)` programa una ejecución; `setInterval(funcion, intervalo)` programa repeticiones. El primer argumento es la función que se ejecutará después. El segundo es un tiempo en **milisegundos**: `1000` equivale a un segundo y `2000`, a dos. No es una hora del reloj ni una garantía de puntualidad.
+Los temporizadores permiten programar una tarea para más adelante. En esta unidad solo conoceremos su finalidad: implementarlos requiere funciones, que se estudiarán en la UT4.
 
-En `() => { ... }`, los paréntesis indican que la función no recibe parámetros y las llaves contienen sus instrucciones. Aquí solo necesitas reconocer esa sintaxis; se desarrolla en la UT4.
+| Método | Finalidad |
+| --- | --- |
+| `setTimeout` | Programar una ejecución después de un retraso mínimo |
+| `setInterval` | Programar ejecuciones repetidas |
+| `clearTimeout` | Cancelar una ejecución pendiente mediante su identificador |
+| `clearInterval` | Detener las repeticiones mediante su identificador |
 
+El tiempo se expresa en **milisegundos**: 2000 ms son 2 segundos. El retraso no garantiza puntualidad y no detiene las instrucciones siguientes. No utilizaremos temporizadores en los ejemplos ni en los ejercicios de esta UT. Tampoco los sustituiremos por cadenas de código o bucles de espera.
 
-```javascript
-const id = setTimeout(() => {
-  console.log("Han pasado 2 segundos");
-}, 2000);
-
-// clearTimeout(id);
-
-const repetir = setInterval(() => {
-  console.log("tick", new Date().toLocaleTimeString("es-ES"));
-}, 1000);
-
-// clearInterval(repetir);
-```
-
-`id` y `repetir` guardan los identificadores devueltos por el navegador. `clearTimeout(id)` cancela la ejecución pendiente y `clearInterval(repetir)` detiene las repeticiones: su argumento es el identificador, no el tiempo. Las líneas que empiezan por `//` son comentarios; para detener el intervalo debes ejecutar `clearInterval(repetir)`.
-
-Pasa **una función**, no una cadena (`setTimeout("Mover()", 100)` evalúa código: inseguro y obsoleto).
-
-### Una espera no detiene la página
-
-`setTimeout` no “congela” JavaScript durante esos milisegundos. Registra una tarea para que se ejecute **cuando haya pasado al menos** el tiempo indicado y el hilo esté libre.
+Puedes practicar la conversión de unidades con código secuencial:
 
 ```javascript
-console.log("A");
-setTimeout(() => {
-  console.log("C");
-}, 1000);
-console.log("B");
-
-// Sale A, luego B y, aproximadamente un segundo después, C.
+const segundos = 2;
+const milisegundos = segundos * 1000;
+console.log(milisegundos); // 2000; este cálculo no produce ninguna espera.
 ```
-
-`setTimeout` devuelve un identificador. Guárdalo si puedes necesitar cancelar la tarea antes de que se ejecute:
-
-```javascript
-const avisoPendiente = setTimeout(() => {
-  console.log("Este aviso no llegará a mostrarse");
-}, 5000);
-
-clearTimeout(avisoPendiente);
-```
-
-`setInterval` intenta repetir una tarea. También devuelve identificador y debe detenerse con `clearInterval` cuando deje de tener sentido:
-
-```javascript
-const reloj = setInterval(() => {
-  console.log(new Date().toLocaleTimeString("es-ES"));
-}, 1000);
-
-// Más tarde: clearInterval(reloj);
-```
-
-Los temporizadores necesitan una **función de devolución** (*callback*): una instrucción que el navegador guardará para ejecutar después. La sintaxis de funciones se trabaja formalmente en la UT4; aquí basta reconocer que el bloque entre `() => { ... }` es el código que se ejecutará más tarde. No uses texto como primer argumento (`setTimeout("...", 1000)`): evalúa código y está obsoleto.
 
 ## Tamaño y desplazamiento
 
@@ -250,16 +210,16 @@ Estos métodos afectan a la ventana del navegador, no al desplazamiento del docu
 Mover o redimensionar ventanas está restringido: normalmente solo puede intentarse con ventanas abiertas por script, y aun así el navegador puede impedirlo. El foco también está sujeto a restricciones. No bases una práctica en que funcionen en una pestaña normal. La apertura de ventanas se estudia en el apartado 3.8.
 
 !!! tip "Depuración"
-    En la consola, `window` es el global. Escribe `location` o `innerWidth` y pulsa Intro. En **Sources** puedes poner un punto de interrupción dentro del `setTimeout`.
+    En la consola, `window` es el global. Escribe `location` o `innerWidth` y pulsa Intro. En **Sources** puedes poner un punto de interrupción en una instrucción del caso resuelto.
 
 ## Caso práctico resuelto: iniciar una sesión de lectura
 
 !!! example "Prueba el scroll en una página preparada"
     [Abrir el laboratorio de scroll](laboratorio-scroll.html). El HTML incluye contenido largo y el script de este caso resuelto.
 
-    Abre la consola con **F12**, pulsa **«Ir a la zona de prueba»** y después **«Ejecutar el caso resuelto»**. Introduce tu nombre, acepta el inicio y cierra el último aviso: observarás el regreso suave al principio. La consola conserva la posición inicial.
+    Abre la consola con **F12**, pulsa **«Ir a la zona de prueba»** y ejecuta allí el código que muestra el laboratorio. Introduce tu nombre, acepta el inicio y cierra el último aviso: observarás el regreso suave al principio. La consola conserva la posición inicial.
 
-    El botón permite ejecutar el ejemplo cuando ya estás abajo. Su evento es solo un soporte de demostración; no forma parte de los conceptos exigidos en este caso. Puedes repetir la prueba sin recargar y consultar el código dentro del propio laboratorio.
+    El laboratorio no registra eventos. Copia el código mostrado y ejecútalo en consola cuando ya estés abajo. Está rodeado de un bloque de llaves para poder repetirlo sin redeclarar constantes globales: ese bloque no es una función.
 
 Una página de apuntes quiere preparar una sesión de lectura sin tocar el HTML. Al cargarse, el script pregunta el nombre, solicita confirmación para comenzar y muestra en consola un resumen de la sesión:
 

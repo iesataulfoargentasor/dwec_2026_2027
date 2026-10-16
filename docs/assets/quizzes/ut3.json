@@ -159,16 +159,16 @@
     {
       "topic": "3.4 Temporizadores",
       "href": "../window/",
-      "prompt": "Temporizadores de 3.4. ¿Cuál es la forma de la unidad?",
-      "code": "const id = setTimeout(() => {\n  console.log(\"Han pasado 2 segundos\");\n}, 2000);",
+      "prompt": "Un retraso de 2000 milisegundos, ¿a cuántos segundos equivale y qué implica un temporizador?",
+      "code": "const milisegundos = 2000;\nconsole.log(milisegundos / 1000);",
       "options": [
-        "setTimeout espera segundos, no milisegundos: aquí serían 2000 s.",
-        "Pasar la cadena \"console.log(...)\" para que evalúe el código.",
-        "Pasar una función y los milisegundos; clearTimeout(id) cancela.",
-        "Hay que escribir new Window().setTimeout(...)."
+        "Equivale a 2000 segundos.",
+        "Detiene siempre todas las instrucciones del script.",
+        "Equivale a 2 segundos; programar una tarea no detiene el script ni garantiza puntualidad.",
+        "Equivale a 2 minutos."
       ],
       "answer": 2,
-      "explain": "Se pasa una función (aquí una flecha) y el retraso en milisegundos (2000 ms = 2 s). setTimeout(\"Mover()\", 100) evalúa una cadena: inseguro y obsoleto. setInterval repite; se para con clearInterval."
+      "explain": "1000 milisegundos equivalen a un segundo. Los temporizadores se presentan de forma conceptual; su implementación se pospone hasta estudiar funciones. El fragmento solo convierte unidades y no espera."
     },
     {
       "topic": "3.5 Document",
@@ -327,8 +327,8 @@
     {
       "topic": "3.8 Ventanas",
       "href": "../ventanas/",
-      "prompt": "Al pulsar un botón se intenta abrir una ayuda propia, sin noopener. El navegador bloquea la apertura y devuelve null. ¿Qué debe hacer el programa?",
-      "code": "// Dentro de la función que responde al clic:\nconst secundaria = window.open(\"ayuda.html\", \"ayudaUT3\", \"popup,width=600,height=400\");",
+      "prompt": "Desde la consola se intenta abrir una ayuda propia, sin noopener. El navegador bloquea la apertura y devuelve null. ¿Qué debe hacer el programa?",
+      "code": "// Prueba por separado desde la consola; la apertura puede bloquearse.\nconst secundaria = window.open(\"ayuda.html\", \"ayudaUT3\", \"popup,width=600,height=400\");",
       "options": [
         "Llamar siempre a secundaria.focus(), sin comprobar nada.",
         "Comprobar si secundaria es null e informar u ofrecer un enlace alternativo.",
@@ -336,7 +336,7 @@
         "Usar un temporizador para garantizar que el navegador permita abrirla."
       ],
       "answer": 1,
-      "explain": "Una acción directa favorece que se permita la apertura, pero no la garantiza. Si la referencia es null, no se pueden usar sus métodos. No debe afirmarse que toda apertura sin clic falla siempre. Con noopener también puede devolverse null aunque el destino se abra."
+      "explain": "Si la referencia es null, no se pueden usar sus métodos. El bloqueo depende del navegador y sus permisos; ejecutar desde la consola no garantiza la apertura. Con noopener también puede devolverse null aunque el destino se abra."
     },
     {
       "topic": "3.8 parent y opener",
