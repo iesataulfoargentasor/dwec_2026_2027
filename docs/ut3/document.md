@@ -45,7 +45,7 @@ Coloca el `<script src="practica.js"></script>` justo antes de cerrar `</body>`,
 | `cookie` | Cadena de cookies (ver [almacenamiento](almacenamiento.md)) |
 | `documentElement` | El elemento `<html>` |
 | `body` | El `<body>` |
-| `forms`, `images`, `links` | Colecciones clásicas (hoy se usa más `querySelector`) |
+| `forms`, `images`, `links` | Colecciones de formularios, imágenes y enlaces; su recorrido se estudiará más adelante |
 
 ```javascript
 console.log(document.title);
@@ -69,7 +69,7 @@ console.log("Idioma del documento:", document.documentElement.lang);
 console.log("Etiqueta body:", document.body.tagName); // BODY
 ```
 
-`forms`, `images` y `links` son colecciones clásicas que el navegador mantiene. Se pueden consultar, pero sus métodos y las listas se trabajan de forma más completa en la UT4 y en los apartados de DOM.
+`forms`, `images` y `links` son colecciones que el navegador mantiene. Aquí basta con reconocer qué representan: para localizar un elemento concreto en la UT3 usaremos únicamente `document.getElementById`. El trabajo con colecciones se desarrollará en unidades posteriores.
 
 ## Cambiar el aspecto del documento
 
@@ -130,31 +130,46 @@ Eso cubre el criterio **c)**: cambiar el aspecto del documento con objetos del l
 
 ## Colecciones `forms` / `images` / `links`
 
-Siguen existiendo. Un formulario con `id="alta"`:
+Estas propiedades agrupan elementos del documento, pero no las utilizaremos como mecanismo de búsqueda en esta unidad. Un formulario, una imagen o un enlace se puede localizar por su `id`, igual que un párrafo.
 
-```javascript
-const formulario = document.querySelector("#alta");
-// equivalente clásico si tiene name="alta":
-// document.forms.alta
+### Localizar elementos con `document.getElementById`
+
+Prepara estos elementos en el HTML, antes del script:
+
+```html
+<form id="alta">
+  <label for="nombre">Nombre:</label>
+  <input id="nombre" type="text">
+</form>
+<p id="aviso">Formulario pendiente.</p>
 ```
 
-En esta unidad puedes usar `querySelector` / `querySelectorAll` (estándar DOM). `getElementById` también es correcto.
+En JavaScript:
 
-| Necesito… | Opción |
+```javascript
+const formulario = document.getElementById("alta");
+const aviso = document.getElementById("aviso");
+
+if (formulario === null || aviso === null) {
+  console.error("Falta el formulario alta o el párrafo aviso.");
+} else {
+  aviso.textContent = "Formulario localizado correctamente.";
+}
+```
+
+`getElementById` recibe una cadena con el valor exacto del atributo `id`, **sin `#` ni punto**. Devuelve la referencia al elemento, o `null` si no existe. Cada identificador debe ser único en el documento y respetar las mayúsculas y minúsculas.
+
+| Elemento del HTML | Cómo localizarlo |
 | --- | --- |
-| Un elemento por su `id` | `document.getElementById("alta")` o `document.querySelector("#alta")` |
-| El primer elemento que cumple un selector CSS | `document.querySelector("main p")` |
-| Todos los elementos que cumplen un selector | `document.querySelectorAll("a")` |
+| Formulario con `id="alta"` | `document.getElementById("alta")` |
+| Campo con `id="nombre"` | `document.getElementById("nombre")` |
+| Párrafo con `id="aviso"` | `document.getElementById("aviso")` |
 
-Los argumentos son cadenas con lo que se desea buscar:
+El método no busca por el nombre de la etiqueta, por una clase ni por el atributo `name`. Si necesitas localizar otro elemento, asígnale un `id` propio en el HTML y usa ese identificador.
 
-- `getElementById("alta")` recibe el identificador sin `#`.
-- `querySelector("#alta")` recibe un selector CSS: `#` significa identificador.
-- `querySelector(".aviso")` busca el primer elemento con la clase `aviso`; el punto significa clase.
-- `querySelector("main p")` busca el primer párrafo dentro de un `main`: el espacio indica descendencia.
-- `querySelectorAll("a")` busca todos los enlaces; `a` es el nombre de la etiqueta, no una variable. Si no hay coincidencias devuelve una colección vacía.
+Guardar la referencia permite utilizar después las propiedades del elemento. En el ejemplo, `aviso.textContent` cambia el texto del párrafo ya localizado: no realiza una nueva búsqueda. `document.body` y `document.documentElement` son accesos directos a partes del documento, no métodos alternativos de búsqueda.
 
-`querySelector` devuelve un elemento o `null` si no encuentra ninguno. `querySelectorAll` devuelve una colección de elementos; se recorrerá con detalle cuando ya se hayan trabajado arrays y funciones.
+Prueba a cambiar temporalmente `id="aviso"` por `id="otro"`: debe aparecer el mensaje de error sin intentar escribir en `null`. Restáuralo después. Si el identificador está bien pero no se encuentra el elemento, comprueba que el script se ejecute después de su HTML.
 
 !!! failure "`document.write`"
     `document.write("Hola")` recibe texto que el navegador interpreta como HTML. Durante la carga puede insertar contenido en el flujo del documento; después de la carga puede abrir un documento nuevo y borrar el contenido existente. No lo uses para actualizar la interfaz. El apartado [3.7](generar-html.md) muestra las alternativas.
