@@ -5,7 +5,7 @@
     {
       "topic": "3.1 Date",
       "href": "../objetos-nativos/",
-      "prompt": "El constructor de `Date` (apartado 3.1.1). ¿Qué fecha representa esta línea?",
+      "prompt": "El constructor de Date (apartado 3.1.1). ¿Qué fecha representa esta línea?",
       "code": "const concreta = new Date(2026, 8, 9);",
       "options": [
         "9 de agosto de 2026 (el 8 es agosto).",
@@ -14,12 +14,12 @@
         "9 de agosto de 2028: el año se cuenta desde 1900."
       ],
       "answer": 2,
-      "explain": "En `new Date(año, mes, día)` el **mes empieza en 0**: 0 es enero y 8 es septiembre. El día del mes sí es 1–31 (`getDate()`). `getYear()` está obsoleto; se usa `getFullYear()`."
+      "explain": "En new Date(año, mes, día) el mes empieza en 0: 0 es enero y 8 es septiembre. El día del mes sí es 1–31 (getDate()). getYear() está obsoleto; se usa getFullYear()."
     },
     {
       "topic": "3.1 Date (métodos)",
       "href": "../objetos-nativos/",
-      "prompt": "Métodos de `Date`. Con esa fecha, ¿qué imprimen `getDate()` y `getMonth()`?",
+      "prompt": "Métodos de Date. Con esa fecha, ¿qué imprimen getDate() y getMonth()?",
       "code": "const f = new Date(2026, 8, 9);\nconsole.log(f.getDate());\nconsole.log(f.getMonth());",
       "options": [
         "9 y 8",
@@ -28,26 +28,26 @@
         "El día de la semana (0–6) y 8"
       ],
       "answer": 0,
-      "explain": "`getDate()` es el **día del mes** (9). `getMonth()` es el mes **0–11** (8 = septiembre). `getDay()` es el día de la semana (0 = domingo). No los mezcles."
+      "explain": "getDate() es el día del mes (9). getMonth() es el mes 0–11 (8 = septiembre). getDay() es el día de la semana (0 = domingo). No los mezcles."
     },
     {
       "topic": "3.1 Math",
       "href": "../objetos-nativos/",
-      "prompt": "`Math` no se instancia. Con `num = 27.6`, ¿qué sale en `floor`, `ceil` y `round`?",
+      "prompt": "Math no se instancia. Con num = 27.6, ¿qué sale en floor, ceil y round?",
       "code": "const num = 27.6;\nconsole.log(Math.floor(num));\nconsole.log(Math.ceil(num));\nconsole.log(Math.round(num));",
       "options": [
         "27, 27 y 28",
-        "27, 28 y 28",
+        "27.6, 27.6 y 28",
         "28, 27 y 28",
-        "27.6, 27.6 y 28"
+        "27, 28 y 28"
       ],
-      "answer": 1,
-      "explain": "`floor` baja al entero (27), `ceil` sube (28), `round` al más cercano (28). `trunc` cortaría a 27 sin redondear. Se llama `Math.floor(...)`, nunca `new Math()`."
+      "answer": 3,
+      "explain": "floor baja al entero (27), ceil sube (28), round al más cercano (28). trunc cortaría a 27 sin redondear. Se llama Math.floor(...), nunca new Math()."
     },
     {
       "topic": "3.1 Number",
       "href": "../objetos-nativos/",
-      "prompt": "Formato con `toFixed`, como en 3.1.3. ¿Qué imprime esto?",
+      "prompt": "Formato con toFixed, como en 3.1.3. ¿Qué imprime esto?",
       "code": "console.log((12.348).toFixed(2));\nconsole.log(typeof (12.348).toFixed(2));",
       "options": [
         "12.34 y \"number\"",
@@ -56,7 +56,7 @@
         "12.35 y \"number\""
       ],
       "answer": 1,
-      "explain": "`toFixed(2)` redondea a dos decimales (**12.35**) y devuelve una **cadena**, no un número. `new Number(6) === 6` es `false`: en esta unidad no se usa `new Number()`."
+      "explain": "toFixed(2) redondea a dos decimales (12.35) y devuelve una cadena, no un número. new Number(6) === 6 es false: en esta unidad no se usa new Number()."
     },
     {
       "topic": "3.2 String (length)",
@@ -70,12 +70,12 @@
         "5 y \"D\" (cuenta las comillas)"
       ],
       "answer": 0,
-      "explain": "`length` es la longitud (4). El primer carácter está en el índice **0**, así que `txt[0]` (o `charAt(0)`) es `\"D\"`. Evita `new String(\"DWEC\")`."
+      "explain": "length es la longitud (4). El primer carácter está en el índice 0, así que txt[0] (o charAt(0)) es \"D\". Evita new String(\"DWEC\")."
     },
     {
       "topic": "3.2 includes",
       "href": "../string/",
-      "prompt": "`includes` distingue mayúsculas. ¿Qué imprime este fragmento?",
+      "prompt": "includes distingue mayúsculas. ¿Qué imprime este fragmento?",
       "code": "const s = \"JavaScript\";\nconsole.log(s.includes(\"Script\"));\nconsole.log(s.includes(\"script\"));",
       "options": [
         "true y true",
@@ -84,12 +84,12 @@
         "false y true"
       ],
       "answer": 2,
-      "explain": "`includes` busca un trozo **tal cual**. `\"Script\"` está; `\"script\"` no, porque la S de JavaScript es mayúscula. Si hace falta ignorar caja, pasa antes por `toLowerCase()`."
+      "explain": "includes busca un trozo tal cual. \"Script\" está; \"script\" no, porque la S de JavaScript es mayúscula. Si hace falta ignorar caja, pasa antes por toLowerCase()."
     },
     {
       "topic": "3.2 slice",
       "href": "../string/",
-      "prompt": "`slice` extrae un trozo (`fin` no incluido). ¿Qué sale?",
+      "prompt": "slice extrae un trozo (fin no incluido). ¿Qué sale?",
       "code": "const s = \"DWEC-objetos\";\nconsole.log(s.slice(0, 4));",
       "options": [
         "DWEC-objetos",
@@ -98,21 +98,21 @@
         "DWEC-"
       ],
       "answer": 1,
-      "explain": "`slice(0, 4)` toma los índices 0, 1, 2 y 3: **DWEC**. El 4 no entra. En código nuevo se prefiere `slice` a `substring`. `substr` está obsoleto."
+      "explain": "slice(0, 4) toma los índices 0, 1, 2 y 3: DWEC. El 4 no entra. En código nuevo se prefiere slice a substring. substr está obsoleto."
     },
     {
       "topic": "3.2 trim y split",
       "href": "../string/",
-      "prompt": "`trim` y `split`, de la tabla de 3.2. ¿Qué imprime la última línea?",
+      "prompt": "trim y split, de la tabla de 3.2. ¿Qué imprime la última línea?",
       "code": "const bruto = \"  Ana,Luis,Eva  \";\nconst partes = bruto.trim().split(\",\");\nconsole.log(partes[0], partes.length);",
       "options": [
         "\"  Ana\" y 3",
-        "Ana y 3",
+        "undefined y 0",
         "Ana,Luis,Eva y 1",
-        "undefined y 0"
+        "Ana y 3"
       ],
-      "answer": 1,
-      "explain": "`trim()` quita espacios de los extremos. `split(\",\")` parte en un array de **3** elementos; el primero es `\"Ana\"`. `replace` / `toUpperCase` siguen el mismo estilo: el string original no cambia a menos que guardes el resultado."
+      "answer": 3,
+      "explain": "trim() quita espacios de los extremos. split(\",\") parte en un array de 3 elementos; el primero es \"Ana\". replace / toUpperCase siguen el mismo estilo: el string original no cambia a menos que guardes el resultado."
     },
     {
       "topic": "3.3 BOM",
@@ -126,7 +126,7 @@
         "Los dos son objetos nativos de ECMAScript, como Date."
       ],
       "answer": 1,
-      "explain": "El **BOM** describe la ventana (`window`, `navigator`, `screen`, `location`, `history`). El **DOM** describe el HTML (`document` y sus nodos). `Date`/`Math` son nativos: no dependen del navegador."
+      "explain": "El BOM describe la ventana (window, navigator, screen, location, history). El DOM describe el HTML (document y sus nodos). Date/Math son nativos: no dependen del navegador."
     },
     {
       "topic": "3.3 screen",
@@ -136,25 +136,25 @@
       "options": [
         "screen es el viewport; innerWidth es la resolución del monitor.",
         "Las dos parejas miden lo mismo siempre.",
-        "screen es la pantalla (solo lectura); innerWidth/innerHeight son el viewport de la pestaña.",
-        "Hay que usar with (screen) { width } para leer el ancho."
+        "Hay que usar with (screen) { width } para leer el ancho.",
+        "screen es la pantalla (solo lectura); innerWidth/innerHeight son el viewport de la pestaña."
       ],
-      "answer": 2,
-      "explain": "`screen.width` / `height` son la **pantalla**. El tamaño de la **ventana** es `window.innerWidth` / `innerHeight`. `with` está prohibido en modo estricto; se escribe `screen.width`."
+      "answer": 3,
+      "explain": "screen.width y screen.height describen la pantalla en píxeles CSS. innerWidth e innerHeight describen el área de contenido o viewport de la ventana. No tienen por qué coincidir."
     },
     {
       "topic": "3.4 Diálogos",
       "href": "../window/",
-      "prompt": "`prompt` y `confirm` (criterio e). Si la persona pulsa **Cancelar** en el `prompt`, ¿qué vale `nombre`?",
+      "prompt": "prompt y confirm (criterio e). Si la persona pulsa Cancelar en el prompt, ¿qué vale nombre?",
       "code": "const nombre = prompt(\"Tu nombre:\", \"\");\nif (nombre !== null) {\n  console.log(\"Hola, \" + nombre);\n}",
       "options": [
-        "La cadena vacía \"\".",
-        "undefined.",
         "null: Cancelar no es lo mismo que un texto vacío.",
+        "undefined.",
+        "La cadena vacía \"\".",
         "false, igual que confirm."
       ],
-      "answer": 2,
-      "explain": "`prompt` devuelve el texto o **`null`** si se cancela. Un Enter con el campo vacío sí es `\"\"`. `confirm` devuelve `true`/`false`. En la unidad se comprueba `nombre !== null` antes de usar el valor."
+      "answer": 0,
+      "explain": "prompt devuelve el texto o null si se cancela. Un Enter con el campo vacío sí es \"\". confirm devuelve true/false. En la unidad se comprueba nombre !== null antes de usar el valor."
     },
     {
       "topic": "3.4 Temporizadores",
@@ -162,27 +162,27 @@
       "prompt": "Temporizadores de 3.4. ¿Cuál es la forma de la unidad?",
       "code": "const id = setTimeout(() => {\n  console.log(\"Han pasado 2 segundos\");\n}, 2000);",
       "options": [
-        "Pasar una **función** y los milisegundos; `clearTimeout(id)` cancela.",
-        "Pasar la cadena \"console.log(...)\" para que evalúe el código.",
         "setTimeout espera segundos, no milisegundos: aquí serían 2000 s.",
+        "Pasar la cadena \"console.log(...)\" para que evalúe el código.",
+        "Pasar una función y los milisegundos; clearTimeout(id) cancela.",
         "Hay que escribir new Window().setTimeout(...)."
       ],
-      "answer": 0,
-      "explain": "Se pasa **una función** (aquí una flecha) y el retraso en **milisegundos** (2000 ms = 2 s). `setTimeout(\"Mover()\", 100)` evalúa una cadena: inseguro y obsoleto. `setInterval` repite; se para con `clearInterval`."
+      "answer": 2,
+      "explain": "Se pasa una función (aquí una flecha) y el retraso en milisegundos (2000 ms = 2 s). setTimeout(\"Mover()\", 100) evalúa una cadena: inseguro y obsoleto. setInterval repite; se para con clearInterval."
     },
     {
       "topic": "3.5 Document",
       "href": "../document/",
-      "prompt": "El objeto `document` (3.5). Tras ejecutar esto, ¿qué ha cambiado?",
+      "prompt": "El objeto document (3.5). Tras ejecutar esto, ¿qué ha cambiado?",
       "code": "document.title = \"DWEC · UT3\";\nconsole.log(document.URL);",
       "options": [
         "Solo se imprime la URL; el título de la pestaña no se puede asignar.",
-        "Cambia el `<title>` (y el texto de la pestaña) y se muestra la URL del documento.",
-        "Cambia la barra de estado (`status`), no el título.",
-        "Equivale a location.href = \"DWEC · UT3\" y recarga la página."
+        "Equivale a location.href = \"DWEC · UT3\" y recarga la página.",
+        "Cambia la barra de estado (status), no el título.",
+        "Cambia el <title> (y el texto de la pestaña) y se muestra la URL del documento."
       ],
-      "answer": 1,
-      "explain": "`document.title` se **puede asignar**: actualiza `<title>` y la pestaña. `document.URL` es la URL completa (solo lectura). `status` ya no sirve. Navegar es cosa de `location`, no del título."
+      "answer": 3,
+      "explain": "document.title se puede asignar: actualiza <title> y la pestaña. document.URL es la URL completa (solo lectura). status ya no sirve. Navegar es cosa de location, no del título."
     },
     {
       "topic": "3.5 Aspecto",
@@ -196,91 +196,315 @@
         "classList es de jQuery; en JavaScript nativo no existe."
       ],
       "answer": 1,
-      "explain": "`bgColor`, `fgColor` y similares son **legado HTML 4**. En la unidad se usa `element.style` o, mejor, `classList.add` / `toggle` y un CSS. `querySelector` y `getElementById` son válidos para localizar el nodo."
+      "explain": "style.backgroundColor modifica el estilo en línea del cuerpo y classList.add añade una clase, cuyo efecto depende del CSS definido. Para localizar un elemento concreto en esta unidad utilizamos únicamente document.getElementById, con su identificador sin #."
+    },
+    {
+      "topic": "3.5 Localizar elementos",
+      "href": "../document/",
+      "prompt": "El HTML no contiene ningún elemento con id=\"aviso\". ¿Qué ocurre?",
+      "code": "const aviso = document.getElementById(\"aviso\");\nif (aviso !== null) {\n  aviso.textContent = \"Preparado\";\n} else {\n  console.log(\"Falta el aviso\");\n}",
+      "options": [
+        "Se crea automáticamente un párrafo.",
+        "Se imprime \"Falta el aviso\" sin intentar escribir en null.",
+        "Se busca una clase llamada aviso.",
+        "Hay que usar \"#aviso\" como argumento."
+      ],
+      "answer": 1,
+      "explain": "getElementById devuelve null si falta el identificador. El argumento se escribe sin # y no busca por clase ni crea elementos. La comprobación evita utilizar una referencia inexistente."
     },
     {
       "topic": "3.6 Location",
       "href": "../history-location/",
-      "prompt": "Partes de la URL (3.6.2). Si la dirección es la del ejemplo, ¿qué vale `location.search`?",
-      "code": "https://ies.edu/dwec/ut3.html?tema=bom#window\nconsole.log(location.search);",
+      "prompt": "Partes de la URL (3.6.2). Si la dirección es la del ejemplo, ¿qué vale location.search?",
+      "code": "// URL actual: https://ies.edu/dwec/ut3.html?tema=bom#window\nconsole.log(location.search);",
       "options": [
         "\"https://ies.edu/dwec/ut3.html?tema=bom#window\"",
-        "\"?tema=bom\"",
         "\"#window\"",
+        "\"?tema=bom\"",
         "\"/dwec/ut3.html\""
       ],
-      "answer": 1,
-      "explain": "`search` es la consulta (`?tema=bom`). `hash` es `#window`, `pathname` es `/dwec/ut3.html` y `href` es la URL completa. `host` incluye el puerto si no es el de por defecto."
+      "answer": 2,
+      "explain": "search es la consulta (?tema=bom). hash es #window, pathname es /dwec/ut3.html y href es la URL completa. host incluye el puerto si no es el de por defecto."
     },
     {
       "topic": "3.6 History y Location",
       "href": "../history-location/",
-      "prompt": "Navegar sin perder (o sí) el historial. ¿Cuál es la diferencia?",
-      "code": "location.assign(\"https://www.google.es\");\n// location.replace(\"https://www.google.es\");",
+      "prompt": "Desde A has navegado a B. En B, comparas assign hacia C con replace hacia C. ¿Qué cambia en el historial?",
+      "code": "// Alternativas: no ejecutar juntas ni automáticamente.\n// location.assign(\"C.html\");\n// location.replace(\"C.html\");",
       "options": [
-        "assign y replace hacen lo mismo: siempre se puede pulsar Atrás.",
-        "assign carga la URL y deja esta página en el historial; replace la sustituye (no hay Atrás a esta).",
-        "replace es history.back(); assign es history.forward().",
-        "assign solo funciona en Node.js; replace es del BOM."
+        "assign conserva la entrada de B; replace sustituye esa entrada por C.",
+        "Ambas alternativas borran todo el historial.",
+        "replace equivale a history.back().",
+        "replace impide que existan otras visitas anteriores a B."
       ],
-      "answer": 1,
-      "explain": "`assign` (o `location.href = ...`) **añade** una entrada. `replace` **cambia** la actual: no vuelves aquí con Atrás. `history.back()` / `go(-1)` recorren el historial; no puedes leer las URLs visitadas (`current` del PDF no existe)."
+      "answer": 0,
+      "explain": "Con assign queda A → B → C; con replace, A → C. Se sustituye la entrada actual, no todo el historial. Otras visitas previas a B podrían seguir existiendo. Las llamadas se muestran comentadas para no abandonar la actividad."
+    },
+    {
+      "topic": "3.6 Historial",
+      "href": "../history-location/",
+      "prompt": "history.length vale 4. ¿Qué se puede concluir con seguridad?",
+      "code": "console.log(history.length);",
+      "options": [
+        "Existen cuatro entradas en el historial de la sesión, pero no sabemos cuántas quedan detrás ni sus URLs.",
+        "Hay exactamente tres páginas anteriores de este sitio.",
+        "history.back() siempre vuelve al índice de la UT3.",
+        "Podemos leer las cuatro URLs con history.previous."
+      ],
+      "answer": 0,
+      "explain": "La cantidad incluye la entrada actual y puede incluir entradas por delante. No permite inspeccionar las URLs ni garantizar que Atrás conduzca a otra página del mismo sitio."
     },
     {
       "topic": "3.7 Generar HTML",
       "href": "../generar-html/",
-      "prompt": "Texto en el documento (3.7). El contenedor `#app` está vacío. ¿Qué se ve en la página?",
-      "code": "const app = document.querySelector(\"#app\");\napp.textContent = \"<b>Hola</b>\";",
+      "prompt": "Existe un contenedor vacío con id=\"app\" y el script se ejecuta después de su HTML. ¿Qué se ve?",
+      "code": "const app = document.getElementById(\"app\");\napp.textContent = \"<b>Hola</b>\";",
       "options": [
         "La palabra Hola en negrita (interpreta el HTML).",
-        "El texto literal <b>Hola</b> (no interpreta etiquetas).",
         "Nada: textContent solo vale en Node.js.",
+        "El texto literal <b>Hola</b> (no interpreta etiquetas).",
         "Borra toda la página, como document.write."
       ],
-      "answer": 1,
-      "explain": "`textContent` **no** interpreta HTML: muestra `<b>Hola</b>` tal cual. Es lo adecuado para datos del usuario. `innerHTML` sí crea etiquetas, pero no se usa con cadenas de `prompt` (XSS). `document.write` después de cargar **pisa** el documento."
+      "answer": 2,
+      "explain": "getElementById recibe el identificador sin #. textContent muestra <b>Hola</b> literalmente, sin interpretar etiquetas. Es apropiado para presentar datos como texto; innerHTML los interpretaría como marcado."
     },
     {
       "topic": "3.7 createElement",
       "href": "../generar-html/",
-      "prompt": "Crear etiquetas (criterio d). ¿Qué hace este fragmento?",
-      "code": "const app = document.querySelector(\"#app\");\nconst p = document.createElement(\"p\");\np.textContent = \"Hola Mundo\";\napp.append(p);",
+      "prompt": "Existe el contenedor con id=\"app\". ¿Qué hace este fragmento?",
+      "code": "const app = document.getElementById(\"app\");\nconst p = document.createElement(\"p\");\np.textContent = \"Hola Mundo\";\napp.append(p);",
       "options": [
         "Sustituye todo el HTML de la página por un párrafo.",
-        "Crea un <p> con ese texto y lo inserta al final de #app.",
+        "Equivale a document.write(\"<p>Hola Mundo</p>\").",
         "Escribe en la consola; el DOM no cambia.",
-        "Equivale a document.write(\"<p>Hola Mundo</p>\")."
+        "Crea un <p> con ese texto y lo inserta al final de #app."
       ],
-      "answer": 1,
-      "explain": "`createElement(\"p\")` crea el nodo; `textContent` pone el texto; `append` lo mete **dentro** de `#app` (al final). No reescribe el documento. En DevTools → Elements se ve el `<p>` nuevo."
+      "answer": 3,
+      "explain": "getElementById localiza el contenedor; createElement crea el párrafo; textContent establece su texto y append lo inserta al final del contenedor. Crear e insertar son operaciones diferentes. El archivo HTML guardado no se modifica."
+    },
+    {
+      "topic": "3.7 Crear e insertar",
+      "href": "../generar-html/",
+      "prompt": "Existe un div con id=\"app\". ¿Qué falta para que el párrafo aparezca dentro de él?",
+      "code": "const app = document.getElementById(\"app\");\nconst parrafo = document.createElement(\"p\");\nparrafo.textContent = \"Actividad preparada\";",
+      "options": [
+        "Asignar parrafo = \"p\".",
+        "Llamar a document.write para abrir el documento.",
+        "Ejecutar app.append(parrafo).",
+        "Cambiar el título de la pestaña."
+      ],
+      "answer": 2,
+      "explain": "createElement devuelve un elemento nuevo que todavía no está insertado. append lo incorpora al contenedor. textContent configura su texto, pero no lo conecta al documento."
+    },
+    {
+      "topic": "3.7 Sustituir contenido",
+      "href": "../generar-html/",
+      "prompt": "El contenedor existe y contiene una lista. ¿Qué queda dentro después de ejecutar el código?",
+      "code": "const app = document.getElementById(\"app\");\napp.textContent = \"Resumen\";",
+      "options": [
+        "La lista y el texto Resumen al final.",
+        "La lista se convierte en un archivo guardado.",
+        "Nada: también se elimina el contenedor.",
+        "Solo el texto Resumen; el contenedor sigue existiendo."
+      ],
+      "answer": 3,
+      "explain": "Asignar textContent sustituye los hijos del elemento por texto. Para conservar una estructura, cambia el texto del elemento concreto o añade nuevos nodos con append."
+    },
+    {
+      "topic": "3.7 Referencias a nodos",
+      "href": "../generar-html/",
+      "prompt": "Existe el contenedor con id=\"app\". ¿Cuántos párrafos contiene al final?",
+      "code": "const app = document.getElementById(\"app\");\nconst p = document.createElement(\"p\");\np.textContent = \"Primero\";\napp.append(p);\np.textContent = \"Segundo\";\napp.append(p);",
+      "options": [
+        "Uno, con el texto Segundo.",
+        "Ninguno: append solo acepta cadenas.",
+        "Dos: uno con Primero y otro con Segundo.",
+        "Uno, con el texto Primero."
+      ],
+      "answer": 0,
+      "explain": "La variable p sigue apuntando al mismo nodo. Cambiar su texto modifica ese nodo y volver a insertarlo lo mueve, no lo duplica. Para dos párrafos distintos hay que crear dos elementos."
     },
     {
       "topic": "3.8 Ventanas",
       "href": "../ventanas/",
-      "prompt": "Varias ventanas (3.8). Llamas a `open` **al cargar** la página (sin clic). ¿Qué suele pasar?",
-      "code": "const secundaria = window.open(\n  \"popup.html\",\n  \"p\",\n  \"width=400,height=300\"\n);\nconsole.log(secundaria);",
+      "prompt": "Al pulsar un botón se intenta abrir una ayuda propia, sin noopener. El navegador bloquea la apertura y devuelve null. ¿Qué debe hacer el programa?",
+      "code": "// Dentro de la función que responde al clic:\nconst secundaria = window.open(\"ayuda.html\", \"ayudaUT3\", \"popup,width=600,height=400\");",
       "options": [
-        "Siempre abre el popup; secundaria es un Window.",
-        "El bloqueador de pop-ups suele devolver null si no hay un clic (gesto).",
-        "Abre un frameset HTML5 con dos marcos.",
-        "Desde el popup, parent apunta a Google aunque sea otro origen."
+        "Llamar siempre a secundaria.focus(), sin comprobar nada.",
+        "Comprobar si secundaria es null e informar u ofrecer un enlace alternativo.",
+        "Intentar leer secundaria.document aunque sea null.",
+        "Usar un temporizador para garantizar que el navegador permita abrirla."
       ],
       "answer": 1,
-      "explain": "`open` casi solo funciona tras un **clic**. Si no, devuelve `null`. El `frameset` está obsoleto; hoy se usa `<iframe>`. Solo lees `contentWindow.document` u `opener.document` si es **mismo origen**."
+      "explain": "Una acción directa favorece que se permita la apertura, pero no la garantiza. Si la referencia es null, no se pueden usar sus métodos. No debe afirmarse que toda apertura sin clic falla siempre. Con noopener también puede devolverse null aunque el destino se abra."
+    },
+    {
+      "topic": "3.8 parent y opener",
+      "href": "../ventanas/",
+      "prompt": "Se abre panel.html directamente en una pestaña independiente, sin otra ventana que la abra. ¿Qué comparación permite detectar que no está dentro de un marco?",
+      "code": "console.log(window === parent);",
+      "options": [
+        "Es false: parent siempre apunta a otra ventana.",
+        "Es true: sin marco padre, parent es la propia ventana.",
+        "Produce SecurityError incluso sin leer otro documento.",
+        "parent es siempre la ventana que abrió esta mediante open."
+      ],
+      "answer": 1,
+      "explain": "parent representa la relación entre marcos. En una pestaña de nivel superior es la propia ventana. La relación con una ventana que abre otra se consulta con opener, que puede ser null."
+    },
+    {
+      "topic": "3.8 Mismo origen",
+      "href": "../ventanas/",
+      "prompt": "La principal está en http://localhost:8000/aula.html y su iframe carga http://localhost:8001/panel.html. Ambos se muestran sin restricciones de incrustación. ¿Puede el hijo leer parent.document?",
+      "code": "// Solo cambia el puerto entre ambos documentos.",
+      "options": [
+        "Sí: basta con estar en el mismo equipo.",
+        "Sí: si el marco se ve, su DOM es accesible.",
+        "Sí: la ruta panel.html concede permiso.",
+        "No: el puerto distinto implica otro origen y se restringe el acceso al documento."
+      ],
+      "answer": 3,
+      "explain": "Protocolo, servidor y puerto efectivo determinan el origen. Poder mostrar un iframe no implica poder leer su documento. El caso resuelto captura el error de acceso y muestra un diagnóstico."
+    },
+    {
+      "topic": "3.8 Orden de carga",
+      "href": "../ventanas/",
+      "prompt": "En el caso resuelto, ¿por qué los párrafos de la principal están antes del iframe y panel.js al final del body del hijo?",
+      "code": "// En panel.js:\nconst resumen = document.getElementById(\"resumen\");\nconst actividad = parent.document.getElementById(\"actividad\");",
+      "options": [
+        "Para eliminar la política de mismo origen.",
+        "Para que ambos documentos pasen a compartir el mismo árbol DOM.",
+        "Para que los elementos consultados ya existan cuando se ejecuta el script del hijo.",
+        "Para que getElementById busque automáticamente dentro de todos los marcos."
+      ],
+      "answer": 2,
+      "explain": "Cada búsqueda actúa sobre el documento indicado. El orden prepara los elementos propios y los del padre antes de consultarlos. Se mantiene la necesidad de comprobar referencias y permisos de acceso."
+    },
+    {
+      "topic": "3.8 Comunicación con la principal",
+      "href": "../ventanas/",
+      "prompt": "Una ayuda propia del mismo origen se ha abierto conservando opener. La principal tiene id=\"estado\". ¿Qué instrucción localiza ese elemento desde la ayuda?",
+      "code": "// Se ha comprobado que opener existe y sigue disponible.",
+      "options": [
+        "document.getElementById(\"estado\"), porque siempre busca en todas las ventanas.",
+        "document.getElementById(\"#estado\").",
+        "parent.getElementById(\"estado\").",
+        "window.opener.document.getElementById(\"estado\")."
+      ],
+      "answer": 3,
+      "explain": "Se aplica getElementById al documento de la ventana que abrió la ayuda. El documento actual es otro. Después debe comprobarse que el resultado no sea null antes de asignar textContent."
     },
     {
       "topic": "3.9 Almacenamiento",
       "href": "../almacenamiento/",
-      "prompt": "Web Storage (criterio g). Tras recargar la misma pestaña, ¿qué se imprime?",
-      "code": "localStorage.setItem(\"colorFondo\", \"crimson\");\nconsole.log(localStorage.getItem(\"colorFondo\"));\nconsole.log(typeof localStorage.getItem(\"colorFondo\"));",
+      "prompt": "En una visita anterior se guardó \"oscuro\" en esta clave. Se recarga desde el mismo origen y perfil, sin borrar datos ni restringir el acceso. ¿Qué imprime este código?",
+      "code": "const tema = localStorage.getItem(\"dwec.ut3.lectura.tema\");\nconsole.log(tema);\nconsole.log(typeof tema);",
       "options": [
-        "crimson y \"string\" (sigue ahí tras recargar; todo se guarda como texto).",
-        "crimson y \"string\", pero al recargar getItem devuelve null.",
-        "crimson y \"object\".",
-        "undefined y \"undefined\" si la clave no es un número."
+        "oscuro y \"string\".",
+        "null y \"object\": toda recarga borra localStorage.",
+        "oscuro y \"boolean\".",
+        "undefined y \"undefined\"."
       ],
       "answer": 0,
-      "explain": "`localStorage` **sobrevive** al recargar (hasta que lo borres). `sessionStorage` se pierde al cerrar la pestaña. Solo guarda **cadenas**: un número se lee como string. Si la clave no existe, `getItem` devuelve `null`. Las cookies se envían al servidor; el storage no."
+      "explain": "localStorage conserva normalmente los datos entre cargas. getItem devuelve una cadena o null si la clave está ausente. Aquí se lee lo guardado en una ejecución anterior: no hay una escritura que oculte si realmente persistió."
+    },
+    {
+      "topic": "3.9 Ausencia y texto vacío",
+      "href": "../almacenamiento/",
+      "prompt": "El almacenamiento está disponible. ¿Qué imprime el código?",
+      "code": "sessionStorage.setItem(\"dwec.ut3.test.nota\", \"\");\nconst nota = sessionStorage.getItem(\"dwec.ut3.test.nota\");\nconsole.log(nota === \"\", nota === null);\nsessionStorage.removeItem(\"dwec.ut3.test.nota\");",
+      "options": [
+        "true y true.",
+        "false y true.",
+        "true y false.",
+        "false y false."
+      ],
+      "answer": 2,
+      "explain": "La clave existe con un valor vacío. getItem devuelve null únicamente cuando no existe. removeItem elimina la clave al final de la prueba; almacenar una cadena vacía no la elimina."
+    },
+    {
+      "topic": "3.9 Cadenas y números",
+      "href": "../almacenamiento/",
+      "prompt": "El almacenamiento está disponible. ¿Qué muestran las dos operaciones?",
+      "code": "localStorage.setItem(\"dwec.ut3.test.intentos\", 2);\nconst valor = localStorage.getItem(\"dwec.ut3.test.intentos\");\nconsole.log(valor + 1);\nconsole.log(Number(valor) + 1);\nlocalStorage.removeItem(\"dwec.ut3.test.intentos\");",
+      "options": [
+        "\"21\" y 3.",
+        "21 y 21.",
+        "3 y 3.",
+        "NaN y 3."
+      ],
+      "answer": 0,
+      "explain": "Web Storage conserva cadenas. El primer + concatena; Number convierte antes de sumar. En una lectura real hay que comprobar primero ausencia y validez del dato, porque Number(null) devuelve 0."
+    },
+    {
+      "topic": "3.9 Borrado selectivo",
+      "href": "../almacenamiento/",
+      "prompt": "Quieres olvidar el tema sin borrar otras preferencias del mismo origen. ¿Qué instrucción debes usar?",
+      "code": "const clave = \"dwec.ut3.lectura.tema\";",
+      "options": [
+        "localStorage.clear().",
+        "localStorage.removeItem(clave).",
+        "sessionStorage.clear().",
+        "localStorage.setItem(clave, null)."
+      ],
+      "answer": 1,
+      "explain": "removeItem elimina solo esa clave. clear vacía todas las claves del almacén, incluso las de otras prácticas. Guardar null con setItem produciría la cadena \"null\", no una eliminación."
+    },
+    {
+      "topic": "3.9 Sesión y persistencia",
+      "href": "../almacenamiento/",
+      "prompt": "En una pestaña guardas un perfil en localStorage y una actividad en sessionStorage. ¿Qué ocurre al recargar sin borrar datos y después abrir otra pestaña independiente escribiendo la misma URL?",
+      "code": "// Mismo origen y perfil; sin duplicar ni restaurar pestañas.",
+      "options": [
+        "La recarga borra los dos almacenes.",
+        "La nueva pestaña comparte siempre la actividad de sessionStorage en tiempo real.",
+        "La recarga conserva ambos; la nueva pestaña comparte el perfil local y comienza con su propia sesión.",
+        "localStorage solo pertenece a la primera pestaña."
+      ],
+      "answer": 2,
+      "explain": "sessionStorage sobrevive a la recarga, pero pertenece a la sesión de pestaña. localStorage se comparte entre documentos del mismo origen y perfil. Una pestaña con opener puede recibir una copia inicial y la restauración puede recuperar datos; aquí se excluyen esos casos."
+    },
+    {
+      "topic": "3.9 Error al guardar",
+      "href": "../almacenamiento/",
+      "prompt": "En el caso resuelto, el tema recuperado es oscuro. Se elige claro, pero setItem lanza un error. ¿Cuál debe ser el resultado?",
+      "code": "// Política del caso resuelto: cambiar el tema solo tras guardar con éxito.",
+      "options": [
+        "Anunciar que se ha guardado claro y cambiar el fondo.",
+        "Mantener oscuro en esta página e informar de que no se pudo guardar.",
+        "Vaciar todo localStorage para continuar.",
+        "Repetir la escritura indefinidamente hasta que funcione."
+      ],
+      "answer": 1,
+      "explain": "La asignación del nuevo tema y el mensaje de éxito van después de setItem dentro de try. Si falla, catch informa y el tema preparado se conserva. No debe anunciarse una escritura que no se completó."
+    },
+    {
+      "topic": "3.9 Validar lo recuperado",
+      "href": "../almacenamiento/",
+      "prompt": "La clave del caso resuelto contiene \"azul\", pero solo se admiten claro y oscuro. Se recarga y se pulsa Cancelar. ¿Qué ocurre?",
+      "code": "// Clave: dwec.ut3.lectura.tema",
+      "options": [
+        "Se aplica azul porque todo dato guardado es válido.",
+        "Se elimina automáticamente la clave inválida.",
+        "Cancelar convierte la clave en una cadena vacía.",
+        "Se aplica claro como respaldo, se informa y la clave conserva \"azul\"."
+      ],
+      "answer": 3,
+      "explain": "El caso valida el dato recuperado y usa claro si es inválido. Cancelar no escribe ni borra. El usuario puede elegir después un tema válido o la orden borrar. La persistencia no garantiza la validez del contenido."
+    },
+    {
+      "topic": "3.9 Cookies y Web Storage",
+      "href": "../almacenamiento/",
+      "prompt": "¿Qué diferencia de envío y acceso es correcta?",
+      "code": "// Una cookie y una preferencia de Web Storage no se usan igual.",
+      "options": [
+        "El navegador envía las cookies que correspondan; Web Storage no se envía automáticamente. HttpOnly lo configura el servidor.",
+        "localStorage se envía automáticamente con cada petición HTTP.",
+        "JavaScript puede activar HttpOnly mediante document.cookie.",
+        "Todas las cookies se separan por puerto, igual que localStorage."
+      ],
+      "answer": 0,
+      "explain": "Las cookies se envían según su ámbito y atributos. Web Storage puede enviarse si un script lo hace explícitamente, pero no automáticamente. HttpOnly impide su lectura desde JavaScript y se establece desde el servidor; las cookies no se aíslan por puerto."
     }
   ]
 }
