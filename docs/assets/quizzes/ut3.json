@@ -423,24 +423,24 @@
       "explain": "La clave existe con un valor vacío. getItem devuelve null únicamente cuando no existe. removeItem elimina la clave al final de la prueba; almacenar una cadena vacía no la elimina."
     },
     {
-      "topic": "3.9 Objetos y JSON",
+      "topic": "3.9 Actualizar un texto",
       "href": "../almacenamiento/",
-      "prompt": "El almacenamiento está disponible. ¿Qué muestra el código después de guardar y recuperar la ficha?",
-      "code": "const clave = \"dwec.ut3.test.ficha\";\nconst ficha = { minutos: 25, completada: false };\nsessionStorage.setItem(clave, JSON.stringify(ficha));\nconst texto = sessionStorage.getItem(clave);\nconst recuperada = JSON.parse(texto);\nconsole.log(typeof texto);\nconsole.log(recuperada.minutos + 5);\nconsole.log(typeof recuperada.completada);\nsessionStorage.removeItem(clave);",
+      "prompt": "El almacenamiento está disponible. ¿Qué imprime el código?",
+      "code": "const clave = \"dwec.ut3.test.actividad\";\nsessionStorage.setItem(clave, \"Leer\");\nsessionStorage.setItem(clave, \"Repasar\");\nconsole.log(sessionStorage.getItem(clave));\nsessionStorage.removeItem(clave);",
       "options": [
-        "\"string\", 30 y \"boolean\".",
-        "\"object\", 30 y \"boolean\".",
-        "\"string\", \"255\" y \"string\".",
-        "\"string\", 30 y \"string\"."
+        "\"Repasar\".",
+        "\"Leer\".",
+        "\"Leer,Repasar\".",
+        "null."
       ],
       "answer": 0,
-      "explain": "stringify convierte el objeto en texto y parse reconstruye sus datos. El almacén conserva una cadena, pero minutos vuelve a ser número y completada vuelve a ser booleano. Guardar directamente el objeto ordinario produciría \"[object Object]\"."
+      "explain": "setItem con la misma clave sustituye el valor anterior. No crea una segunda clave ni acumula los textos. Al final se elimina únicamente la clave de prueba."
     },
     {
       "topic": "3.9 Borrado selectivo",
       "href": "../almacenamiento/",
-      "prompt": "Quieres olvidar las preferencias de lectura sin borrar otros datos del mismo origen. ¿Qué instrucción debes usar?",
-      "code": "const clave = \"dwec.ut3.lectura.preferencias\";",
+      "prompt": "Quieres olvidar el nombre del saludo sin borrar otros datos del mismo origen. ¿Qué instrucción debes usar?",
+      "code": "const clave = \"dwec.ut3.saludo.nombre\";",
       "options": [
         "localStorage.clear().",
         "localStorage.removeItem(clave).",
@@ -467,30 +467,30 @@
     {
       "topic": "3.9 Error al guardar",
       "href": "../almacenamiento/",
-      "prompt": "En el caso resuelto se recupera oscuro con 20 px. Se eligen claro y 16, pero setItem lanza un error. ¿Cuál debe ser el resultado?",
-      "code": "// El nuevo objeto se aplica solo después de guardar su JSON con éxito.",
+      "prompt": "En el caso resuelto se recupera Ana. Se introduce Luis, pero setItem lanza un error. ¿Qué debe mostrar la página?",
+      "code": "// nombre = nuevoNombre va después de setItem dentro de try.",
       "options": [
-        "Anunciar que se ha guardado claro y cambiar el fondo.",
-        "Mantener oscuro con 20 px e informar de que no se pudo guardar.",
-        "Vaciar todo localStorage para continuar.",
-        "Repetir la escritura indefinidamente hasta que funcione."
+        "Saludar a Luis y anunciar que se ha guardado.",
+        "Saludar a Ana e informar del error de almacenamiento.",
+        "Borrar todo localStorage para continuar.",
+        "Volver a pedir el nombre indefinidamente."
       ],
       "answer": 1,
-      "explain": "La asignación preferencias = nuevas y el mensaje de éxito van después de setItem dentro de try. Si falla, catch informa y se conserva todo el objeto preparado, sin aplicar cambios parciales."
+      "explain": "Si setItem falla, se pasa a catch antes de asignar el nuevo nombre. Se conserva Ana y se informa del error, sin anunciar una escritura que no se completó."
     },
     {
-      "topic": "3.9 Validar lo recuperado",
+      "topic": "3.9 Nombre vacío",
       "href": "../almacenamiento/",
-      "prompt": "La clave del caso resuelto contiene el JSON indicado. Se recarga y se pulsa Cancelar en el primer diálogo. ¿Qué ocurre?",
-      "code": "// Clave: dwec.ut3.lectura.preferencias\n// Texto guardado: {\"tema\":\"azul\",\"tamano\":16}",
+      "prompt": "Se ha recuperado el nombre Ana. En el diálogo se introducen solo espacios. ¿Qué ocurre?",
+      "code": "// entrada.trim() produce una cadena vacía.",
       "options": [
-        "Se aplica azul porque todo dato guardado es válido.",
-        "Se elimina automáticamente la clave inválida.",
-        "Cancelar convierte la clave en una cadena vacía.",
-        "Se aplica claro con 16 px, se informa y el texto guardado permanece igual."
+        "Se guarda una cadena vacía como nombre.",
+        "Se elimina la clave automáticamente.",
+        "Se sustituye Ana por Visitante.",
+        "Se conserva Ana y se muestra un aviso."
       ],
       "answer": 3,
-      "explain": "parse interpreta un JSON válido, pero el tema azul no cumple la validación. Se usa el objeto de respaldo. Cancelar no escribe ni borra: una elección válida posterior puede sustituir el texto y borrar puede eliminarlo."
+      "explain": "El ejemplo rechaza una entrada vacía tras trim, sin escribir ni borrar. Cancelar tampoco cambia el dato, pero es una situación distinta: prompt devuelve null."
     },
     {
       "topic": "3.9 Cookies y Web Storage",
