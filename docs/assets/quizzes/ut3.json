@@ -423,24 +423,24 @@
       "explain": "La clave existe con un valor vacío. getItem devuelve null únicamente cuando no existe. removeItem elimina la clave al final de la prueba; almacenar una cadena vacía no la elimina."
     },
     {
-      "topic": "3.9 Cadenas y números",
+      "topic": "3.9 Objetos y JSON",
       "href": "../almacenamiento/",
-      "prompt": "El almacenamiento está disponible. ¿Qué muestran las dos operaciones?",
-      "code": "localStorage.setItem(\"dwec.ut3.test.intentos\", 2);\nconst valor = localStorage.getItem(\"dwec.ut3.test.intentos\");\nconsole.log(valor + 1);\nconsole.log(Number(valor) + 1);\nlocalStorage.removeItem(\"dwec.ut3.test.intentos\");",
+      "prompt": "El almacenamiento está disponible. ¿Qué muestra el código después de guardar y recuperar la ficha?",
+      "code": "const clave = \"dwec.ut3.test.ficha\";\nconst ficha = { minutos: 25, completada: false };\nsessionStorage.setItem(clave, JSON.stringify(ficha));\nconst texto = sessionStorage.getItem(clave);\nconst recuperada = JSON.parse(texto);\nconsole.log(typeof texto);\nconsole.log(recuperada.minutos + 5);\nconsole.log(typeof recuperada.completada);\nsessionStorage.removeItem(clave);",
       "options": [
-        "\"21\" y 3.",
-        "21 y 21.",
-        "3 y 3.",
-        "NaN y 3."
+        "\"string\", 30 y \"boolean\".",
+        "\"object\", 30 y \"boolean\".",
+        "\"string\", \"255\" y \"string\".",
+        "\"string\", 30 y \"string\"."
       ],
       "answer": 0,
-      "explain": "Web Storage conserva cadenas. El primer + concatena; Number convierte antes de sumar. En una lectura real hay que comprobar primero ausencia y validez del dato, porque Number(null) devuelve 0."
+      "explain": "stringify convierte el objeto en texto y parse reconstruye sus datos. El almacén conserva una cadena, pero minutos vuelve a ser número y completada vuelve a ser booleano. Guardar directamente el objeto ordinario produciría \"[object Object]\"."
     },
     {
       "topic": "3.9 Borrado selectivo",
       "href": "../almacenamiento/",
-      "prompt": "Quieres olvidar el tema sin borrar otras preferencias del mismo origen. ¿Qué instrucción debes usar?",
-      "code": "const clave = \"dwec.ut3.lectura.tema\";",
+      "prompt": "Quieres olvidar las preferencias de lectura sin borrar otros datos del mismo origen. ¿Qué instrucción debes usar?",
+      "code": "const clave = \"dwec.ut3.lectura.preferencias\";",
       "options": [
         "localStorage.clear().",
         "localStorage.removeItem(clave).",
@@ -467,30 +467,30 @@
     {
       "topic": "3.9 Error al guardar",
       "href": "../almacenamiento/",
-      "prompt": "En el caso resuelto, el tema recuperado es oscuro. Se elige claro, pero setItem lanza un error. ¿Cuál debe ser el resultado?",
-      "code": "// Política del caso resuelto: cambiar el tema solo tras guardar con éxito.",
+      "prompt": "En el caso resuelto se recupera oscuro con 20 px. Se eligen claro y 16, pero setItem lanza un error. ¿Cuál debe ser el resultado?",
+      "code": "// El nuevo objeto se aplica solo después de guardar su JSON con éxito.",
       "options": [
         "Anunciar que se ha guardado claro y cambiar el fondo.",
-        "Mantener oscuro en esta página e informar de que no se pudo guardar.",
+        "Mantener oscuro con 20 px e informar de que no se pudo guardar.",
         "Vaciar todo localStorage para continuar.",
         "Repetir la escritura indefinidamente hasta que funcione."
       ],
       "answer": 1,
-      "explain": "La asignación del nuevo tema y el mensaje de éxito van después de setItem dentro de try. Si falla, catch informa y el tema preparado se conserva. No debe anunciarse una escritura que no se completó."
+      "explain": "La asignación preferencias = nuevas y el mensaje de éxito van después de setItem dentro de try. Si falla, catch informa y se conserva todo el objeto preparado, sin aplicar cambios parciales."
     },
     {
       "topic": "3.9 Validar lo recuperado",
       "href": "../almacenamiento/",
-      "prompt": "La clave del caso resuelto contiene \"azul\", pero solo se admiten claro y oscuro. Se recarga y se pulsa Cancelar. ¿Qué ocurre?",
-      "code": "// Clave: dwec.ut3.lectura.tema",
+      "prompt": "La clave del caso resuelto contiene el JSON indicado. Se recarga y se pulsa Cancelar en el primer diálogo. ¿Qué ocurre?",
+      "code": "// Clave: dwec.ut3.lectura.preferencias\n// Texto guardado: {\"tema\":\"azul\",\"tamano\":16}",
       "options": [
         "Se aplica azul porque todo dato guardado es válido.",
         "Se elimina automáticamente la clave inválida.",
         "Cancelar convierte la clave en una cadena vacía.",
-        "Se aplica claro como respaldo, se informa y la clave conserva \"azul\"."
+        "Se aplica claro con 16 px, se informa y el texto guardado permanece igual."
       ],
       "answer": 3,
-      "explain": "El caso valida el dato recuperado y usa claro si es inválido. Cancelar no escribe ni borra. El usuario puede elegir después un tema válido o la orden borrar. La persistencia no garantiza la validez del contenido."
+      "explain": "parse interpreta un JSON válido, pero el tema azul no cumple la validación. Se usa el objeto de respaldo. Cancelar no escribe ni borra: una elección válida posterior puede sustituir el texto y borrar puede eliminarlo."
     },
     {
       "topic": "3.9 Cookies y Web Storage",
