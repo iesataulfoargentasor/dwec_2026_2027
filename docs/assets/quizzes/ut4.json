@@ -154,7 +154,7 @@
         "5 undefined: el array se expande hasta el índice 4 y las posiciones intermedias quedan como huecos."
       ],
       "answer": 3,
-      "explain": "Si asignas un índice **más allá** del final, el array se expande y `length` pasa a `índice + 1` (5); las posiciones intermedias quedan *huecos* (`undefined`). Los apuntes recomiendan rellenar en orden o usar `push`."
+      "explain": "Asignar al índice 4 amplía length a 5 y deja huecos en las posiciones intermedias. Leer ciudades[2] devuelve undefined, pero el hueco no es un elemento almacenado explícitamente con ese valor. Es preferible añadir con push para mantener una lista sin huecos."
     },
     {
       "topic": "4.5 Operaciones agregadas",
