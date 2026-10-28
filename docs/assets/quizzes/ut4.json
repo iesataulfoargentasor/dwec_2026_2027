@@ -92,13 +92,13 @@
       "prompt": "¿Qué imprime la consola?",
       "code": "function marcar(obj) {\n  obj.visto = true;\n}\n\nconst tarea = { titulo: \"UT4\" };\nmarcar(tarea);\nconsole.log(tarea.visto);",
       "options": [
-        "true: los objetos se pasan por referencia y la función muta el mismo objeto.",
+        "true: el parámetro recibe una copia de la referencia y modifica el mismo objeto.",
         "undefined: la función recibe una copia del objeto.",
         "false.",
         "Error: no se puede añadir propiedades dentro de una función."
       ],
       "answer": 0,
-      "explain": "Los primitivos se pasan **por valor**, pero los objetos y arrays **por referencia** (apartado 4.2): `marcar` modifica el mismo `tarea`, que pasa a tener `visto: true`."
+      "explain": "Los argumentos se pasan por valor. En un objeto se copia la referencia: cambiar obj.visto modifica el objeto compartido. Reasignar el parámetro obj a otro objeto no reasignaría la variable tarea de quien llama."
     },
     {
       "topic": "4.3 Arrays",
