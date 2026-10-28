@@ -42,7 +42,7 @@
         "JSON.parse para convertir texto en objeto."
       ],
       "answer": 2,
-      "explain": "El apartado 4.1 lo marca con \"failure\": `eval` ejecuta texto como código, lo que es inseguro y difícil de depurar. También están obsoletas `escape`/`unescape` (usa `encodeURIComponent`) y el `isNaN` global con coerción (usa `Number.isNaN`)."
+      "explain": "eval ejecuta texto como código: en estas prácticas se evitan sus riesgos y se utilizan conversiones, condiciones o JSON.parse según el problema. escape y unescape están obsoletas. isNaN global no está obsoleta, pero convierte el argumento; Number.isNaN no lo convierte."
     },
     {
       "topic": "4.2 Funciones de usuario",
