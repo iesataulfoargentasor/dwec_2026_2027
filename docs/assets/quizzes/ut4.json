@@ -218,13 +218,13 @@
       "prompt": "¿Qué imprime la consola?",
       "code": "const ficha = {\n  nombre: \"Alex\",\n  nota: 8,\n  aprobado() {\n    return this.nota >= 5;\n  },\n};\nconsole.log(ficha.aprobado());",
       "options": [
-        "true: dentro de un método, this es el objeto desde el que se llama (ficha).",
+        "true: en la llamada ficha.aprobado(), this es ficha.",
         "false",
         "undefined",
         "Error: this no existe en JavaScript."
       ],
       "answer": 0,
-      "explain": "Dentro de un método, `this` es el objeto **desde el que se llamó** la función (apartado 4.5): `ficha.aprobado()` → `this` es `ficha`, con nota 8 ≥ 5 → true. Ojo: si extrajeras la función (`const fn = ficha.aprobado`), se perdería el receptor."
+      "explain": "En la llamada ordinaria ficha.aprobado(), this es ficha: su nota es 8 y la comparación devuelve true (apartado 4.6). El receptor depende de cómo llamamos al método. Separar la función en una variable no conserva automáticamente ese receptor; las flechas tienen un comportamiento distinto."
     },
     {
       "topic": "4.6 Orientación a objetos",
@@ -238,7 +238,7 @@
         "Error: Alumno no tiene prototipo."
       ],
       "answer": 1,
-      "explain": "`class` es azúcar sobre **prototipos**: `new` crea el objeto, enlaza su prototipo y ejecuta el `constructor`. Los métodos declarados en la clase se comparten en `Alumno.prototype`, así que todas las instancias usan la misma copia (apartado 4.5)."
+      "explain": "En este ejemplo, new crea una instancia enlazada con Alumno.prototype y ejecuta el constructor para inicializar sus datos (apartado 4.6). Si definimos métodos ordinarios en la clase, se encuentran en ese prototipo y las instancias pueden compartirlos, manteniendo sus propios datos."
     },
     {
       "topic": "4.7 Objetos de usuario",
