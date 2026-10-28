@@ -168,7 +168,7 @@
         "undefined: map necesita un bucle for."
       ],
       "answer": 0,
-      "explain": "`map` devuelve un **array nuevo** con el mismo número de elementos, transformados por el callback. El original no cambia (apartado 4.4)."
+      "explain": "`map` devuelve un **array nuevo** con el mismo número de elementos, transformados por el callback. El original no cambia (apartado 4.5)."
     },
     {
       "topic": "4.5 Operaciones agregadas",
@@ -182,7 +182,7 @@
         "[7, 4, 9, 5, 10]: filter no descarta nada."
       ],
       "answer": 2,
-      "explain": "`filter` devuelve un array nuevo con los elementos que cumplen la condición (`n >= 5`): [7, 9, 5, 10]. Es la operación agregada de filtrado del apartado 4.4."
+      "explain": "`filter` devuelve un array nuevo con los elementos que cumplen la condición (`n >= 5`): [7, 9, 5, 10]. Es la operación agregada de filtrado del apartado 4.5."
     },
     {
       "topic": "4.5 Operaciones agregadas",
@@ -196,7 +196,7 @@
         "Error: reduce no acepta dos parámetros."
       ],
       "answer": 0,
-      "explain": "`reduce` acumula un único valor. El segundo argumento (`0`) es el **valor inicial** del acumulador. Sin él, el primer elemento haría de inicial y en un array vacío fallaría (apartado 4.4)."
+      "explain": "`reduce` acumula un único valor. El segundo argumento (`0`) es el **valor inicial** del acumulador. Sin él, el primer elemento haría de inicial y en un array vacío fallaría (apartado 4.5)."
     },
     {
       "topic": "4.5 Operaciones agregadas",
@@ -210,7 +210,7 @@
         "true false"
       ],
       "answer": 2,
-      "explain": "`some` devuelve `true` si **alguno** cumple la condición (el 4 es menor que 5) y `every` si **todos** la cumplen (las tres notas son ≥ 0). Ambos devuelven booleanos, no arrays (apartado 4.4)."
+      "explain": "`some` devuelve `true` si **alguno** cumple la condición (el 4 es menor que 5) y `every` si **todos** la cumplen (las tres notas son ≥ 0). Ambos devuelven booleanos, no arrays (apartado 4.5)."
     },
     {
       "topic": "4.6 Orientación a objetos",
