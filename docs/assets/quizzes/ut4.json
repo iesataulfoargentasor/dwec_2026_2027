@@ -252,7 +252,7 @@
         "Error: no se puede acceder a Contador.creados."
       ],
       "answer": 2,
-      "explain": "Una propiedad o método `static` pertenece a la **clase**, no a cada objeto (apartado 4.6). Las dos llamadas a `new` incrementan el mismo contador compartido → 2."
+      "explain": "Una propiedad o método `static` pertenece a la **clase**, no a cada objeto (apartado 4.7). Las dos llamadas a `new` incrementan el mismo contador compartido → 2."
     },
     {
       "topic": "4.7 Objetos de usuario",
@@ -266,7 +266,7 @@
         "undefined"
       ],
       "answer": 1,
-      "explain": "Los campos `#privados` no se pueden leer ni escribir **desde fuera** de la clase (`caja.#saldo` daría error), pero los métodos de la propia clase sí los usan con normalidad. Por eso `ver()` devuelve 50 (apartado 4.6: encapsulación real)."
+      "explain": "Los campos `#privados` no se pueden leer ni escribir **desde fuera** de la clase (`caja.#saldo` daría error), pero los métodos de la propia clase sí los usan con normalidad. Por eso `ver()` devuelve 50 (apartado 4.7, campos privados)."
     },
     {
       "topic": "4.8 Patrones de diseño",
