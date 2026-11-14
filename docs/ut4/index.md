@@ -31,7 +31,7 @@ Consulta el [enunciado oficial del RA4 y sus criterios de evaluación](ra4.md).
 | [4.6 Orientación a objetos](orientacion-objetos.md) | Prototipos, `this`, clases |
 | [4.7 Objetos de usuario](objetos-usuario.md) | Literales, `class`, métodos y propiedades |
 | [4.8 Patrones de diseño](patrones.md) | Módulo, fábrica, singleton, observador |
-| [Autoevaluación](autoevaluacion.md) | Test de 20 preguntas (código y casos de uso), con corrección comentada |
+| [Autoevaluación](autoevaluacion.md) | Test de 24 preguntas con código, tres por apartado, con corrección comentada |
 
 !!! info "JavaScript actual"
     Se sigue el temario clásico de la UT4 (funciones, arrays, objetos). El contenido usa **ECMAScript actual**: `const`/`let`, funciones flecha, `class`, métodos de array (`map`/`filter`/`reduce`) y patrones que verás en código profesional. No se enseña `eval`, ni `escape`/`unescape`, ni arrays “asociativos” como si fueran arrays de verdad.

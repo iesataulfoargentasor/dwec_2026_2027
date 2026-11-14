@@ -8,9 +8,9 @@ tags:
 
 # Autoevaluación de la UT4
 
-Veinte preguntas de **opción múltiple** (una correcta), a lo largo de la unidad: 4.1 funciones predefinidas, 4.2 funciones de usuario, 4.3 arrays, 4.5 operaciones agregadas, 4.6 orientación a objetos, 4.7 objetos de usuario y 4.8 patrones de diseño. El código sigue los ejemplos de los apuntes (`const`/`let`, funciones flecha, `map`/`filter`/`reduce`, `class`). `Map` y `Set` (4.4) se estudian en los apuntes; este test todavía no los pregunta.
+Practica con **24 preguntas de JavaScript**, tres por cada apartado de la UT4. Seguirás una solicitud de copias, un presupuesto, una cola de atención y un registro de asistencia con `Map` y `Set`. También repasarás las operaciones sobre colecciones, los objetos y sus métodos, las clases de usuario y los patrones de diseño.
 
-Son casos **prácticos** (qué hace este código, qué imprime la consola). No puntúan en Moodle: cada pregunta tiene su botón **Comprobar respuesta** para autocorregirse al instante, y al final puedes pulsar **Corregir test** para corregir todas de golpe, ver la nota, la opción buena y **por qué**.
+Lee cada fragmento como un programa independiente. Antes de marcar una de las cuatro opciones, predice la salida de la consola y fíjate en qué datos cambian tras cada llamada. La corrección explica el resultado y enlaza con el apartado que puedes repasar. Es una actividad de práctica sin calificación en Moodle.
 
 <div class="dwec-quiz" data-dwec-quiz data-src="../../assets/quizzes/ut4.json"></div>
 
