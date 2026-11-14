@@ -5,282 +5,338 @@
     {
       "topic": "4.1 Funciones predefinidas",
       "href": "../funciones-predefinidas/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "console.log(Number.parseInt(\"12px\", 10));",
+      "prompt": "¿Qué valores obtiene la solicitud al convertir el número de copias?",
+      "code": "const texto = \"14 copias\";\nconsole.log(Number.parseInt(texto, 10), Number.isNaN(Number(texto)));",
       "options": [
-        "NaN, porque \"12px\" no es un número completo.",
-        "12: lee los dígitos del principio y se detiene en el primer carácter no numérico.",
-        "\"12px\": devuelve el texto sin cambios.",
-        "Error de sintaxis: parseInt no acepta texto con letras."
+        "14 false",
+        "14 true",
+        "NaN true",
+        "NaN false"
       ],
       "answer": 1,
-      "explain": "El apartado 4.1 recomienda `Number.parseInt(texto, 10)` indicando siempre la base. La función lee los dígitos iniciales (\"12\") y para al llegar a la \"p\": devuelve 12."
+      "explain": "parseInt lee los dígitos iniciales. Number intenta convertir la cadena completa y obtiene NaN, que Number.isNaN reconoce."
     },
     {
       "topic": "4.1 Funciones predefinidas",
       "href": "../funciones-predefinidas/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const alumno = { nombre: \"Alex\", grupo: \"DAW2\" };\nconst copia = JSON.parse(JSON.stringify(alumno));\nconsole.log(copia.grupo);",
+      "prompt": "¿Qué texto quedará en el parámetro de la reserva?",
+      "code": "const taller = \"  Web & Redes  \".trim();\nconsole.log(\"taller=\" + encodeURIComponent(taller));",
       "options": [
-        "\"DAW2\": stringify pasa el objeto a texto y parse lo reconstruye.",
-        "undefined, porque JSON.stringify borra las propiedades.",
-        "\"[object Object]\".",
-        "Error: un objeto no se puede convertir a JSON."
+        "taller=Web%20%26%20Redes",
+        "taller=Web & Redes",
+        "taller=Web%20&%20Redes",
+        "taller=Web+%26+Redes"
       ],
       "answer": 0,
-      "explain": "`JSON.stringify` convierte el objeto en texto y `JSON.parse` lo convierte de vuelta en un objeto nuevo. Por eso `copia.grupo` vale \"DAW2\". Es el par habitual para guardar o transmitir datos."
+      "explain": "trim elimina los espacios de los extremos. Al codificar el valor, cada espacio interior pasa a %20 y el signo & a %26."
     },
     {
       "topic": "4.1 Funciones predefinidas",
       "href": "../funciones-predefinidas/",
-      "prompt": "Según los apuntes, ¿cuál de estas funciones NO debes usar en código actual?",
-      "code": "",
+      "prompt": "¿Qué cantidad recupera la solicitud guardada?",
+      "code": "const solicitud = { copias: 2 };\nconst guardada = JSON.stringify(solicitud);\nsolicitud.copias += 3;\nconsole.log(JSON.parse(guardada).copias, solicitud.copias);",
       "options": [
-        "encodeURIComponent para codificar un valor de una query string.",
-        "Number.isNaN para comprobar si un valor es NaN.",
-        "eval para ejecutar una cadena como si fuera código.",
-        "JSON.parse para convertir texto en objeto."
-      ],
-      "answer": 2,
-      "explain": "eval ejecuta texto como código: en estas prácticas se evitan sus riesgos y se utilizan conversiones, condiciones o JSON.parse según el problema. escape y unescape están obsoletas. isNaN global no está obsoleta, pero convierte el argumento; Number.isNaN no lo convierte."
-    },
-    {
-      "topic": "4.2 Funciones de usuario",
-      "href": "../funciones-usuario/",
-      "prompt": "¿Qué imprime este código?",
-      "code": "function avisar(msg) {\n  console.log(msg);\n}\nconsole.log(avisar(\"hola\"));",
-      "options": [
-        "\"hola\" dos veces.",
-        "\"hola\" y después \"undefined\": la función no tiene return, así que devuelve undefined.",
-        "Error: toda función debe devolver un valor.",
-        "Nada: la función no se ejecuta."
-      ],
-      "answer": 1,
-      "explain": "`return` devuelve un valor y termina la función. Si no hay `return`, el resultado es `undefined` (apartado 4.2). La línea exterior primero ejecuta `avisar` (que imprime \"hola\" internamente) y luego imprime lo devuelto: undefined."
-    },
-    {
-      "topic": "4.2 Funciones de usuario",
-      "href": "../funciones-usuario/",
-      "prompt": "¿Qué ocurre al ejecutar este código?",
-      "code": "saludar();\n\nfunction saludar() {\n  console.log(\"Hola\");\n}\n\nconst despedir = () => console.log(\"Adiós\");\ndespedir();",
-      "options": [
-        "Error en la primera línea: saludar se usa antes de declararse.",
-        "Imprime \"Adiós\" y después \"Hola\".",
-        "Solo imprime \"Hola\": las funciones flecha no se pueden llamar.",
-        "Imprime \"Hola\" y después \"Adiós\": las declaraciones function se elevan (hoisting); la constante, no."
+        "5 5",
+        "2 2",
+        "undefined 5",
+        "2 5"
       ],
       "answer": 3,
-      "explain": "Las declaraciones `function nombre()` se elevan (*hoisting*): puedes llamarlas antes de la línea donde están escritas. Las constantes con función (como la flecha guardada en `const`), no: por eso `despedir()` solo funciona después de su definición."
+      "explain": "El texto guardado contiene la cantidad inicial. Al leerlo se obtiene un objeto con dos copias, mientras que la solicitud original ya contiene cinco."
     },
     {
       "topic": "4.2 Funciones de usuario",
       "href": "../funciones-usuario/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "function ficha(nombre, grupo = \"DAW2\") {\n  return `${nombre} (${grupo})`;\n}\nconsole.log(ficha(\"Luis\"));",
+      "prompt": "¿Qué presupuestos devuelve la función?",
+      "code": "function coste(unidades, precio = 4) {\n  return unidades * precio;\n}\nconsole.log(coste(3), coste(3, 0));",
       "options": [
-        "\"Luis (DAW2)\": el parámetro usa su valor por defecto.",
-        "\"Luis ()\": el grupo queda vacío.",
-        "\"Luis (undefined)\".",
-        "Error: faltan argumentos en la llamada."
-      ],
-      "answer": 0,
-      "explain": "El apartado 4.2 introduce los parámetros con valor por defecto: `grupo = \"DAW2\"`. Al llamar `ficha(\"Luis\")` sin segundo argumento, `grupo` toma \"DAW2\"."
-    },
-    {
-      "topic": "4.2 Funciones de usuario",
-      "href": "../funciones-usuario/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "function marcar(obj) {\n  obj.visto = true;\n}\n\nconst tarea = { titulo: \"UT4\" };\nmarcar(tarea);\nconsole.log(tarea.visto);",
-      "options": [
-        "true: el parámetro recibe una copia de la referencia y modifica el mismo objeto.",
-        "undefined: la función recibe una copia del objeto.",
-        "false.",
-        "Error: no se puede añadir propiedades dentro de una función."
-      ],
-      "answer": 0,
-      "explain": "Los argumentos se pasan por valor. En un objeto se copia la referencia: cambiar obj.visto modifica el objeto compartido. Reasignar el parámetro obj a otro objeto no reasignaría la variable tarea de quien llama."
-    },
-    {
-      "topic": "4.3 Arrays",
-      "href": "../arrays/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const coches = [\"Seat\", \"Audi\", \"Renault\"];\nconsole.log(coches.length, coches[1]);",
-      "options": [
-        "3 Seat",
-        "2 Audi",
-        "3 Audi",
-        "2 Renault"
+        "12 12",
+        "7 3",
+        "12 0",
+        "NaN 0"
       ],
       "answer": 2,
-      "explain": "`length` devuelve 3 (el número de elementos), pero el primer índice es el **0** (apartado 4.3): `coches[1]` es \"Audi\"."
+      "explain": "La primera llamada omite el precio y utiliza 4. En la segunda se pasa 0 expresamente y el producto es cero."
+    },
+    {
+      "topic": "4.2 Funciones de usuario",
+      "href": "../funciones-usuario/",
+      "prompt": "¿Qué valor tiene el recargo fuera de la función?",
+      "code": "const recargo = 2;\nfunction presupuesto(base) {\n  const recargo = 1;\n  return base + recargo;\n}\nconsole.log(presupuesto(8), recargo);",
+      "options": [
+        "9 2",
+        "10 2",
+        "9 1",
+        "10 1"
+      ],
+      "answer": 0,
+      "explain": "Dentro de presupuesto se usa la constante local que vale 1. Al consultar recargo fuera de la función se lee la constante exterior, que conserva el valor 2."
+    },
+    {
+      "topic": "4.2 Funciones de usuario",
+      "href": "../funciones-usuario/",
+      "prompt": "¿Qué se ve en las dos líneas de consola al ejecutar la flecha?",
+      "code": "const mostrar = importe => {\n  console.log(importe * 2);\n};\nconsole.log(mostrar(6));",
+      "options": [
+        "6 y después 12",
+        "12 y después 12",
+        "12 y después undefined",
+        "undefined y después 12"
+      ],
+      "answer": 2,
+      "explain": "Primero se ejecuta el cuerpo de mostrar y se imprime 12. Al terminar sin return, la llamada devuelve undefined, que imprime el segundo console.log."
     },
     {
       "topic": "4.3 Arrays",
       "href": "../arrays/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const cola = [\"A\", \"B\"];\ncola.push(\"C\");\ncola.shift();\nconsole.log(cola);",
+      "prompt": "¿Quién sale de la cola y quién queda en primer lugar?",
+      "code": "const cola = [\"Mar\", \"Leo\"];\ncola.unshift(\"Paz\");\nconst atendida = cola.shift();\nconsole.log(atendida, cola[0]);",
       "options": [
-        "[\"A\", \"B\", \"C\"]",
-        "[\"B\", \"C\"]",
-        "[\"A\", \"B\"]",
-        "[\"C\"]"
+        "Mar Leo",
+        "Paz Mar",
+        "Leo Paz",
+        "Paz Leo"
       ],
       "answer": 1,
-      "explain": "`push` añade al **final** → [\"A\", \"B\", \"C\"]; `shift` quita el **primero** → [\"B\", \"C\"]. (`pop` quitaría el último y `unshift` añadiría al principio.)"
+      "explain": "unshift coloca a Paz al principio. shift retira y devuelve ese primer nombre, así que Mar vuelve a ocupar la posición cero."
     },
     {
       "topic": "4.3 Arrays",
       "href": "../arrays/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const nums = [10, 2, 33];\nconsole.log(nums.sort());",
+      "prompt": "¿Qué cantidades se leen en las dos listas?",
+      "code": "const stock = [4, 7];\nconst revision = [...stock];\nrevision[1] -= 2;\nconsole.log(stock[1], revision[1]);",
       "options": [
-        "[2, 10, 33]: ordena numéricamente.",
-        "[10, 2, 33]: sin función de comparación, sort trata los valores como texto (\"10\" va antes que \"2\").",
-        "[33, 10, 2]: ordena de mayor a menor.",
-        "Error: sort necesita una función de comparación."
-      ],
-      "answer": 1,
-      "explain": "`sort()` sin función compara **como texto**: \"1\" va antes que \"2\", así que 10 queda antes que 2. Para números: `.sort((a, b) => a - b)`. Además, `sort` y `reverse` **mutan** el array original (apartado 4.3)."
-    },
-    {
-      "topic": "4.3 Arrays",
-      "href": "../arrays/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const ciudades = [\"Santander\", \"Torrelavega\"];\nciudades[4] = \"Laredo\";\nconsole.log(ciudades.length, ciudades[2]);",
-      "options": [
-        "2 undefined",
-        "5 Laredo",
-        "2 Laredo",
-        "5 undefined: el array se expande hasta el índice 4 y las posiciones intermedias quedan como huecos."
+        "5 5",
+        "7 7",
+        "5 7",
+        "7 5"
       ],
       "answer": 3,
-      "explain": "Asignar al índice 4 amplía length a 5 y deja huecos en las posiciones intermedias. Leer ciudades[2] devuelve undefined, pero el hueco no es un elemento almacenado explícitamente con ese valor. Es preferible añadir con push para mantener una lista sin huecos."
+      "explain": "El operador de propagación crea otro array. Sus elementos son números, de modo que escribir un 5 en la copia conserva el 7 del original."
     },
     {
-      "topic": "4.5 Operaciones agregadas",
-      "href": "../operaciones-agregadas/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const notas = [7, 4, 9];\nconsole.log(notas.map((n) => n * 10));",
+      "topic": "4.3 Arrays",
+      "href": "../arrays/",
+      "prompt": "¿Qué muestra la consulta del inventario?",
+      "code": "const material = [[\"Cable\", 3], [\"Ratón\", 2]];\nmaterial[0][1] += 1;\nconsole.log(material.length, material[0][1]);",
       "options": [
-        "[70, 40, 90]: map devuelve un array nuevo con cada elemento transformado.",
-        "[7, 4, 9]: map no modifica los elementos.",
-        "200: la suma de todos multiplicados.",
-        "undefined: map necesita un bucle for."
-      ],
-      "answer": 0,
-      "explain": "`map` devuelve un **array nuevo** con el mismo número de elementos, transformados por el callback. El original no cambia (apartado 4.5)."
-    },
-    {
-      "topic": "4.5 Operaciones agregadas",
-      "href": "../operaciones-agregadas/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const notas = [7, 4, 9, 5, 10];\nconsole.log(notas.filter((n) => n >= 5));",
-      "options": [
-        "[4]: los que no cumplen la condición.",
-        "true: algún elemento cumple la condición.",
-        "[7, 9, 5, 10]: un array nuevo solo con los que cumplen la condición.",
-        "[7, 4, 9, 5, 10]: filter no descarta nada."
+        "4 2",
+        "2 3",
+        "2 4",
+        "3 4"
       ],
       "answer": 2,
-      "explain": "`filter` devuelve un array nuevo con los elementos que cumplen la condición (`n >= 5`): [7, 9, 5, 10]. Es la operación agregada de filtrado del apartado 4.5."
+      "explain": "El primer índice selecciona la fila del cable y el segundo, su cantidad. Cambia la cantidad de 3 a 4 y el inventario sigue teniendo dos filas."
     },
     {
-      "topic": "4.5 Operaciones agregadas",
-      "href": "../operaciones-agregadas/",
-      "prompt": "¿Qué imprime la consola? (Fíjate en el segundo argumento de reduce.)",
-      "code": "const nums = [1, 2, 3];\nconsole.log(nums.reduce((acum, n) => acum + n, 0));",
+      "topic": "4.4 Map y Set",
+      "href": "../map-set/",
+      "prompt": "¿Cuántas personas hay registradas y en qué grupo figura Luz?",
+      "code": "const grupos = new Map();\ngrupos.set(\"Luz\", \"A\");\ngrupos.set(\"Leo\", \"A\");\ngrupos.set(\"Luz\", \"B\");\nconsole.log(grupos.size, grupos.get(\"Luz\"));",
       "options": [
-        "6: el 0 es el valor inicial del acumulador (0+1+2+3).",
-        "123: concatena los valores.",
-        "[1, 2, 3]: reduce no transforma el array.",
-        "Error: reduce no acepta dos parámetros."
+        "3 B",
+        "2 A",
+        "3 A",
+        "2 B"
+      ],
+      "answer": 3,
+      "explain": "La tercera llamada actualiza el valor asociado a la clave Luz. Permanecen dos claves distintas."
+    },
+    {
+      "topic": "4.4 Map y Set",
+      "href": "../map-set/",
+      "prompt": "¿Cuántas asistencias distintas quedan y sigue inscrita Mar?",
+      "code": "const asistencia = new Set([\"Mar\", \"Paz\", \"Mar\"]);\nasistencia.delete(\"Paz\");\nasistencia.add(\"Mar\");\nconsole.log(asistencia.size, asistencia.has(\"Mar\"));",
+      "options": [
+        "1 true",
+        "3 true",
+        "2 true",
+        "1 false"
       ],
       "answer": 0,
-      "explain": "`reduce` acumula un único valor. El segundo argumento (`0`) es el **valor inicial** del acumulador. Sin él, el primer elemento haría de inicial y en un array vacío fallaría (apartado 4.5)."
+      "explain": "Set guarda Mar una sola vez. Tras borrar a Paz queda Mar y volver a añadir ese nombre conserva el tamaño."
+    },
+    {
+      "topic": "4.4 Map y Set",
+      "href": "../map-set/",
+      "prompt": "¿Cómo distingue el registro una clave ausente de un préstamo de cero unidades?",
+      "code": "const prestamos = new Map([[\"P1\", 0]]);\nconsole.log(prestamos.has(\"P1\"), prestamos.get(\"P1\"),\n            prestamos.has(\"P2\"));",
+      "options": [
+        "false 0 false",
+        "true 0 false",
+        "true undefined false",
+        "true 0 true"
+      ],
+      "answer": 1,
+      "explain": "has comprueba si la clave existe. P1 existe con el valor 0 y P2 aún no se ha registrado."
     },
     {
       "topic": "4.5 Operaciones agregadas",
       "href": "../operaciones-agregadas/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const notas = [7, 4, 9];\nconsole.log(notas.some((n) => n < 5), notas.every((n) => n >= 0));",
+      "prompt": "¿Cuántos minutos suman las actividades seleccionadas?",
+      "code": "const minutos = [8, 15, 20, 5];\nconst largas = minutos.filter(m => m >= 15);\nconsole.log(largas.reduce((suma, m) => suma + m, 0));",
       "options": [
-        "false false",
+        "48",
+        "20",
+        "35",
+        "2"
+      ],
+      "answer": 2,
+      "explain": "El filtro conserva 15 y 20. reduce parte de cero y suma esas dos duraciones."
+    },
+    {
+      "topic": "4.5 Operaciones agregadas",
+      "href": "../operaciones-agregadas/",
+      "prompt": "¿Qué valores quedan en el informe y en la lista original?",
+      "code": "const notas = [3, 6];\nconst puntos = notas.map(n => n * 10);\nconsole.log(puntos[1], notas[1]);",
+      "options": [
+        "60 6",
+        "6 6",
+        "60 60",
+        "30 3"
+      ],
+      "answer": 0,
+      "explain": "map construye un array con 30 y 60. La función multiplica números y la posición 1 del array de notas conserva el 6."
+    },
+    {
+      "topic": "4.5 Operaciones agregadas",
+      "href": "../operaciones-agregadas/",
+      "prompt": "¿Hay alguna entrega pendiente? ¿Han aprobado todas?",
+      "code": "const notas = [6, 0, 8];\nconsole.log(notas.some(n => n === 0),\n            notas.every(n => n >= 5));",
+      "options": [
         "false true",
-        "true true: some es true si ALGUNO cumple (el 4 < 5) y every si TODOS cumplen (todos >= 0).",
+        "true true",
+        "false false",
         "true false"
       ],
-      "answer": 2,
-      "explain": "`some` devuelve `true` si **alguno** cumple la condición (el 4 es menor que 5) y `every` si **todos** la cumplen (las tres notas son ≥ 0). Ambos devuelven booleanos, no arrays (apartado 4.5)."
+      "answer": 3,
+      "explain": "El cero satisface la condición de some. Ese mismo cero incumple la condición de every."
     },
     {
       "topic": "4.6 Orientación a objetos",
       "href": "../orientacion-objetos/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "const ficha = {\n  nombre: \"Alex\",\n  nota: 8,\n  aprobado() {\n    return this.nota >= 5;\n  },\n};\nconsole.log(ficha.aprobado());",
+      "prompt": "¿De qué ficha toma el método la nota?",
+      "code": "const ficha = { nota: 7, leer() { return this.nota; } };\nconst otra = { nota: 4, leer: ficha.leer };\nconsole.log(otra.leer(), ficha.leer());",
       "options": [
-        "true: en la llamada ficha.aprobado(), this es ficha.",
-        "false",
-        "undefined",
-        "Error: this no existe en JavaScript."
+        "7 7",
+        "4 7",
+        "4 4",
+        "7 4"
+      ],
+      "answer": 1,
+      "explain": "La primera llamada tiene a otra como receptor y la segunda a ficha. La misma función lee la nota del objeto que la llama."
+    },
+    {
+      "topic": "4.6 Orientación a objetos",
+      "href": "../orientacion-objetos/",
+      "prompt": "¿En qué objeto se encuentra el método de consulta?",
+      "code": "class Libro {\n  disponible() { return true; }\n}\nconst a = new Libro();\nconst b = new Libro();\nconsole.log(Object.hasOwn(a, \"disponible\"),\n            a.disponible === b.disponible);",
+      "options": [
+        "true true",
+        "true false",
+        "false false",
+        "false true"
+      ],
+      "answer": 3,
+      "explain": "La clase define el método en Libro.prototype. Las dos instancias encuentran allí la misma función y a carece de una propiedad propia con ese nombre."
+    },
+    {
+      "topic": "4.6 Orientación a objetos",
+      "href": "../orientacion-objetos/",
+      "prompt": "¿Qué equipos quedan reservados?",
+      "code": "const a = { reservado: false };\nconst b = { reservado: false };\nconst referencia = a;\nreferencia.reservado = true;\nconsole.log(a.reservado, b.reservado);",
+      "options": [
+        "true true",
+        "false true",
+        "true false",
+        "false false"
+      ],
+      "answer": 2,
+      "explain": "referencia y a designan el mismo objeto. El segundo literal crea otro equipo con su propio estado."
+    },
+    {
+      "topic": "4.7 Objetos de usuario",
+      "href": "../objetos-usuario/",
+      "prompt": "¿Qué devuelve el intento de retirada y cuántas unidades quedan?",
+      "code": "class Articulo {\n  constructor(unidades) { this.unidades = unidades; }\n  retirar(n) {\n    if (!Number.isInteger(n) || n <= 0 || n > this.unidades) return false;\n    this.unidades -= n;\n    return true;\n  }\n}\nconst cable = new Articulo(4);\ncable.retirar(3);\nconsole.log(cable.retirar(2), cable.unidades);",
+      "options": [
+        "false 1",
+        "true 1",
+        "false 4",
+        "true -1"
       ],
       "answer": 0,
-      "explain": "En la llamada ordinaria ficha.aprobado(), this es ficha: su nota es 8 y la comparación devuelve true (apartado 4.6). El receptor depende de cómo llamamos al método. Separar la función en una variable no conserva automáticamente ese receptor; las flechas tienen un comportamiento distinto."
-    },
-    {
-      "topic": "4.6 Orientación a objetos",
-      "href": "../orientacion-objetos/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "class Alumno {\n  constructor(nombre, nota) {\n    this.nombre = nombre;\n    this.nota = nota;\n  }\n}\n\nconst a = new Alumno(\"Mar\", 9);\nconsole.log(Object.getPrototypeOf(a) === Alumno.prototype);",
-      "options": [
-        "false: cada objeto tiene un prototipo propio e independiente.",
-        "true: new crea el objeto y lo enlaza con el prototipo de la clase.",
-        "undefined",
-        "Error: Alumno no tiene prototipo."
-      ],
-      "answer": 1,
-      "explain": "En este ejemplo, new crea una instancia enlazada con Alumno.prototype y ejecuta el constructor para inicializar sus datos (apartado 4.6). Si definimos métodos ordinarios en la clase, se encuentran en ese prototipo y las instancias pueden compartirlos, manteniendo sus propios datos."
+      "explain": "La primera entrega deja una unidad. La siguiente pide dos y termina en el primer return, antes de cambiar las existencias."
     },
     {
       "topic": "4.7 Objetos de usuario",
       "href": "../objetos-usuario/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "class Contador {\n  static creados = 0;\n\n  constructor() {\n    Contador.creados += 1;\n    this.id = Contador.creados;\n  }\n}\n\nnew Contador();\nnew Contador();\nconsole.log(Contador.creados);",
+      "prompt": "¿Qué identificador conserva el primer equipo y cuántos se han creado?",
+      "code": "class Equipo {\n  static creados = 0;\n  constructor() {\n    Equipo.creados += 1;\n    this.id = Equipo.creados;\n  }\n}\nconst primero = new Equipo();\nnew Equipo();\nconsole.log(primero.id, Equipo.creados);",
       "options": [
-        "0: las propiedades static no se pueden modificar.",
-        "1",
-        "2: static pertenece a la clase y se comparte entre todas las instancias.",
-        "Error: no se puede acceder a Contador.creados."
+        "2 2",
+        "1 2",
+        "1 1",
+        "0 2"
       ],
-      "answer": 2,
-      "explain": "Una propiedad o método `static` pertenece a la **clase**, no a cada objeto (apartado 4.7). Las dos llamadas a `new` incrementan el mismo contador compartido → 2."
+      "answer": 1,
+      "explain": "El primer constructor copia el valor 1 en la instancia. La segunda creación incrementa el campo de la clase hasta 2."
     },
     {
       "topic": "4.7 Objetos de usuario",
       "href": "../objetos-usuario/",
-      "prompt": "¿Qué imprime la consola?",
-      "code": "class Caja {\n  #saldo = 0;\n\n  ingresar(cantidad) {\n    if (cantidad > 0) {\n      this.#saldo += cantidad;\n    }\n  }\n\n  ver() {\n    return this.#saldo;\n  }\n}\n\nconst caja = new Caja();\ncaja.ingresar(50);\nconsole.log(caja.ver());",
+      "prompt": "¿Qué saldo comunica la caja después de ambos intentos?",
+      "code": "class Caja {\n  #saldo = 0;\n  ingresar(n) {\n    if (Number.isFinite(n) && n > 0) this.#saldo += n;\n  }\n  ver() { return this.#saldo; }\n}\nconst caja = new Caja();\ncaja.ingresar(6);\ncaja.ingresar(\"2\");\nconsole.log(caja.ver());",
       "options": [
-        "0: el saldo no cambia porque es privado.",
-        "50: #saldo solo es accesible desde dentro de la clase, y los métodos ingresar/ver sí pueden usarlo.",
-        "Error: #saldo es privado y no se puede modificar.",
-        "undefined"
+        "8",
+        "6",
+        "62",
+        "0"
       ],
       "answer": 1,
-      "explain": "Los campos `#privados` no se pueden leer ni escribir **desde fuera** de la clase (`caja.#saldo` daría error), pero los métodos de la propia clase sí los usan con normalidad. Por eso `ver()` devuelve 50 (apartado 4.7, campos privados)."
+      "explain": "El método puede escribir en el campo privado. Acepta el número 6 y descarta la cadena porque Number.isFinite exige un número finito."
     },
     {
       "topic": "4.8 Patrones de diseño",
       "href": "../patrones/",
-      "prompt": "Necesitas que las variables internas de un carrito no llenen `window` de basura y exponer solo tres métodos públicos (`add`, `listar`, `total`). ¿Qué patrón de los apuntes encaja mejor?",
-      "code": "",
+      "prompt": "La fábrica crea líneas y el módulo las guarda. ¿Qué puede consultar el programa?",
+      "code": "function crearLinea(n) { return { unidades: n }; }\nconst pedido = (function () {\n  const lineas = [];\n  return {\n    anadir(n) { lineas.push(crearLinea(n)); },\n    contar() { return lineas.length; }\n  };\n})();\npedido.anadir(3);\npedido.anadir(2);\nconsole.log(pedido.contar(), pedido.lineas);",
       "options": [
-        "Singleton: una única instancia de la clase Carrito.",
-        "Observador: el carrito avisa a los oyentes de cada cambio.",
-        "Módulo: una función que se ejecuta una vez, guarda estado interno (closure) y exporta solo lo público.",
-        "Fábrica: una función que crea carritos nuevos."
+        "5 undefined",
+        "2 2",
+        "5 5",
+        "2 undefined"
+      ],
+      "answer": 3,
+      "explain": "Cada alta crea una línea. contar conserva acceso al array a través del cierre y devuelve dos. El objeto público ofrece anadir y contar, por lo que leer pedido.lineas da undefined."
+    },
+    {
+      "topic": "4.8 Patrones de diseño",
+      "href": "../patrones/",
+      "prompt": "En esta configuración compartida, ¿qué muestran las dos consultas?",
+      "code": "const configuracion = Object.freeze({ plazas: 8 });\nconst aula = configuracion;\nconsole.log(aula === configuracion, aula.plazas);",
+      "options": [
+        "false 8",
+        "true undefined",
+        "true 8",
+        "false undefined"
       ],
       "answer": 2,
-      "explain": "El patrón **módulo** resuelve exactamente eso: ocultar variables internas en una closure y devolver solo la API pública (apartado 4.8). El observador desacopla quién avisa de quién reacciona; la fábrica crea objetos similares; y el singleton permite compartir una única instancia."
+      "explain": "La asignación conserva la referencia a la única configuración usada por el programa. Esa decisión corresponde al singleton. freeze protege las propiedades del objeto."
+    },
+    {
+      "topic": "4.8 Patrones de diseño",
+      "href": "../patrones/",
+      "prompt": "¿Qué valores quedan después de las dos publicaciones?",
+      "code": "const oyentes = [];\nlet avisos = 0;\nlet ultimo = 0;\noyentes.push(total => { ultimo = total; });\noyentes.push(() => { avisos += 1; });\nfunction publicar(total) {\n  for (const avisar of oyentes) avisar(total);\n}\npublicar(12);\npublicar(20);\nconsole.log(avisos, ultimo);",
+      "options": [
+        "2 20",
+        "2 12",
+        "4 20",
+        "1 20"
+      ],
+      "answer": 0,
+      "explain": "Cada publicación llama una vez a cada observador. Uno conserva el último total recibido y el otro cuenta las dos publicaciones."
     }
   ]
 }
