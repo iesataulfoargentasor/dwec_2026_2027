@@ -280,7 +280,7 @@
         "Fábrica: una función que crea carritos nuevos."
       ],
       "answer": 2,
-      "explain": "El patrón **módulo** resuelve exactamente eso: ocultar variables internas en una closure y devolver solo la API pública (apartado 4.7). El observador desacopla quién avisa de quién reacciona; la fábrica crea objetos similares; y un objeto módulo exportado ya actúa como singleton."
+      "explain": "El patrón **módulo** resuelve exactamente eso: ocultar variables internas en una closure y devolver solo la API pública (apartado 4.8). El observador desacopla quién avisa de quién reacciona; la fábrica crea objetos similares; y el singleton permite compartir una única instancia."
     }
   ]
 }
